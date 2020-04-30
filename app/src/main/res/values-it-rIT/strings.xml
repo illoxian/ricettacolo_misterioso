@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ricettacolo Misterioso</string>
+    <string name="title_recipes">Ricette</string>
+    <string name="title_pantry">Dispensa</string>
+    <string name="title_notifications">Notifiche</string>
+</resources>
