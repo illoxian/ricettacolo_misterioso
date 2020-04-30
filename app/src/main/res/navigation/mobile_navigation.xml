@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_recipes" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.pape.ricettacolomisterioso.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_shoppinglist"
+        android:name="com.pape.ricettacolomisterioso.ui.shopping_list.ShoppingListFragment"
+        android:label="@string/title_shoppinglist"
+        tools:layout="@layout/fragment_shoppinglist" />
 </navigation>

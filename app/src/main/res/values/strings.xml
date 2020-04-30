@@ -2,5 +2,5 @@
     <string name="app_name">Ricettacolo Misterioso</string>
     <string name="title_recipes">Recipes</string>
     <string name="title_pantry">Pantry</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_shoppinglist">Shopping List</string>
 </resources>
