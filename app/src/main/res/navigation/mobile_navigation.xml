@@ -22,4 +22,9 @@
         android:name="com.pape.ricettacolomisterioso.ui.shopping_list.ShoppingListFragment"
         android:label="@string/title_shoppinglist"
         tools:layout="@layout/fragment_shoppinglist" />
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.pape.ricettacolomisterioso.ui.menu.MenuFragment"
+        android:label="@string/title_menu"
+        tools:layout="@layout/fragment_menu" />
 </navigation>
