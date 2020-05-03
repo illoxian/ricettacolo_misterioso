@@ -7,4 +7,7 @@
     <string name="title_menu">Menu</string>
     <string name="expiring_button">Vedi Tutto</string>
     <string name="expiring_products">Prodotti in scadenza</string>
+    <string name="fruits_and_vegetables">FRUTTA E VERDURA</string>
+    <string name="meat">CARNE</string>
+    <string name="category_product">Categorie</string>
 </resources>

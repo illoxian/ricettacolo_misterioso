@@ -6,5 +6,7 @@
     <string name="title_menu">Menu</string>
     <string name="expiring_button">All</string>
     <string name="expiring_products">Expiring Products</string>
-
+    <string name="category_product">Categories</string>
+    <string name="fruits_and_vegetables">FRUITS AND VEGETABLES</string>
+    <string name="meat">MEAT</string>
 </resources>
