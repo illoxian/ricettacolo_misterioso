@@ -3,4 +3,8 @@
     <string name="title_recipes">Recipes</string>
     <string name="title_pantry">Pantry</string>
     <string name="title_shoppinglist">Shopping List</string>
+    <string name="title_menu">Menu</string>
+    <string name="expiring_button">All</string>
+    <string name="expiring_products">Expiring Products</string>
+
 </resources>

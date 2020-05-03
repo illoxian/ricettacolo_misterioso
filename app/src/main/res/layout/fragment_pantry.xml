@@ -1,22 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.pantry.PantryFragment">
 
-    <TextView
-        android:id="@+id/text_pantry"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           tools:context=".ui.pantry.PantryFragment" >
+
+           <androidx.cardview.widget.CardView
+               android:id="@+id/expiring_card"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="8dp"
+               android:layout_marginTop="8dp"
+               android:layout_marginEnd="8dp"
+               android:layout_marginBottom="16dp"
+               app:layout_constraintBottom_toTopOf="@+id/category_card"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.6"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent">
+
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/expiring_layout"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent">
+
+                   <TextView
+                       android:id="@+id/title_expiring_products"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="16dp"
+                       android:layout_marginTop="8dp"
+                       android:fontFamily="sans-serif-medium"
+                       android:text="@string/expiring_products"
+                       android:textColor="@color/textColorPrimary"
+                       android:textSize="20sp"
+                       app:layout_constraintBottom_toTopOf="@+id/expiring_button"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent"
+                       app:layout_constraintVertical_chainStyle="packed" />
+
+
+                   <Button
+                       android:id="@+id/expiring_button"
+                       style="?android:attr/borderlessButtonStyle"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="270dp"
+                       android:layout_marginEnd="8dp"
+                       android:backgroundTint="@color/textColorSecondary"
+                       android:shadowColor="@color/textColorSecondary"
+                       android:text="@string/expiring_button"
+                       android:textSize="16sp"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/title_expiring_products" />
+
+
+               </androidx.constraintlayout.widget.ConstraintLayout>
+           </androidx.cardview.widget.CardView>
+
+           <androidx.cardview.widget.CardView
+               android:id="@+id/category_card"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="8dp"
+               android:layout_marginEnd="8dp"
+               android:layout_marginBottom="683dp"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/expiring_card"
+               app:layout_constraintTop_toTopOf="parent">
+
+               <LinearLayout
+                   android:id="@+id/category_layout"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:orientation="vertical">
+
+                   <Button
+                       android:id="@+id/button10"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Button" />
+               </LinearLayout>
+
+           </androidx.cardview.widget.CardView>
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

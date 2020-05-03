@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui.pantry;
+package com.pape.ricettacolomisterioso.ui.menu;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.pape.ricettacolomisterioso.R;
 
-public class PantryFragment extends Fragment {
+public class MenuFragment extends Fragment {
 
-    private PantryViewModel pantryViewModel;
+    private MenuViewModel menuViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        pantryViewModel =
-                ViewModelProviders.of(this).get(PantryViewModel.class);
+        menuViewModel =
+                ViewModelProviders.of(this).get(MenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_pantry, container, false);
-         return root;
+        return root;
     }
+
 }
