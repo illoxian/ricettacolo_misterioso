@@ -23,13 +23,6 @@ public class MenuFragment extends Fragment {
         menuViewModel =
                 ViewModelProviders.of(this).get(MenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_pantry, container, false);
-        final TextView textView = root.findViewById(R.id.text_pantry);
-        menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 

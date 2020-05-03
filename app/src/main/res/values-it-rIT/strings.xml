@@ -5,4 +5,6 @@
     <string name="title_pantry">Dispensa</string>
     <string name="title_shoppinglist">Spesa</string>
     <string name="title_menu">Menu</string>
+    <string name="expiring_button">Vedi Tutto</string>
+    <string name="expiring_products">Prodotti in scadenza</string>
 </resources>
