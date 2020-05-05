@@ -42,8 +42,8 @@
 
                 <ImageView
                     android:id="@+id/recipes_menu_card1_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recipes_menu_card1" />
 
         <TableLayout
-            android:id="@+id/tableLayout"
+            android:id="@+id/recipes_categories_tablelayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -137,6 +137,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_1_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -178,6 +179,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_2_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -227,6 +229,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_3_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -268,6 +271,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_4_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -317,6 +321,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_5_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -358,6 +363,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_6_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -407,6 +413,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_7_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -448,6 +455,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_8_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -497,6 +505,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_9_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -538,6 +547,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/recipes_categories_10_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -575,7 +585,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/recipes_categories_tablelayout" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

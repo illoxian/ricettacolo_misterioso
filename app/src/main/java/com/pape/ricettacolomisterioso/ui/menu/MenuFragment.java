@@ -22,7 +22,7 @@ public class MenuFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         menuViewModel =
                 ViewModelProviders.of(this).get(MenuViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_pantry, container, false);
+        View root = inflater.inflate(R.layout.fragment_shoppinglist, container, false);
         return root;
     }
 
