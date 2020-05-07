@@ -10,6 +10,10 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ActivityNewProduct"
+            android:label="Nuovo prodotto">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
