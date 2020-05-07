@@ -1,9 +1,16 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +23,7 @@ import com.pape.ricettacolomisterioso.R;
 
 public class RecipesFragment extends Fragment {
 
+    private static final String TAG = "RECIPES_FRAGMENT";
     private RecipesViewModel recipesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -23,13 +31,7 @@ public class RecipesFragment extends Fragment {
         recipesViewModel =
                 ViewModelProviders.of(this).get(RecipesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_recipes, container, false);
-        final TextView textView = root.findViewById(R.id.text_recipes);
-        recipesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

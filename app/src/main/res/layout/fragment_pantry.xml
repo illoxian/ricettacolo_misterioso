@@ -101,11 +101,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:drawableBottom="@drawable/fruits_and_vegetables"
+                        android:drawableBottom="@drawable/previews_fruits_and_vegetables"
                         app:layout_constraintBottom_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/fruits_and_vegetables_textview"
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
-                        android:drawableBottom="@drawable/meat"
+                        android:drawableBottom="@drawable/previews_meat"
                         app:layout_constraintBottom_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
