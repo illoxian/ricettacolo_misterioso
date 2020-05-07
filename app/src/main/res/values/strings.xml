@@ -6,5 +6,19 @@
     <string name="title_menu">Menu</string>
     <string name="expiring_button">All</string>
     <string name="expiring_products">Expiring Products</string>
-
+    <string name="category_product">Categories</string>
+    <string name="fruits_and_vegetables">FRUITS AND VEGETABLES</string>
+    <string name="meat">MEAT</string>
+    <string name="recipes_categories_title">Categories</string>
+    <string name="recipes_menu_title">Menu of the day</string>
+    <string name="recipes_categories_appetizers">Appetizers</string>
+    <string name="recipes_categories_first_courses">First Courses</string>
+    <string name="recipes_categories_main_courses">Main Courses</string>
+    <string name="recipes_categories_desserts">Desserts</string>
+    <string name="recipes_categories_side_dishes">Side Dishes</string>
+    <string name="recipes_categories_single_courses">Single Courses</string>
+    <string name="recipes_categories_condiments">Condiments</string>
+    <string name="recipes_categories_bread_and_pizza">Bread and Pizza</string>
+    <string name="recipes_categories_drinks">Drinks</string>
+    <string name="recipes_categories_see_all">See All</string>
 </resources>
