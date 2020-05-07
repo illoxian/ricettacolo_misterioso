@@ -7,8 +7,8 @@
     <string name="expiring_button">All</string>
     <string name="expiring_products">Expiring Products</string>
     <string name="category_product">Categories</string>
-    <string name="fruits_and_vegetables">FRUITS AND VEGETABLES</string>
-    <string name="meat">MEAT</string>
+    <string name="pantry_categories_fruits_and_vegetables">Fruits and Vegetables</string>
+    <string name="pantry_categories_meat">Meat</string>
     <string name="recipes_categories_title">Categories</string>
     <string name="recipes_menu_title">Menu of the day</string>
     <string name="recipes_categories_appetizers">Appetizers</string>
