@@ -10,7 +10,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActivityNewProduct"
+            android:name=".NewProductActivity"
             android:label="Nuovo prodotto">
         </activity>
         <activity

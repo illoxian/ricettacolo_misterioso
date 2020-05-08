@@ -4,7 +4,7 @@
     <string name="title_pantry">Pantry</string>
     <string name="title_shoppinglist">Shopping List</string>
     <string name="title_menu">Menu</string>
-    <string name="expiring_button">All</string>
+    <string name="expiring_button">See all</string>
     <string name="expiring_products">Expiring Products</string>
     <string name="category_product">Categories</string>
     <string name="pantry_categories_fruits_and_vegetables">Fruits and Vegetables</string>
@@ -21,4 +21,18 @@
     <string name="recipes_categories_bread_and_pizza">Bread and Pizza</string>
     <string name="recipes_categories_drinks">Drinks</string>
     <string name="recipes_categories_see_all">See All</string>
+    <string name="new_product_scan_the_barcode">Scan the barcode</string>
+    <string name="new_product_divider_text">or</string>
+    <string name="new_product_input_name">Name</string>
+    <string name="new_product_input_category">Category</string>
+    <string name="new_product_input_expiration_date">Expiration date</string>
+    <string name="pantry_categories_fish">Fish</string>
+    <string name="pantry_categories_pasta_and_rice">Pasta and rice</string>
+    <string name="pantry_categories_milk_and_cheese">Milk and cheese</string>
+    <string name="pantry_categories_ice_cream_and_frozen_food">Ice cream and frozen food</string>
+    <string name="pantry_categories_bread_and_pizza">Bread and pizza</string>
+    <string name="pantry_categories_breakfast_and_sweets">Breakfast and sweets</string>
+    <string name="pantry_categories_oil_and_condiments">Oil and coniments</string>
+    <string name="pantry_categories_water_and_drinks">Water and drinks</string>
+    <string name="pantry_categories_see_all">See all</string>
 </resources>

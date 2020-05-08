@@ -22,4 +22,18 @@
     <string name="recipes_categories_bread_and_pizza">Pane e Pizza</string>
     <string name="recipes_categories_drinks">Bevande</string>
     <string name="recipes_categories_see_all">Vedi Tutto</string>
+    <string name="new_product_scan_the_barcode">Scansiona il codice a barre</string>
+    <string name="new_product_divider_text">oppure</string>
+    <string name="new_product_input_name">Nome</string>
+    <string name="new_product_input_category">Categoria</string>
+    <string name="new_product_input_expiration_date">Data di scadenza</string>
+    <string name="pantry_categories_fish">Pesce</string>
+    <string name="pantry_categories_pasta_and_rice">Pasta e riso</string>
+    <string name="pantry_categories_milk_and_cheese">Latticini e formaggi</string>
+    <string name="pantry_categories_ice_cream_and_frozen_food">Gelati e surgelati</string>
+    <string name="pantry_categories_bread_and_pizza">Pane e pizza</string>
+    <string name="pantry_categories_breakfast_and_sweets">Colazione, snack e dolci</string>
+    <string name="pantry_categories_oil_and_condiments">Olio, sottoli, condimenti e preparati</string>
+    <string name="pantry_categories_water_and_drinks">Acqua, bevande, vini e alcolici</string>
+    <string name="pantry_categories_see_all">Vedi tutto</string>
 </resources>
