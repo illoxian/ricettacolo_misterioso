@@ -71,6 +71,7 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/new_product_input_name"
         app:boxStrokeColor="@color/colorOnBackground"
+        app:endIconTint="@color/colorOnBackground"
         app:hintTextColor="@color/colorOnBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +95,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:boxStrokeColor="@color/colorOnBackground"
+        app:endIconTint="@color/colorOnBackground"
         app:hintTextColor="@color/colorOnBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +107,7 @@
             android:layout_height="wrap_content"
             android:dropDownHeight="wrap_content"
             android:hint="@string/new_product_input_category"
+            android:inputType="text"
             android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
