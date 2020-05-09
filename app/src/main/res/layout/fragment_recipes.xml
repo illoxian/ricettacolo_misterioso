@@ -49,7 +49,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/previews_pennealpomodoro" />
+                    app:srcCompat="@drawable/previews_pennealpomodoro"
+                    android:contentDescription="Penne al pomodoro" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -83,7 +84,7 @@
                         android:layout_marginBottom="8dp"
                         android:text="Penne al pomodoro"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@color/textColorSecondary"
+                        android:textColor="@color/colorOnSecondary"
                         android:textSize="24sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +151,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_appetizers" />
+                            app:srcCompat="@drawable/previews_appetizers"
+                            android:contentDescription="@string/recipes_categories_appetizers" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -165,7 +167,6 @@
                                 android:text="@string/recipes_categories_appetizers"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -196,7 +197,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_first_courses" />
+                            app:srcCompat="@drawable/previews_first_courses"
+                            android:contentDescription="@string/recipes_categories_first_courses" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -211,7 +213,6 @@
                                 android:text="@string/recipes_categories_first_courses"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -254,7 +255,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_main_courses" />
+                            app:srcCompat="@drawable/previews_main_courses"
+                            android:contentDescription="@string/recipes_categories_main_courses" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -269,7 +271,6 @@
                                 android:text="@string/recipes_categories_main_courses"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -300,7 +301,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_desserts" />
+                            app:srcCompat="@drawable/previews_desserts"
+                            android:contentDescription="@string/recipes_categories_desserts" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -315,7 +317,6 @@
                                 android:text="@string/recipes_categories_desserts"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -358,7 +359,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_side_dishes" />
+                            app:srcCompat="@drawable/previews_side_dishes"
+                            android:contentDescription="@string/recipes_categories_side_dishes" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -373,7 +375,6 @@
                                 android:text="@string/recipes_categories_side_dishes"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -404,7 +405,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_single_courses" />
+                            app:srcCompat="@drawable/previews_single_courses"
+                            android:contentDescription="@string/recipes_categories_single_courses" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -419,7 +421,6 @@
                                 android:text="@string/recipes_categories_single_courses"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -462,7 +463,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_condiments" />
+                            app:srcCompat="@drawable/previews_condiments"
+                            android:contentDescription="@string/recipes_categories_condiments" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -477,7 +479,6 @@
                                 android:text="@string/recipes_categories_condiments"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -508,7 +509,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_bread_and_pizza" />
+                            app:srcCompat="@drawable/previews_bread_and_pizza"
+                            android:contentDescription="@string/recipes_categories_bread_and_pizza" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -523,7 +525,6 @@
                                 android:text="@string/recipes_categories_bread_and_pizza"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -566,7 +567,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_drinks" />
+                            app:srcCompat="@drawable/previews_drinks"
+                            android:contentDescription="@string/recipes_categories_drinks" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -581,7 +583,6 @@
                                 android:text="@string/recipes_categories_drinks"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
@@ -612,7 +613,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/pattern" />
+                            app:srcCompat="@drawable/pattern"
+                            android:contentDescription="@string/recipes_categories_see_all" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -627,7 +629,6 @@
                                 android:text="@string/recipes_categories_see_all"
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:textColor="@color/textColorSecondary"
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
