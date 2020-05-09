@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".NewProductActivity"
-            android:label="Nuovo prodotto">
+            android:label="@string/title_new_product">
         </activity>
         <activity
             android:name=".MainActivity"

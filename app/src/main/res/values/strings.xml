@@ -35,4 +35,5 @@
     <string name="pantry_categories_oil_and_condiments">Oil and coniments</string>
     <string name="pantry_categories_water_and_drinks">Water and drinks</string>
     <string name="pantry_categories_see_all">See all</string>
+    <string name="title_new_product">New product</string>
 </resources>

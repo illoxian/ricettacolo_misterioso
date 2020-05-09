@@ -132,7 +132,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            android:clickable="true"
+            android:focusable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -2,24 +2,31 @@ package com.pape.ricettacolomisterioso;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-
+import android.widget.DatePicker;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.List;
+import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 
 public class NewProductActivity extends AppCompatActivity {
 
-
+    private ActivityNewProductBinding binding;
+    Calendar c;
+    DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_product);
+        binding = ActivityNewProductBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         initCategoriesAutocomplete();
+        initDatePicker();
     }
 
     private void initCategoriesAutocomplete(){
@@ -38,7 +45,28 @@ public class NewProductActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, CATEGORIES);
-        AutoCompleteTextView textView = findViewById(R.id.textInput_category);
-        textView.setAdapter(adapter);
+        binding.textInputCategory.setAdapter(adapter);
+    }
+
+    private void initDatePicker(){
+        binding.textInputExpirationDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c = Calendar.getInstance();
+
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year = c.get(Calendar.YEAR);
+
+                datePickerDialog = new DatePickerDialog(NewProductActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
+                        String dateString = mDayOfMonth + "/" + (mMonth+1) + "/" + mYear;
+                        binding.textInputExpirationDate.setText(dateString);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
     }
 }
