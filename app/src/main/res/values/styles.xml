@@ -1,30 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryLight</item>
-        <item name="colorOnSecondary">@color/colorOnSecondary</item>
-        <item name="colorError">@color/colorError</item>
-        <item name="colorOnError">@color/colorOnError</item>
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="colorOnBackground">@color/colorOnBackground</item>
+    <!-- Components -->
 
-
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    <!-- Bottom Navigation View -->
+    <style name="Widget.MyTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="itemBackground">?attr/colorPrimary</item>
+        <item name="itemIconTint">?attr/colorOnPrimary</item>
+        <item name="itemTextColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="BottomNavigation">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="itemBackground">@color/colorPrimary</item>
-        <item name="itemIconTint">@color/colorOnPrimary</item>
-        <item name="itemTextColor">@color/colorOnPrimary</item>
+    <!-- Text Button -->
+    <style name="Widget.MyTheme.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Text Input Layout Outlined -->
+    <style name="Widget.MyTheme.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">?attr/colorOnBackground</item>
+        <item name="endIconTint">?attr/colorOnBackground</item>
+        <item name="hintTextColor">?attr/colorOnBackground</item>
+    </style>
+    <style name="Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">?attr/colorOnBackground</item>
+        <item name="endIconTint">?attr/colorOnBackground</item>
+        <item name="hintTextColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Date Picker -->
+    <style name="Theme.MyTheme.Dialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorPrimary">?attr/colorSecondary</item>
+        <item name="colorPrimaryDark">?attr/colorSecondaryVariant</item>
     </style>
 
 </resources>

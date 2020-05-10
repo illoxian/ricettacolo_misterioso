@@ -46,15 +46,14 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/expiring_button"
+                        style="@style/Widget.MyTheme.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="@string/expiring_button"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:textColor="@color/colorOnSurface"/>
+                        app:layout_constraintEnd_toEndOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

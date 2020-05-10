@@ -58,7 +58,7 @@ public class NewProductActivity extends AppCompatActivity {
                 int month = c.get(Calendar.MONTH);
                 int year = c.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(NewProductActivity.this, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(NewProductActivity.this, R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         String dateString = mDayOfMonth + "/" + (mMonth+1) + "/" + mYear;
