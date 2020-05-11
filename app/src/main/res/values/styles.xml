@@ -11,6 +11,9 @@
         <item name="itemIconTint">?attr/colorOnPrimary</item>
         <item name="itemTextColor">?attr/colorOnPrimary</item>
     </style>
+    <style name="Widget.MyTheme.BottomNavigationView.Dark" parent="Widget.MaterialComponents.BottomNavigationView">
+
+    </style>
 
     <!-- Text Button -->
     <style name="Widget.MyTheme.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">

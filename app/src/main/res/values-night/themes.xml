@@ -19,6 +19,9 @@
         <item name="colorOnSurface">@color/white_50</item>
         <item name="colorOnError">@color/black_900</item>
 
+        <!--Component styles-->
+        <item name="bottomNavigationStyle">@style/Widget.MyTheme.BottomNavigationView.Dark</item>
+
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
 
