@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFEB3B</color>
-    <color name="colorPrimaryDark">#C8B900</color>
-    <color name="colorPrimaryLight">#C8B900</color>
-    <color name="colorSecondary">#FF2180</color>
-    <color name="colorSecondaryDark">#FF2180</color>
-    <color name="colorSecondaryLight">#FF2180</color>
-    <color name="colorOnPrimary">#000000</color>
-    <color name="colorOnSecondary">#FFFFFF</color>
-    <color name="colorError">#F44336</color>
-    <color name="colorOnError">#FFFFFF</color>
-    <color name="colorSurface">#FFFFFF</color>
-    <color name="colorOnSurface">#212121</color>
-    <color name="colorBackground">#FAFAFA</color>
-    <color name="colorOnBackground">#212121</color>
+
+    <!-- primary -->
+    <color name="yellow_500">#FFEB3B</color>
+    <color name="yellow_500_dark">#c8b900</color>
+    <color name="yellow_500_light">#ffff72</color>
+    <color name="amber_700">#ffa000</color>
+    <!-- secondary -->
+    <color name="pink_a200">#ff4081</color>
+    <color name="pink_a200_dark">#c60055</color>
+    <color name="pink_a200_light">#ff79b0</color>
+    <!-- error -->
+    <color name="red_200">#cf6679</color>
+    <color name="red_600">#b00020</color>
+    <!-- background -->
+    <color name="white_50">#ffffff</color>
+    <color name="black_800">#121212</color>
+    <color name="black_900">#000000</color>
+
+    <!-- secondary text -->
+    <color name="grey_400">#bdbdbd</color>
+
 </resources>
