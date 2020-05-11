@@ -1,22 +1,30 @@
-package com.pape.ricettacolomisterioso;
+package com.pape.ricettacolomisterioso.ui.new_product;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.lifecycle.Observer;
 import android.app.DatePickerDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import com.pape.ricettacolomisterioso.MainActivity;
+import com.pape.ricettacolomisterioso.ui.database.Product;
+import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 
 public class NewProductActivity extends AppCompatActivity {
 
     private ActivityNewProductBinding binding;
-    Calendar c;
-    DatePickerDialog datePickerDialog;
+    private NewProductViewModel model;
+    private Calendar c;
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,24 @@ public class NewProductActivity extends AppCompatActivity {
 
         initCategoriesAutocomplete();
         initDatePicker();
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addProduct();
+            }
+        });
+
+        MainActivity.db.productDao().getAll().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                String s = "";
+                for(int i=0; i<products.size(); i++)
+                {
+                    s+=products.get(i).productName + " ";
+                }
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initCategoriesAutocomplete(){
@@ -68,5 +94,32 @@ public class NewProductActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void addProduct(){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                addProductAsync();
+            }
+        });
+
+    }
+    private void addProductAsync(){
+        Product p = new Product();
+        p.productName = binding.textInputName.getText().toString();
+        p.category = binding.textInputCategory.getText().toString();
+        MainActivity.db.productDao().insertAll(p);
     }
 }
