@@ -37,4 +37,6 @@
     <string name="pantry_categories_water_and_drinks">Acqua, bevande, vini e alcolici</string>
     <string name="pantry_categories_see_all">Vedi tutto</string>
     <string name="title_new_product">Nuovo prodotto</string>
+    <string name="error_not_a_category">Seleziona una delle categorie</string>
+    <string name="error_empty_field">Questo campo non può essere vuoto</string>
 </resources>

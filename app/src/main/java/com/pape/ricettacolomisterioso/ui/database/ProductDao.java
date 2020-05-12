@@ -6,8 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.pape.ricettacolomisterioso.ui.database.Product;
-
 import java.util.List;
 
 @Dao
@@ -22,10 +20,13 @@ public interface ProductDao {
     Product findByName(String first);
 
     @Insert
-    void insertAll(Product... users);
+    void insertAll(Product... products);
+
+    @Insert
+    long insertProduct(Product product);
 
     @Delete
-    void delete(Product user);
+    void delete(Product product);
 }
 
 

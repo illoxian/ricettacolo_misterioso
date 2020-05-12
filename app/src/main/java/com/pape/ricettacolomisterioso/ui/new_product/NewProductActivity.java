@@ -5,13 +5,19 @@ import androidx.lifecycle.Observer;
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.pape.ricettacolomisterioso.MainActivity;
@@ -21,10 +27,16 @@ import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 
 public class NewProductActivity extends AppCompatActivity {
 
+    private static final String TAG = "NewProductActivity";
     private ActivityNewProductBinding binding;
     private NewProductViewModel model;
     private Calendar c;
     private DatePickerDialog datePickerDialog;
+    List<String> CATEGORIES;
+
+    String productName;
+    String category;
+    Date expirationDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +45,10 @@ public class NewProductActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        initTextInputs();
+        initFAB();
         initCategoriesAutocomplete();
         initDatePicker();
-        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addProduct();
-            }
-        });
 
         MainActivity.db.productDao().getAll().observe(this, new Observer<List<Product>>() {
             @Override
@@ -48,15 +56,60 @@ public class NewProductActivity extends AppCompatActivity {
                 String s = "";
                 for(int i=0; i<products.size(); i++)
                 {
-                    s+=products.get(i).productName + " ";
+                    String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(products.get(i).expirationDate);
+                    s+=products.get(i).productName + " " + products.get(i).category + " " + dateString + "\n";
                 }
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initTextInputs(){
+        binding.textInputName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.textInputLayoutName.setError(null);
+            }
+        });
+
+        binding.textInputCategory.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.textInputLayoutCategory.setError(null);
+            }
+        });
+    }
+
+    private void initFAB(){
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addProduct();
+            }
+        });
+    }
+
     private void initCategoriesAutocomplete(){
-        List<String> CATEGORIES = new ArrayList<>();
+        CATEGORIES = new ArrayList<>();
 
         CATEGORIES.add(getResources().getString(R.string.pantry_categories_fruits_and_vegetables));
         CATEGORIES.add(getResources().getString(R.string.pantry_categories_meat));
@@ -78,16 +131,21 @@ public class NewProductActivity extends AppCompatActivity {
         binding.textInputExpirationDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.textInputLayoutExpirationDate.setError(null);
+
                 c = Calendar.getInstance();
 
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year = c.get(Calendar.YEAR);
+                final int day = c.get(Calendar.DAY_OF_MONTH);
+                final int month = c.get(Calendar.MONTH);
+                final int year = c.get(Calendar.YEAR);
 
                 datePickerDialog = new DatePickerDialog(NewProductActivity.this, R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                        String dateString = mDayOfMonth + "/" + (mMonth+1) + "/" + mYear;
+                        Calendar cPicked = Calendar.getInstance();
+                        cPicked.set(mYear, mMonth, mDayOfMonth);
+                        expirationDate = cPicked.getTime();
+                        String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(expirationDate);
                         binding.textInputExpirationDate.setText(dateString);
                     }
                 }, year, month, day);
@@ -96,30 +154,50 @@ public class NewProductActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void addProduct(){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                addProductAsync();
-            }
-        });
+        productName = binding.textInputName.getText().toString();
+        category = binding.textInputCategory.getText().toString();
+        boolean isValid = true;
 
+        //ProductName
+        if(productName.equals("")){
+            binding.textInputLayoutName.setError(getResources().getString((R.string.error_empty_field)));
+            if(isValid) binding.textInputLayoutName.requestFocus();
+            isValid = false;
+        }
+        //Category
+        if(category.equals("")){
+            binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_empty_field)));
+            if(isValid) binding.textInputLayoutCategory.requestFocus();
+            isValid = false;
+        }
+        else if(!CATEGORIES.contains(category)){
+            binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_not_a_category)));
+            if(isValid) binding.textInputLayoutCategory.requestFocus();
+            isValid = false;
+        }
+        //Date
+        if(expirationDate==null){
+            binding.textInputLayoutExpirationDate.setError(getResources().getString((R.string.error_empty_field)));
+            isValid = false;
+        }
+
+        if(isValid){
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    addProductAsync();
+                }
+            });
+        }
     }
+
     private void addProductAsync(){
         Product p = new Product();
-        p.productName = binding.textInputName.getText().toString();
-        p.category = binding.textInputCategory.getText().toString();
-        MainActivity.db.productDao().insertAll(p);
+        p.productName = productName;
+        p.category = category;
+        p.expirationDate = expirationDate;
+        int id = (int)MainActivity.db.productDao().insertProduct(p);
+        Log.d(TAG, "addProductAsync: "+id);
     }
 }
