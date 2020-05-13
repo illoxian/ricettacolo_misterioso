@@ -52,4 +52,12 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <!--<style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressBackgroundTint">?attr/colorSecondaryVariant</item>
+        <item name="android:progressTint">?attr/colorSecondary</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:minWidth">200dp</item>
+        <item name="android:minHeight">50dp</item>
+    </style>-->
+
 </resources>
