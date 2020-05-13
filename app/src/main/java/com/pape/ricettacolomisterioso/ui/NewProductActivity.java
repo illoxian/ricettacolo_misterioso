@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -50,6 +51,7 @@ public class NewProductActivity extends AppCompatActivity {
         setContentView(view);
 
         initTextInputs();
+        initScannerButton();
         initFAB();
         initCategoriesAutocomplete();
         initDatePicker();
@@ -66,6 +68,20 @@ public class NewProductActivity extends AppCompatActivity {
         };
         liveData = model.getProducts();
         liveData.observe(this, observer);
+    }
+
+    private void initScannerButton() {
+        binding.buttonScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScannerActivity();
+            }
+        });
+    }
+
+    private void startScannerActivity(){
+        Intent intent = new Intent(this, ScannerActivity.class);
+        startActivity(intent);
     }
 
     @Override
