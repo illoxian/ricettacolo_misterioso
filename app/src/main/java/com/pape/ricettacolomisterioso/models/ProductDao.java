@@ -1,9 +1,9 @@
-package com.pape.ricettacolomisterioso.ui.database;
+package com.pape.ricettacolomisterioso.models;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -11,10 +11,10 @@ import java.util.List;
 @Dao
 public interface ProductDao {
     @Query("SELECT * FROM products")
-    LiveData<List<Product>> getAll();
+    List<Product> getAll();
 
-    @Query("SELECT * FROM products WHERE uid IN (:userIds)")
-    List<Product> loadAllByIds(int[] userIds);
+    //@Query("SELECT * FROM products WHERE uid IN (:userIds)")
+    //List<Product> loadAllByIds(int[] userIds);
 
     @Query("SELECT * FROM products WHERE productName LIKE :first LIMIT 1")
     Product findByName(String first);
@@ -22,7 +22,7 @@ public interface ProductDao {
     @Insert
     void insertAll(Product... products);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertProduct(Product product);
 
     @Delete

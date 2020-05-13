@@ -1,9 +1,10 @@
-package com.pape.ricettacolomisterioso;
+package com.pape.ricettacolomisterioso.ui;
 
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.pape.ricettacolomisterioso.ui.database.AppDatabase;
+import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.models.AppDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;

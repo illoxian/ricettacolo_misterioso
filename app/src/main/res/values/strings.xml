@@ -38,4 +38,8 @@
     <string name="title_new_product">New product</string>
     <string name="error_empty_field">This field can not be blank</string>
     <string name="error_not_a_category">Select one of the categories</string>
+
+    <string name="title_activity_scanner">ScannerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

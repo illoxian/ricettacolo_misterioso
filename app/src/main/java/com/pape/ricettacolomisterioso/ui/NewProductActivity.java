@@ -1,7 +1,10 @@
-package com.pape.ricettacolomisterioso.ui.new_product;
+package com.pape.ricettacolomisterioso.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,10 +22,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.pape.ricettacolomisterioso.MainActivity;
-import com.pape.ricettacolomisterioso.ui.database.Product;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
+import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.viewmodels.NewProductViewModel;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -33,6 +35,8 @@ public class NewProductActivity extends AppCompatActivity {
     private Calendar c;
     private DatePickerDialog datePickerDialog;
     List<String> CATEGORIES;
+
+    LiveData<List<Product>> liveData;
 
     String productName;
     String category;
@@ -50,18 +54,18 @@ public class NewProductActivity extends AppCompatActivity {
         initCategoriesAutocomplete();
         initDatePicker();
 
-        MainActivity.db.productDao().getAll().observe(this, new Observer<List<Product>>() {
+        model = new ViewModelProvider(this).get(NewProductViewModel.class);
+
+        final Observer<List<Product>> observer = new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
-                String s = "";
-                for(int i=0; i<products.size(); i++)
-                {
-                    String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(products.get(i).expirationDate);
-                    s+=products.get(i).productName + " " + products.get(i).category + " " + dateString + "\n";
+                for (int i = 0; i < products.size(); i++) {
+                    Log.d(TAG, "Product: " + i + " " + products.get(i).toString());
                 }
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+        liveData = model.getProducts();
+        liveData.observe(this, observer);
     }
 
     @Override
@@ -193,11 +197,9 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     private void addProductAsync(){
-        Product p = new Product();
-        p.productName = productName;
-        p.category = category;
-        p.expirationDate = expirationDate;
+        Product p = new Product(productName, category, expirationDate);
         int id = (int)MainActivity.db.productDao().insertProduct(p);
         Log.d(TAG, "addProductAsync: "+id);
+        liveData = model.getProducts();
     }
 }

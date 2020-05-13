@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pape.ricettacolomisterioso">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +13,17 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.MyApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.ScannerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_scanner"
+            android:theme="@style/FullscreenTheme" />
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity
+            android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,13 +32,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.new_product.NewProductActivity"
+            android:name=".ui.NewProductActivity"
             android:label="@string/title_new_product"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.MainActivity">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui.database;
+package com.pape.ricettacolomisterioso.utils;
 
 import androidx.room.TypeConverter;
 

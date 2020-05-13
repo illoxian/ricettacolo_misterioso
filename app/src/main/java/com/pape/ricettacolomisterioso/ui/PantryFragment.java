@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui.pantry;
+package com.pape.ricettacolomisterioso.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.pape.ricettacolomisterioso.ui.new_product.NewProductActivity;
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 
 public class PantryFragment extends Fragment {
 
