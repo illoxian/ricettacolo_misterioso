@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,7 +21,6 @@ import android.widget.DatePicker;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.pape.ricettacolomisterioso.R;
@@ -36,12 +36,11 @@ public class NewProductActivity extends AppCompatActivity {
     private Calendar c;
     private DatePickerDialog datePickerDialog;
     List<String> CATEGORIES;
+    int LAUNCH_SCANNER_ACTIVITY = 1;
 
     LiveData<List<Product>> liveData;
 
-    String productName;
-    String category;
-    Date expirationDate;
+    Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +79,24 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     private void startScannerActivity(){
-        Intent intent = new Intent(this, ScannerActivity.class);
-        startActivity(intent);
+        Intent i = new Intent(this, ScannerActivity.class);
+        startActivityForResult(i, LAUNCH_SCANNER_ACTIVITY);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SCANNER_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                product = data.getParcelableExtra("product");
+                binding.textInputName.setText(product.getProduct_name());
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }//onActivityResult
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -164,8 +178,8 @@ public class NewProductActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         Calendar cPicked = Calendar.getInstance();
                         cPicked.set(mYear, mMonth, mDayOfMonth);
-                        expirationDate = cPicked.getTime();
-                        String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(expirationDate);
+                        product.setExpirationDate(cPicked.getTime());
+                        String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(product.getExpirationDate());
                         binding.textInputExpirationDate.setText(dateString);
                     }
                 }, year, month, day);
@@ -175,29 +189,30 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     private void addProduct(){
-        productName = binding.textInputName.getText().toString();
-        category = binding.textInputCategory.getText().toString();
+        if(product==null) product = new Product();
+        product.setProduct_name(binding.textInputName.getText().toString());
+        product.setCategory(binding.textInputCategory.getText().toString());
         boolean isValid = true;
 
         //ProductName
-        if(productName.equals("")){
+        if(product.getProduct_name().equals("")){
             binding.textInputLayoutName.setError(getResources().getString((R.string.error_empty_field)));
             if(isValid) binding.textInputLayoutName.requestFocus();
             isValid = false;
         }
         //Category
-        if(category.equals("")){
+        if(product.getCategory().equals("")){
             binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_empty_field)));
             if(isValid) binding.textInputLayoutCategory.requestFocus();
             isValid = false;
         }
-        else if(!CATEGORIES.contains(category)){
+        else if(!CATEGORIES.contains(product.getCategory())){
             binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_not_a_category)));
             if(isValid) binding.textInputLayoutCategory.requestFocus();
             isValid = false;
         }
         //Date
-        if(expirationDate==null){
+        if(product.getExpirationDate()==null){
             binding.textInputLayoutExpirationDate.setError(getResources().getString((R.string.error_empty_field)));
             isValid = false;
         }
@@ -213,8 +228,7 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     private void addProductAsync(){
-        Product p = new Product(productName, category, expirationDate);
-        int id = (int)MainActivity.db.productDao().insertProduct(p);
+        int id = (int)MainActivity.db.productDao().insertProduct(product);
         Log.d(TAG, "addProductAsync: "+id);
         liveData = model.getProducts();
     }

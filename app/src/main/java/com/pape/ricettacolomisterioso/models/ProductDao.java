@@ -16,7 +16,7 @@ public interface ProductDao {
     //@Query("SELECT * FROM products WHERE uid IN (:userIds)")
     //List<Product> loadAllByIds(int[] userIds);
 
-    @Query("SELECT * FROM products WHERE productName LIKE :first LIMIT 1")
+    @Query("SELECT * FROM products WHERE product_name LIKE :first LIMIT 1")
     Product findByName(String first);
 
     @Insert
