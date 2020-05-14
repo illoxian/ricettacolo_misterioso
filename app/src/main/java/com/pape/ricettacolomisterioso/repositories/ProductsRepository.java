@@ -11,6 +11,8 @@ import com.pape.ricettacolomisterioso.services.FoodService;
 import com.pape.ricettacolomisterioso.ui.MainActivity;
 import com.pape.ricettacolomisterioso.utils.Constants;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -65,11 +67,17 @@ public class ProductsRepository {
         // It shows the use of method enqueue to do the HTTP request asynchronously.
         call.enqueue(new Callback<ProductApiResponse>() {
             @Override
-            public void onResponse(Call<ProductApiResponse> call, Response<ProductApiResponse> response) {
+            public void onResponse(@NotNull Call<ProductApiResponse> call, @NotNull Response<ProductApiResponse> response) {
                 Log.d(TAG, "successful: " + response.isSuccessful());
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "onResponse: " + response.body().toString());
-                    product.postValue(response.body().getProduct());
+                    if(response.body().getStatus()==1){ //API returns successful even if product was not found
+                        Log.d(TAG, "onResponse: " + response.body().toString());
+                        product.postValue(response.body().getProduct());
+                    }
+                    else {
+                        product.postValue(null);
+                        Log.d(TAG, "onResponse: Success. Product not found");
+                    }
                 } else if (response.errorBody() != null) {
                     try {
                         new Throwable(response.errorBody().string()).printStackTrace();

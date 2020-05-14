@@ -28,4 +28,8 @@ public class ScannerViewModel extends ViewModel {
         return product;
     }
 
+    public void clear(){
+        product = null;
+    }
+
 }
