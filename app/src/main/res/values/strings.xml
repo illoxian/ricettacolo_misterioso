@@ -36,4 +36,9 @@
     <string name="pantry_categories_water_and_drinks">Water and drinks</string>
     <string name="pantry_categories_see_all">See all</string>
     <string name="title_new_product">New product</string>
+    <string name="category_product_profile">Category</string>
+    <string name="quantity_product_profile">Quantity</string>
+    <string name="brand_product_profile">Brand</string>
+    <string name="expiring_product_profile">Expiring</string>
+    <string name="purchase_date_product_profile">Purchase date</string>
 </resources>

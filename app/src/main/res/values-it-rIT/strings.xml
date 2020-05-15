@@ -37,4 +37,9 @@
     <string name="pantry_categories_water_and_drinks">Acqua, bevande, vini e alcolici</string>
     <string name="pantry_categories_see_all">Vedi tutto</string>
     <string name="title_new_product">Nuovo prodotto</string>
+    <string name="category_product_profile">Categoria</string>
+    <string name="quantity_product_profile">Quantità</string>
+    <string name="brand_product_profile">Marca</string>
+    <string name="expiring_product_profile">Scadenza</string>
+    <string name="purchase_date_product_profile">Data di acquisto</string>
 </resources>
