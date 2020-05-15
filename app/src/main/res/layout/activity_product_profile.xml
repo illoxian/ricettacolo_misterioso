@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/category_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -46,7 +46,6 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="8dp"
                         android:gravity="center_vertical"
-                        android:text="Penne rigate"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="?attr/colorOnSecondary"
                         android:textStyle="bold"
@@ -199,7 +198,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/expiring_value_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

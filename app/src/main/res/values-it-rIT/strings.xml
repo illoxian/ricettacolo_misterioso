@@ -42,4 +42,5 @@
     <string name="brand_product_profile">Marca</string>
     <string name="expiring_product_profile">Scadenza</string>
     <string name="purchase_date_product_profile">Data di acquisto</string>
+    <string name="remaining_day">" giorni rimanenti"</string>
 </resources>

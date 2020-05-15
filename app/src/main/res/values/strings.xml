@@ -41,4 +41,5 @@
     <string name="brand_product_profile">Brand</string>
     <string name="expiring_product_profile">Expiring</string>
     <string name="purchase_date_product_profile">Purchase date</string>
+    <string name="remaining_day">" remaining day"</string>
 </resources>
