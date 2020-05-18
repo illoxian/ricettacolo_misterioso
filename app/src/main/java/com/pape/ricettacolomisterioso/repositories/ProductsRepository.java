@@ -62,22 +62,21 @@ public class ProductsRepository {
 
     public void getProductInfo(MutableLiveData<Product> product, String code) {
         Call<ProductApiResponse> call = foodService.getProductInfo(code, Constants.FOOD_API_USER_AGENT);
-        Log.d(TAG, "prova: " );
         // It shows the use of method enqueue to do the HTTP request asynchronously.
         call.enqueue(new Callback<ProductApiResponse>() {
             @Override
             public void onResponse(@NotNull Call<ProductApiResponse> call, @NotNull Response<ProductApiResponse> response) {
-                Log.d(TAG, "successful: " + response.isSuccessful());
                 if (response.isSuccessful() && response.body() != null) {
                     if(response.body().getStatus()==1){ //API returns successful even if product was not found
                         Log.d(TAG, "onResponse: " + response.body().toString());
                         product.postValue(response.body().getProduct());
                     }
                     else {
-                        product.postValue(null);
                         Log.d(TAG, "onResponse: Success. Product not found");
+                        product.postValue(null);
                     }
                 } else if (response.errorBody() != null) {
+                    product.postValue(null);
                     try {
                         new Throwable(response.errorBody().string()).printStackTrace();
                     } catch (IOException e) {

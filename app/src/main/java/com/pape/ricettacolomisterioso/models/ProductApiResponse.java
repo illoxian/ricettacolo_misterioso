@@ -1,5 +1,7 @@
 package com.pape.ricettacolomisterioso.models;
 
+import android.util.Log;
+
 public class ProductApiResponse {
     private ProductFromApi product;
     private String status_verbose;
@@ -19,7 +21,8 @@ public class ProductApiResponse {
         p.setImageUrl(product.getImage_url());
         p.setBrand(product.getBrands());
         p.setBarcode(product.getCode());
-        return product;
+        //Log.d("ProductApiResponse", "getProduct: "+product.toString());
+        return p;
     }
 
     public void setProduct(ProductFromApi product) {

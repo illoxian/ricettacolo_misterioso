@@ -82,14 +82,23 @@ public class ProductFromApi extends Product {
     }
 
     public String getGeneric_name(){
+        fixNames();
         String lang = Locale.getDefault().getLanguage();
         if(lang == "it") return generic_name_it;
         else return generic_name_en;
     }
 
     public String getProduct_name(){
+        fixNames();
         String lang = Locale.getDefault().getLanguage();
         if(lang == "it") return product_name_it;
         else return product_name_en;
+    }
+
+    private void fixNames(){
+        if(generic_name_it == null && product_name_it != null) generic_name_it = product_name_it;
+        if(generic_name_it != null && product_name_it == null) product_name_it = generic_name_it;
+        if(generic_name_en == null && product_name_en != null) generic_name_en = product_name_en;
+        if(generic_name_en != null && product_name_en == null) product_name_en = generic_name_en;
     }
 }

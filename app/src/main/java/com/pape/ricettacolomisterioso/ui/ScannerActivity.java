@@ -185,21 +185,38 @@ public class ScannerActivity extends AppCompatActivity {
 
 
     private void createDialog(Product product){
-        builder = new AlertDialog.Builder(this, R.style.Theme_MyTheme_Dialog);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_scanner, null);
-        builder.setView(dialogView);
-        builder.setTitle(getResources().getString(R.string.scanner_alert_dialog_title));
 
-        TextView generic_name_view = dialogView.findViewById(R.id.scanner_dialog_generic_name);
-        TextView product_name_view = dialogView.findViewById(R.id.scanner_dialog_product_name);
-        TextView brand_view = dialogView.findViewById(R.id.scanner_dialog_brand);
-        TextView code_view = dialogView.findViewById(R.id.scanner_dialog_code_name);
-        ImageView image_view = dialogView.findViewById(R.id.scanner_dialog_image);
-        if(product!=null) {
+        if(product == null)
+        {
+            builder = new AlertDialog.Builder(this, R.style.Theme_MyTheme_Dialog);
+            builder.setTitle(getResources().getString(R.string.scanner_alert_dialog_title));
+            builder.setMessage("Il codice a barre non è stato trovato nel database");
+
+            String positiveText = "Riprova";//getString(android.R.string.retry);
+            builder.setPositiveButton(positiveText,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            OnDialogCancel();
+                            dialog.dismiss();
+                        }
+                    });
+        }
+        else{
+            builder = new AlertDialog.Builder(this, R.style.Theme_MyTheme_Dialog);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_scanner, null);
+            builder.setView(dialogView);
+            builder.setTitle(getResources().getString(R.string.scanner_alert_dialog_title));
+
+            TextView generic_name_view = dialogView.findViewById(R.id.scanner_dialog_generic_name);
+            TextView product_name_view = dialogView.findViewById(R.id.scanner_dialog_product_name);
+            TextView brand_view = dialogView.findViewById(R.id.scanner_dialog_brand);
+            TextView code_view = dialogView.findViewById(R.id.scanner_dialog_code_name);
+            ImageView image_view = dialogView.findViewById(R.id.scanner_dialog_image);
             product_name_view.setText(product.getProduct_name());
             brand_view.setText(product.getBrand());
-            code_view.setText(product.getBrand());
+            code_view.setText(product.getBarcode());
             //handle Image
             Target target = new Target() {
                 @Override
@@ -216,27 +233,27 @@ public class ScannerActivity extends AppCompatActivity {
                 }
             };
             Picasso.get().load(product.getImageUrl()).into(target);
+
+            String positiveText = getString(android.R.string.ok);
+            builder.setPositiveButton(positiveText,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            OnDialogOk(product);
+                            dialog.dismiss();
+                        }
+                    });
+
+            String negativeText = getString(android.R.string.cancel);
+            builder.setNegativeButton(negativeText,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            OnDialogCancel();
+                            dialog.dismiss();
+                        }
+                    });
         }
-
-        String positiveText = getString(android.R.string.ok);
-        builder.setPositiveButton(positiveText,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        OnDialogOk(product);
-                        dialog.dismiss();
-                    }
-                });
-
-        String negativeText = getString(android.R.string.cancel);
-        builder.setNegativeButton(negativeText,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                       OnDialogCancel();
-                       dialog.dismiss();
-                    }
-                });
 
         AlertDialog dialog = builder.create();
         dialog.show();
