@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.pape.ricettacolomisterioso.models.AppDatabase;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.models.ProductApiResponse;
-import com.pape.ricettacolomisterioso.models.ProductFromApi;
 import com.pape.ricettacolomisterioso.services.FoodService;
 import com.pape.ricettacolomisterioso.ui.MainActivity;
 import com.pape.ricettacolomisterioso.utils.Constants;
@@ -61,7 +60,7 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
-    public void getProductInfo(MutableLiveData<ProductFromApi> product, String code) {
+    public void getProductInfo(MutableLiveData<Product> product, String code) {
         Call<ProductApiResponse> call = foodService.getProductInfo(code, Constants.FOOD_API_USER_AGENT);
         Log.d(TAG, "prova: " );
         // It shows the use of method enqueue to do the HTTP request asynchronously.

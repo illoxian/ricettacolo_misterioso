@@ -13,7 +13,12 @@ public class ProductApiResponse {
         this.code = code;
     }
 
-    public ProductFromApi getProduct() {
+    public Product getProduct() {
+        Product p = new Product();
+        p.setProduct_name(product.getProduct_name());
+        p.setImageUrl(product.getImage_url());
+        p.setBrand(product.getBrands());
+        p.setBarcode(product.getCode());
         return product;
     }
 

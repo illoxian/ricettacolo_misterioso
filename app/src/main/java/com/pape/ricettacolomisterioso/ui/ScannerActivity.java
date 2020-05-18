@@ -32,7 +32,6 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.models.ProductFromApi;
 import com.pape.ricettacolomisterioso.viewmodels.ScannerViewModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -50,7 +49,7 @@ public class ScannerActivity extends AppCompatActivity {
 
     private Boolean barcodeFound;
     private ScannerViewModel model;
-    private MutableLiveData<ProductFromApi> liveData;
+    private MutableLiveData<Product> liveData;
     private AlertDialog.Builder builder;
 
     @Override
@@ -66,9 +65,9 @@ public class ScannerActivity extends AppCompatActivity {
 
         model = new ViewModelProvider(this).get(ScannerViewModel.class);
 
-        final Observer<ProductFromApi> observer = new Observer<ProductFromApi>() {
+        final Observer<Product> observer = new Observer<Product>() {
             @Override
-            public void onChanged(ProductFromApi product) {
+            public void onChanged(Product product) {
                 // Here we can update the UI
                 if(product!=null) Log.d(TAG, "onChanged: " + product.toString());
                 createDialog(product);
@@ -152,7 +151,7 @@ public class ScannerActivity extends AppCompatActivity {
         };
     }
 
-    private void OnDialogOk(ProductFromApi product){
+    private void OnDialogOk(Product product){
         Log.d(TAG, "positive button clicked");
         returnProduct(product);
     }
@@ -185,7 +184,7 @@ public class ScannerActivity extends AppCompatActivity {
     }
 
 
-    private void createDialog(ProductFromApi product){
+    private void createDialog(Product product){
         builder = new AlertDialog.Builder(this, R.style.Theme_MyTheme_Dialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_scanner, null);
@@ -198,10 +197,9 @@ public class ScannerActivity extends AppCompatActivity {
         TextView code_view = dialogView.findViewById(R.id.scanner_dialog_code_name);
         ImageView image_view = dialogView.findViewById(R.id.scanner_dialog_image);
         if(product!=null) {
-            generic_name_view.setText(product.getGeneric_name_it());
-            product_name_view.setText(product.getProduct_name_it());
-            brand_view.setText(product.getBrands());
-            code_view.setText(product.getCode());
+            product_name_view.setText(product.getProduct_name());
+            brand_view.setText(product.getBrand());
+            code_view.setText(product.getBrand());
             //handle Image
             Target target = new Target() {
                 @Override
@@ -217,7 +215,7 @@ public class ScannerActivity extends AppCompatActivity {
                     image_view.setImageDrawable(placeHolderDrawable);
                 }
             };
-            Picasso.get().load(product.getImage_url()).into(target);
+            Picasso.get().load(product.getImageUrl()).into(target);
         }
 
         String positiveText = getString(android.R.string.ok);
@@ -244,13 +242,11 @@ public class ScannerActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void returnProduct(ProductFromApi p){
-
-        Product pReturn = new Product(p.getProduct_name_it(), null, null);
+    private void returnProduct(Product p){
 
         Intent returnIntent = new Intent();
 
-        returnIntent.putExtra("product",pReturn);
+        returnIntent.putExtra("product",p);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }

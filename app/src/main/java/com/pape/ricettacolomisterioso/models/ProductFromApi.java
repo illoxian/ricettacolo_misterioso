@@ -1,6 +1,6 @@
 package com.pape.ricettacolomisterioso.models;
 
-import java.util.Date;
+import java.util.Locale;
 
 public class ProductFromApi extends Product {
     private String generic_name_it;
@@ -11,8 +11,11 @@ public class ProductFromApi extends Product {
     private String image_url;
     private String code;
 
-    public ProductFromApi(String product_name, String category, Date expirationDate, String generic_name_it, String generic_name_en, String product_name_it, String product_name_en, String brands, String image_url, String code, String generic_name) {
-        super(product_name, category, expirationDate);
+    public ProductFromApi(){
+
+    }
+
+    public ProductFromApi(String generic_name_it, String generic_name_en, String product_name_it, String product_name_en, String brands, String image_url, String code) {
         this.generic_name_it = generic_name_it;
         this.generic_name_en = generic_name_en;
         this.product_name_it = product_name_it;
@@ -20,12 +23,7 @@ public class ProductFromApi extends Product {
         this.brands = brands;
         this.image_url = image_url;
         this.code = code;
-        this.generic_name = generic_name;
     }
-
-    private String generic_name;
-    //private String product_name;
-
 
     public String getGeneric_name_it() {
         return generic_name_it;
@@ -83,25 +81,15 @@ public class ProductFromApi extends Product {
         this.code = code;
     }
 
-    public String getGeneric_name() {
-        return generic_name;
+    public String getGeneric_name(){
+        String lang = Locale.getDefault().getLanguage();
+        if(lang == "it") return generic_name_it;
+        else return generic_name_en;
     }
 
-    public void setGeneric_name(String generic_name) {
-        this.generic_name = generic_name;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "ProductFromApi{" +
-                "generic_name_it='" + generic_name_it + '\'' +
-                ", generic_name_en='" + generic_name_en + '\'' +
-                ", product_name_it='" + product_name_it + '\'' +
-                ", product_name_en='" + product_name_en + '\'' +
-                ", brands='" + brands + '\'' +
-                ", image_url='" + image_url + '\'' +
-                ", code='" + code + '\'' +
-                ", generic_name='" + generic_name + '\'' +
-                '}';
+    public String getProduct_name(){
+        String lang = Locale.getDefault().getLanguage();
+        if(lang == "it") return product_name_it;
+        else return product_name_en;
     }
 }

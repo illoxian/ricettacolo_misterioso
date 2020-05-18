@@ -6,25 +6,43 @@ import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.text.DateFormat;
 import java.util.Date;
 
 @Entity(tableName = "products")
 public class Product implements Parcelable {
-    @PrimaryKey @NotNull
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private String product_name;
+    private String imageUrl;
+    private String brand;
+    private String barcode;
 
     private String category;
     private Date expirationDate;
+    private Date purchaseDate;
 
-    public Product() {}
+    public Product(){
 
-    public Product(String product_name, String category, Date expirationDate) {
+    }
+
+    public Product(String product_name, String imageUrl, String brand, String barcode, String category, Date expirationDate, Date purchaseDate) {
         this.product_name = product_name;
+        this.imageUrl = imageUrl;
+        this.brand = brand;
+        this.barcode = barcode;
         this.category = category;
         this.expirationDate = expirationDate;
+        this.purchaseDate = purchaseDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProduct_name() {
@@ -33,6 +51,30 @@ public class Product implements Parcelable {
 
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getCategory() {
@@ -51,15 +93,37 @@ public class Product implements Parcelable {
         this.expirationDate = expirationDate;
     }
 
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public String getExpirationDateString(){
+        if(expirationDate != null)
+            return DateFormat.getDateInstance(DateFormat.SHORT).format(expirationDate);
+        else return "";
+    }
+
+    public String getPurchaseDateString() {
+        if (purchaseDate != null)
+            return DateFormat.getDateInstance(DateFormat.SHORT).format(purchaseDate);
+        else return "";
+    }
+
     @Override
     public String toString() {
-        String dateString = "";
-        if(expirationDate != null)
-            dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(expirationDate);
         return "Product{" +
-                "productName='" + product_name + '\'' +
+                "id=" + id +
+                ", product_name='" + product_name + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", brand='" + brand + '\'' +
+                ", barcode='" + barcode + '\'' +
                 ", category='" + category + '\'' +
-                ", expirationDate=" + dateString +
+                ", expirationDate=" + getExpirationDateString() +
+                ", purchaseDate=" + getPurchaseDateString() +
                 '}';
     }
 
@@ -71,10 +135,18 @@ public class Product implements Parcelable {
     // write your object's data to the passed-in Parcel
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(this.id);
         out.writeString(this.product_name);
+        out.writeString(this.imageUrl);
+        out.writeString(this.brand);
+        out.writeString(this.barcode);
         out.writeString(this.category);
+
         if(this.expirationDate==null) out.writeString(null);
         else out.writeLong(this.expirationDate.getTime());
+
+        if(this.purchaseDate==null) out.writeString(null);
+        else out.writeLong(this.purchaseDate.getTime());
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -90,8 +162,14 @@ public class Product implements Parcelable {
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private Product(Parcel in) {
+
+        this.id = in.readInt();
         this.product_name = in.readString();
+        this.imageUrl = in.readString();
+        this.brand = in.readString();
+        this.barcode = in.readString();
         this.category = in.readString();
         this.expirationDate = new Date(in.readLong());
+        this.purchaseDate = new Date(in.readLong());
     }
 }
