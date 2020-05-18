@@ -140,7 +140,7 @@ public class ScannerActivity extends AppCompatActivity {
     private void OnBarcodeFound(String barcodeData){
         Log.d(TAG, "barcode found:" + barcodeData);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-        model.getProductInfo(barcodeData);
+        model.getProductInfo2(barcodeData);
 
         //Stop Camera
         Runnable runnable = new Runnable() {

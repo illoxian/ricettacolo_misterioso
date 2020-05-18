@@ -26,6 +26,11 @@ public class ScannerViewModel extends ViewModel {
         ProductsRepository.getInstance().getProductInfo(getProduct(), code);
         return product;
     }
+    public MutableLiveData<Product> getProductInfo2(String code) {
+        Log.d(TAG, "getProductInfo2: Download the product info from Internet");
+        ProductsRepository.getInstance().getProductInfo2(getProduct(), code);
+        return product;
+    }
 
     public void clear(){
         product = null;
