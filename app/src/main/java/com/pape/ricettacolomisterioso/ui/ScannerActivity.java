@@ -3,8 +3,10 @@ package com.pape.ricettacolomisterioso.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -140,7 +142,10 @@ public class ScannerActivity extends AppCompatActivity {
     private void OnBarcodeFound(String barcodeData){
         Log.d(TAG, "barcode found:" + barcodeData);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-        model.getProductInfo2(barcodeData);
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String dataProvider = sharedPref.getString(getResources().getString(R.string.shared_pref_data_provider_key), "Ebay");
+        model.getProductInfo(barcodeData, dataProvider);
 
         //Stop Camera
         Runnable runnable = new Runnable() {
@@ -214,9 +219,12 @@ public class ScannerActivity extends AppCompatActivity {
             TextView brand_view = dialogView.findViewById(R.id.scanner_dialog_brand);
             TextView code_view = dialogView.findViewById(R.id.scanner_dialog_code_name);
             ImageView image_view = dialogView.findViewById(R.id.scanner_dialog_image);
+            TextView data_source_view = dialogView.findViewById(R.id.scanner_dialog_data_source);
             product_name_view.setText(product.getProduct_name());
             brand_view.setText(product.getBrand());
             code_view.setText(product.getBarcode());
+            String dataSourceText = getResources().getString(R.string.scanner_alert_dialog_data_source_label) + " " + product.getDataSource();
+            data_source_view.setText(dataSourceText);
             //handle Image
             Target target = new Target() {
                 @Override

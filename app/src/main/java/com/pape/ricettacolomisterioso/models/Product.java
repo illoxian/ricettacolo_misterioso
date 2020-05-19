@@ -20,20 +20,23 @@ public class Product implements Parcelable {
     private String imageUrl;
     private String brand;
     private String barcode;
+    private String dataSource;
 
     private String category;
     private Date expirationDate;
     private Date purchaseDate;
 
+
     public Product(){
 
     }
 
-    public Product(String product_name, String imageUrl, String brand, String barcode, String category, Date expirationDate, Date purchaseDate) {
+    public Product(String product_name, String imageUrl, String brand, String barcode, String dataSource, String category, Date expirationDate, Date purchaseDate) {
         this.product_name = product_name;
         this.imageUrl = imageUrl;
         this.brand = brand;
         this.barcode = barcode;
+        this.dataSource = dataSource;
         this.category = category;
         this.expirationDate = expirationDate;
         this.purchaseDate = purchaseDate;
@@ -77,6 +80,14 @@ public class Product implements Parcelable {
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getCategory() {
@@ -123,6 +134,7 @@ public class Product implements Parcelable {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", brand='" + brand + '\'' +
                 ", barcode='" + barcode + '\'' +
+                ", dataSource='" + dataSource + '\'' +
                 ", category='" + category + '\'' +
                 ", expirationDate=" + getExpirationDateString() +
                 ", purchaseDate=" + getPurchaseDateString() +
@@ -142,6 +154,7 @@ public class Product implements Parcelable {
         out.writeString(this.imageUrl);
         out.writeString(this.brand);
         out.writeString(this.barcode);
+        out.writeString(this.dataSource);
         out.writeString(this.category);
 
         if(this.expirationDate==null) out.writeString(null);
@@ -170,6 +183,7 @@ public class Product implements Parcelable {
         this.imageUrl = in.readString();
         this.brand = in.readString();
         this.barcode = in.readString();
+        this.dataSource = in.readString();
         this.category = in.readString();
         this.expirationDate = new Date(in.readLong());
         this.purchaseDate = new Date(in.readLong());

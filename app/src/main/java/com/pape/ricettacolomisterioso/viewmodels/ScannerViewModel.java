@@ -21,14 +21,12 @@ public class ScannerViewModel extends ViewModel {
         return product;
     }
 
-    public MutableLiveData<Product> getProductInfo(String code) {
+    public MutableLiveData<Product> getProductInfo(String code, String dataProvider) {
         Log.d(TAG, "getProductInfo: Download the product info from Internet");
-        ProductsRepository.getInstance().getProductInfo(getProduct(), code);
-        return product;
-    }
-    public MutableLiveData<Product> getProductInfo2(String code) {
-        Log.d(TAG, "getProductInfo2: Download the product info from Internet");
-        ProductsRepository.getInstance().getProductInfo2(getProduct(), code);
+        if(dataProvider.equals("Ebay"))
+            ProductsRepository.getInstance().getProductInfoEbay(getProduct(), code);
+        else
+            ProductsRepository.getInstance().getProductInfoOFF(getProduct(), code);
         return product;
     }
 

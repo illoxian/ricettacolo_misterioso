@@ -1,14 +1,12 @@
 package com.pape.ricettacolomisterioso.models;
 
-import android.util.Log;
-
-public class ProductApiResponse {
-    private ProductFromApi product;
+public class OFFProductApiResponse {
+    private OFFProductFromApi product;
     private String status_verbose;
     private int status;
     private String code;
 
-    public ProductApiResponse(ProductFromApi product, String status_verbose, int status, String code) {
+    public OFFProductApiResponse(OFFProductFromApi product, String status_verbose, int status, String code) {
         this.product = product;
         this.status_verbose = status_verbose;
         this.status = status;
@@ -21,11 +19,12 @@ public class ProductApiResponse {
         p.setImageUrl(product.getImage_url());
         p.setBrand(product.getBrands());
         p.setBarcode(product.getCode());
+        p.setDataSource("Open Food Facts");
         //Log.d("ProductApiResponse", "getProduct: "+product.toString());
         return p;
     }
 
-    public void setProduct(ProductFromApi product) {
+    public void setProduct(OFFProductFromApi product) {
         this.product = product;
     }
 

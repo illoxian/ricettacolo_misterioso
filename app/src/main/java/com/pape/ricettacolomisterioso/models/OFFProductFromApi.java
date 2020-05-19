@@ -2,7 +2,7 @@ package com.pape.ricettacolomisterioso.models;
 
 import java.util.Locale;
 
-public class ProductFromApi extends Product {
+public class OFFProductFromApi {
     private String generic_name_it;
     private String generic_name_en;
     private String product_name_it;
@@ -11,11 +11,11 @@ public class ProductFromApi extends Product {
     private String image_url;
     private String code;
 
-    public ProductFromApi(){
+    public OFFProductFromApi(){
 
     }
 
-    public ProductFromApi(String generic_name_it, String generic_name_en, String product_name_it, String product_name_en, String brands, String image_url, String code) {
+    public OFFProductFromApi(String generic_name_it, String generic_name_en, String product_name_it, String product_name_en, String brands, String image_url, String code) {
         this.generic_name_it = generic_name_it;
         this.generic_name_en = generic_name_en;
         this.product_name_it = product_name_it;

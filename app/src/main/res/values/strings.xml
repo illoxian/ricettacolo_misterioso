@@ -39,4 +39,6 @@
     <string name="error_empty_field">This field can not be blank</string>
     <string name="error_not_a_category">Select one of the categories</string>
     <string name="scanner_alert_dialog_title">Barcode scanned</string>
+    <string name="scanner_alert_dialog_data_source_label">Data provided by</string>
+    <string name="shared_pref_data_provider_key" translatable="false">shared_pref_data_provider_key</string>
 </resources>
