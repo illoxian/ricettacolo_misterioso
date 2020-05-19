@@ -144,7 +144,7 @@ public class ScannerActivity extends AppCompatActivity {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String dataProvider = sharedPref.getString(getResources().getString(R.string.shared_pref_data_provider_key), "Ebay");
+        String dataProvider = sharedPref.getString(getResources().getString(R.string.shared_pref_data_provider_key), "OFF");
         model.getProductInfo(barcodeData, dataProvider);
 
         //Stop Camera
