@@ -37,6 +37,9 @@ public class OFFProductApiResponse {
     }
 
     public int getStatus() {
+        if(product == null) return 0;
+        if(product.getProduct_name()==null || product.getProduct_name().equals(""))
+            return 0;
         return status;
     }
 
@@ -55,7 +58,7 @@ public class OFFProductApiResponse {
     @Override
     public String toString() {
         return "ProductApiResponse{" +
-                "product=" + product +
+                "product=" + product.toString() +
                 ", status_verbose='" + status_verbose + '\'' +
                 ", status=" + status +
                 ", code='" + code + '\'' +

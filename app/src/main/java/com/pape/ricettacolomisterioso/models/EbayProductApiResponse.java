@@ -48,7 +48,7 @@ public class EbayProductApiResponse {
     public String toString() {
         return "EbayProductApiResponse{" +
                 "ack='" + ack + '\'' +
-                ", product=" + product +
+                ", product=" + product.toString() +
                 '}';
     }
 }
