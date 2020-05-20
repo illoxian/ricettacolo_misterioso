@@ -1,11 +1,11 @@
-package com.pape.ricettacolomisterioso;
+package com.pape.ricettacolomisterioso.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
+import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
 
 import java.text.DateFormat;

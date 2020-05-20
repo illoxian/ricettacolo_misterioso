@@ -1,6 +1,5 @@
 package com.pape.ricettacolomisterioso.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").build();
 
-        Intent intent = new Intent(this, Product_profile.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, Product_profile.class);
+        startActivity(intent);*/
     }
 }
