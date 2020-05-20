@@ -40,6 +40,28 @@
         <item name="colorPrimaryDark">?attr/colorSecondaryVariant</item>
     </style>
 
+
+    <!-- cardview profile -->
+    <style name="Widget.MyTheme.CardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <!--<style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressBackgroundTint">?attr/colorSecondaryVariant</item>
+        <item name="android:progressTint">?attr/colorSecondary</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:minWidth">200dp</item>
+        <item name="android:minHeight">50dp</item>
+    </style>-->
+
     <style name="FullscreenTheme" parent="Theme.MyApp">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
