@@ -11,11 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.internal.$Gson$Preconditions;
+import com.pape.ricettacolomisterioso.FragmentProductList;
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
+import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
+
+import java.util.List;
 
 public class PantryFragment extends Fragment {
 
@@ -29,6 +42,19 @@ public class PantryFragment extends Fragment {
 
         setHasOptionsMenu(true);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        CardView c = view.findViewById(R.id.primo);
+        c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //andare avanti aprendo fragmentProductList
+                Navigation.findNavController(view).navigate(R.id.fragmentProductList);
+            }
+        });
     }
 
     @Override

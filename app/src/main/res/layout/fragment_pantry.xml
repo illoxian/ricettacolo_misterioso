@@ -99,6 +99,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/primo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -114,9 +115,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_fruits_and_vegetables"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_fruits_and_vegetables"
-                                android:contentDescription="@string/pantry_categories_fruits_and_vegetables" />
+                                app:srcCompat="@drawable/previews_fruits_and_vegetables" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
