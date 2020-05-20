@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui.shopping_list;
+package com.pape.ricettacolomisterioso.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.viewmodels.ShoppingListViewModel;
 
 public class ShoppingListFragment extends Fragment {
 

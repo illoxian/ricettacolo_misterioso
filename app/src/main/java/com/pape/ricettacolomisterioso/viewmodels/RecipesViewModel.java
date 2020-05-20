@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui.recipes;
+package com.pape.ricettacolomisterioso.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
