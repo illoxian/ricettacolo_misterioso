@@ -78,7 +78,7 @@ public class ProductsRepository {
             @Override
             public void run() {
                 try {
-                    Log.d(TAG, "run: getProducts()");
+                    Log.d(TAG, "run: getProducts() "+category);
                     products.postValue(appDatabase.productDao().findByCategory(category));
                 } catch (Exception e) {
                     e.printStackTrace();

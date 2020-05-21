@@ -11,8 +11,9 @@
         android:label="@string/title_pantry"
         tools:layout="@layout/fragment_pantry" >
         <action
-            android:id="@+id/action_navigation_pantry_to_fragmentProductList"
-            app:destination="@id/fragmentProductList" />
+            android:id="@+id/showFragmentProductListAction"
+            app:destination="@id/fragmentProductList"/>
+
     </fragment>
 
     <fragment
@@ -35,6 +36,10 @@
         android:id="@+id/fragmentProductList"
         android:name="com.pape.ricettacolomisterioso.FragmentProductList"
         android:label="fragment_product_list"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_product_list" >
+        <argument
+            android:name="Category"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

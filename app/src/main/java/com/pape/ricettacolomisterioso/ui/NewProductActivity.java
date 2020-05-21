@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.pape.ricettacolomisterioso.R;
@@ -36,6 +37,7 @@ public class NewProductActivity extends AppCompatActivity {
     private Calendar c;
     private DatePickerDialog datePickerDialog;
     List<String> CATEGORIES;
+    private Date timeDatePicker;
     int LAUNCH_SCANNER_ACTIVITY = 1;
 
     LiveData<List<Product>> liveData;
@@ -178,8 +180,8 @@ public class NewProductActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         Calendar cPicked = Calendar.getInstance();
                         cPicked.set(mYear, mMonth, mDayOfMonth);
-                        product.setExpirationDate(cPicked.getTime());
-                        String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(product.getExpirationDate());
+                        timeDatePicker = cPicked.getTime();
+                        String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(timeDatePicker);
                         binding.textInputExpirationDate.setText(dateString);
                     }
                 }, year, month, day);
@@ -190,6 +192,8 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void addProduct(){
         if(product==null) product = new Product();
+
+        product.setExpirationDate(timeDatePicker);
         product.setProduct_name(binding.textInputName.getText().toString());
         product.setCategory(binding.textInputCategory.getText().toString());
         boolean isValid = true;

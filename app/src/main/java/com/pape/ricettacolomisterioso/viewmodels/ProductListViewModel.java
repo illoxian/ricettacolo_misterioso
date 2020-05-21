@@ -21,8 +21,18 @@ public class ProductListViewModel extends ViewModel {
             products = new MutableLiveData<>();
         }
 
-        Log.d(TAG, "getProducts: getProductsUpdate");
+        Log.d(TAG, "getProductsByCategory: getProductsUpdate");
         ProductsRepository.getInstance().getProductsByCategory(products, category);
+        return products;
+    }
+
+    public MutableLiveData<List<Product>> getAllProducts(){
+        if (products == null) {
+            products = new MutableLiveData<>();
+        }
+
+        Log.d(TAG, "getAllProducts: getProductsUpdate");
+        ProductsRepository.getInstance().getProducts(products);
         return products;
     }
 

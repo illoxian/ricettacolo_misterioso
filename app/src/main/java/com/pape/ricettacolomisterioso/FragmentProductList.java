@@ -22,8 +22,6 @@ import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
 
 import java.util.List;
-import java.util.PrimitiveIterator;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +62,7 @@ public class FragmentProductList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Integer res = FragmentProductListArgs.fromBundle(getArguments()).getCategory();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.productListRecyclerView.setLayoutManager(layoutManager);
 
@@ -72,12 +70,14 @@ public class FragmentProductList extends Fragment {
         final Observer<List<Product>> observer = new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> product) {
-                /*ProductListAdapter mAdapter = new ProductListAdapter(getActivity(), product);
-                binding.productListRecyclerView.setAdapter(mAdapter);*/
+                ProductListAdapter mAdapter = new ProductListAdapter(getActivity(), product);
+                binding.productListRecyclerView.setAdapter(mAdapter);
                 Log.d(TAG, product.toString());
             }
         };
-        liveData = model.getProductsByCategory("Pasta e riso");
+        if(res == R.string.pantry_categories_see_all) liveData = model.getAllProducts();
+        else liveData = model.getProductsByCategory(getString(res));
+
         liveData.observe(requireActivity(), observer);
 
     }
