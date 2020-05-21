@@ -1,13 +1,17 @@
 package com.pape.ricettacolomisterioso.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,11 +22,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.android.gms.vision.CameraSource;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -73,9 +79,24 @@ public class NewProductActivity extends AppCompatActivity {
         binding.buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startScannerActivity();
+                if (ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    startScannerActivity();
+                } else {
+                    ActivityCompat.requestPermissions(NewProductActivity.this, new
+                            String[]{Manifest.permission.CAMERA}, ScannerActivity.REQUEST_CAMERA_PERMISSION);
+                }
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, String[] permissions, int[] grantResults) {
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && requestCode==ScannerActivity.REQUEST_CAMERA_PERMISSION) {
+            startScannerActivity();
+        }
     }
 
     private void startScannerActivity(){

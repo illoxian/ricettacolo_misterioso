@@ -26,15 +26,11 @@
 
 
 
-
-
 ## Package usati (API, servizi esterni)
 
 ### FoodService
 
 ### EbayService
-
-
 
 ## Architettura della soluzione
 

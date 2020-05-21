@@ -47,7 +47,7 @@ public class ScannerActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private ToneGenerator toneGen1;
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
+    public static final int REQUEST_CAMERA_PERMISSION = 201;
 
     private Boolean barcodeFound;
     private ScannerViewModel model;
