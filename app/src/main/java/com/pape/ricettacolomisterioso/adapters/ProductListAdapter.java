@@ -1,6 +1,8 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.ui.Product_profile;
 
 import java.util.List;
 
@@ -46,6 +49,16 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
         holder.product_name.setText(products.get(position).getProduct_name());
         holder.product_category.setText(products.get(position).getCategory());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Product_profile.class);
+                Bundle product = new Bundle();
+                product.putParcelable("product", products.get(position));
+                intent.putExtra("product", product);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

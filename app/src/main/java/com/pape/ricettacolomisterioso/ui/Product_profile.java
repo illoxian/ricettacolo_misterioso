@@ -3,15 +3,18 @@ package com.pape.ricettacolomisterioso.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
+import com.pape.ricettacolomisterioso.models.Product;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class Product_profile extends AppCompatActivity {
@@ -20,7 +23,7 @@ public class Product_profile extends AppCompatActivity {
     final static long SECOND = 60;
     final static long MINUTE = 60;
     final static long HOUR = 24;
-
+    final static String TAG = "Product_profile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +31,34 @@ public class Product_profile extends AppCompatActivity {
         View view = productProfileBinding.getRoot();
         setContentView(view);
 
-        /*updateTopImage("Pasta e riso");
-        updateProductInformation("Spaghetti",
-                                "Pasta e riso",
+        Product product = getIntent().getBundleExtra("product").getParcelable("product");
+
+        updateTopImage(product.getCategory());
+
+        Date purchase_date= null;
+        try {
+            purchase_date = new SimpleDateFormat("dd/MM/yyyy").parse("01/05/2020");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        product.setPurchaseDate(purchase_date);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String purchase_date_string = dateFormat.format(product.getPurchaseDate());
+
+
+
+        updateProductInformation(product.getProduct_name(),
+                                product.getCategory(),
                                 "500g",
-                                "Balilla",
-                                "12/05/2020");
-        updateExpiringView("18/05/2020", "12/05/2020");*/
+                                product.getBrand(),
+                                purchase_date_string);
+
+
+
+        Log.d(TAG, product.toString());
+        updateExpiringView(product.getExpirationDate(), product.getPurchaseDate());
     }
 
     public void updateTopImage(final String product_category){
@@ -72,7 +96,7 @@ public class Product_profile extends AppCompatActivity {
         productProfileBinding.purchaseDateValueTextView.setText(product_purchase_date);
     }
 
-    public void updateExpiringView(String expiring, String purchase_date){
+    /*public void updateExpiringView(String expiring, String purchase_date){
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date today = new Date();
         Date todayWithZeroTime = null;
@@ -95,17 +119,43 @@ public class Product_profile extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Log.d(TAG, expiring_date.getTime() + " " + purchase.toString());
         String remaining_day = time_in_day_remain(expiring_date,todayWithZeroTime)+getString(R.string.remaining_day);
         productProfileBinding.expiringValueTextView.setText(remaining_day);
         productProfileBinding.progressBar.setProgress(percentual_for_bar(purchase,expiring_date,todayWithZeroTime));
-    }
+    }*/
 
+
+
+    public void updateExpiringView(Date expiring, Date purchase_date){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date today = new Date();
+        Date todayWithZeroTime = null;
+        try {
+            todayWithZeroTime = formatter.parse(formatter.format(today));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            expiring = formatter.parse(formatter.format(expiring));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            purchase_date = formatter.parse(formatter.format(purchase_date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String remaining_day = time_in_day_remain(expiring,todayWithZeroTime)+getString(R.string.remaining_day);
+        productProfileBinding.expiringValueTextView.setText(remaining_day);
+        productProfileBinding.progressBar.setProgress(percentual_for_bar(purchase_date,expiring,todayWithZeroTime));
+    }
 
     public long time_in_day_remain(Date expiring, Date today){
         long time_in_millisecond = expiring.getTime() -  today.getTime();
-        long time_in_day = time_in_millisecond/(MILLISECOND*SECOND*MINUTE*HOUR);
-
-        return time_in_day;
+        return TimeUnit.DAYS.convert(time_in_millisecond, TimeUnit.MILLISECONDS);
     }
 
 
@@ -113,7 +163,6 @@ public class Product_profile extends AppCompatActivity {
         long exp_pur = expiring.getTime() - purchase.getTime();
         long tod_pur = today.getTime() - purchase.getTime();
         double percentual_value_for_progress_bar = ((double)tod_pur/(double)exp_pur)*100;
-
         return (int)Math.round(percentual_value_for_progress_bar);
     }
 }
