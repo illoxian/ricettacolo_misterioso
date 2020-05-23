@@ -7,25 +7,39 @@
 
     <fragment
         android:id="@+id/navigation_pantry"
-        android:name="com.pape.ricettacolomisterioso.ui.pantry.PantryFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.PantryFragment"
         android:label="@string/title_pantry"
-        tools:layout="@layout/fragment_pantry" />
+        tools:layout="@layout/fragment_pantry" >
+        <action
+            android:id="@+id/showFragmentProductListAction"
+            app:destination="@id/fragmentProductList"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_recipes"
-        android:name="com.pape.ricettacolomisterioso.ui.recipes.RecipesFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.RecipesFragment"
         android:label="@string/title_recipes"
         tools:layout="@layout/fragment_recipes" />
 
     <fragment
         android:id="@+id/navigation_shoppinglist"
-        android:name="com.pape.ricettacolomisterioso.ui.shopping_list.ShoppingListFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.ShoppingListFragment"
         android:label="@string/title_shoppinglist"
         tools:layout="@layout/fragment_shoppinglist" />
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="com.pape.ricettacolomisterioso.ui.menu.MenuFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.MenuFragment"
         android:label="@string/title_menu"
         tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/fragmentProductList"
+        android:name="com.pape.ricettacolomisterioso.FragmentProductList"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list" >
+        <argument
+            android:name="Category"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

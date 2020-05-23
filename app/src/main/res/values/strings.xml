@@ -36,4 +36,18 @@
     <string name="pantry_categories_water_and_drinks">Water and drinks</string>
     <string name="pantry_categories_see_all">See all</string>
     <string name="title_new_product">New product</string>
+    <string name="error_empty_field">This field can not be blank</string>
+    <string name="error_not_a_category">Select one of the categories</string>
+    <string name="scanner_alert_dialog_title">Barcode scanned</string>
+    <string name="scanner_alert_dialog_data_source_label">Data provided by</string>
+    <string name="shared_pref_data_provider_key" translatable="false">shared_pref_data_provider_key</string>
+    <string name="category_product_profile">Category</string>
+    <string name="quantity_product_profile">Quantity</string>
+    <string name="brand_product_profile">Brand</string>
+    <string name="expiring_product_profile">Expiring</string>
+    <string name="purchase_date_product_profile">Purchase date</string>
+    <string name="remaining_day">" remaining day"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

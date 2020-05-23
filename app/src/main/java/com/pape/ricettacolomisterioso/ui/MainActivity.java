@@ -1,18 +1,22 @@
-package com.pape.ricettacolomisterioso;
+package com.pape.ricettacolomisterioso.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.models.AppDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.room.Room;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        Intent intent = new Intent(getApplicationContext(), NewProductActivity.class);
-        startActivity(intent);
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").build();
 
+        /*Intent intent = new Intent(this, Product_profile.class);
+        startActivity(intent);*/
 
 
     }
-
 }

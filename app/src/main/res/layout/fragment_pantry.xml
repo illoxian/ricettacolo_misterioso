@@ -11,7 +11,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.pantry.PantryFragment">
+            tools:context=".ui.PantryFragment">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/expiring_card"
@@ -99,6 +99,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/fruits_and_vegetables_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -114,9 +115,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_fruits_and_vegetables"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_fruits_and_vegetables"
-                                android:contentDescription="@string/pantry_categories_fruits_and_vegetables" />
+                                app:srcCompat="@drawable/previews_fruits_and_vegetables" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -151,6 +152,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/meat_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -203,6 +205,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/fish_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -255,6 +258,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/pasta_and_rice_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -307,6 +311,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/milk_and_cheese_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -359,6 +364,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/ice_cream_and_frozen_food_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -411,6 +417,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/bread_and_pizza_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -463,6 +470,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/breakfast_and_sweet_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -515,6 +523,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/oil_and_condiments_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -567,6 +576,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/water_and_drinks_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -619,6 +629,7 @@
                     android:paddingBottom="8dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/see_all_cardView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"

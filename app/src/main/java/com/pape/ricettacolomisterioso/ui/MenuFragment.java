@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui.menu;
+package com.pape.ricettacolomisterioso.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.viewmodels.MenuViewModel;
 
 public class MenuFragment extends Fragment {
 
