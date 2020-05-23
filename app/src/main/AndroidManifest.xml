@@ -40,7 +40,7 @@
         <activity
             android:name=".ui.NewProductActivity"
             android:label="@string/title_new_product"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.MainActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

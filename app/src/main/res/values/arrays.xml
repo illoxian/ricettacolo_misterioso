@@ -36,4 +36,13 @@
         <item>@drawable/icon_categories_oil_and_condiments</item>
         <item>@drawable/icon_categories_water_and_drinks</item>
     </integer-array>
+
+    <string-array name="barcodeApiText">
+        <item>@string/api_key_off</item>
+        <item>@string/api_key_ebay</item>
+    </string-array>
+    <string-array name="barcodeApiKey">
+        <item>@string/api_text_off</item>
+        <item>@string/api_text_ebay</item>
+    </string-array>
 </resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="appearance_general"
+        app:title="@string/preferences_general"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            app:key="barcode_api"
+            app:title="@string/preferences_barcode_api_title"
+            app:summary="%s"
+            app:iconSpaceReserved="false"
+            app:entries="@array/barcodeApiKey"
+            app:entryValues="@array/barcodeApiText"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="appearance_category"
+        app:title="@string/preferences_appearance"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:key="dark_mode"
+            app:title="@string/preferences_dark_mode_title"
+            app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
+            app:key="image_instead_of_icon"
+            app:title="@string/preferences_image_icon_title"
+            app:summary="@string/preferences_image_icon_summary"
+            app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
+            app:key="image_instead_of_thumbnail"
+            app:title="@string/preferences_image_thumbnail_title"
+            app:summary="@string/preferences_image_thumbnail_summary"
+            app:iconSpaceReserved="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="about_category"
+        app:title="@string/preferences_about"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="version"
+            app:title="@string/preferences_version_title"
+            app:summary=""
+            app:iconSpaceReserved="false"/>
+
+        <Preference
+            app:key="developer"
+            app:title="@string/preferences_developer_title"
+            app:summary="@string/preferences_developer_summary"
+            app:iconSpaceReserved="false"/>
+
+        <Preference
+            app:key="feedback"
+            app:title="@string/preferences_feedback_title"
+            app:summary="@string/preferences_feedback_summary"
+            app:iconSpaceReserved="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

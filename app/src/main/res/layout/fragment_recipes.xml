@@ -112,7 +112,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:stretchColumns="*"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipes_categories_title">
@@ -149,9 +151,9 @@
                             android:id="@+id/recipes_categories_1_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_appetizers"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_appetizers"
-                            android:contentDescription="@string/recipes_categories_appetizers" />
+                            app:srcCompat="@drawable/previews_appetizers" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -195,9 +197,9 @@
                             android:id="@+id/recipes_categories_2_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_first_courses"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_first_courses"
-                            android:contentDescription="@string/recipes_categories_first_courses" />
+                            app:srcCompat="@drawable/previews_first_courses" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -253,9 +255,9 @@
                             android:id="@+id/recipes_categories_3_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_main_courses"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_main_courses"
-                            android:contentDescription="@string/recipes_categories_main_courses" />
+                            app:srcCompat="@drawable/previews_main_courses" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -299,9 +301,9 @@
                             android:id="@+id/recipes_categories_4_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_desserts"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_desserts"
-                            android:contentDescription="@string/recipes_categories_desserts" />
+                            app:srcCompat="@drawable/previews_desserts" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -357,9 +359,9 @@
                             android:id="@+id/recipes_categories_5_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_side_dishes"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_side_dishes"
-                            android:contentDescription="@string/recipes_categories_side_dishes" />
+                            app:srcCompat="@drawable/previews_side_dishes" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -403,9 +405,9 @@
                             android:id="@+id/recipes_categories_6_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_single_courses"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_single_courses"
-                            android:contentDescription="@string/recipes_categories_single_courses" />
+                            app:srcCompat="@drawable/previews_single_courses" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -461,9 +463,9 @@
                             android:id="@+id/recipes_categories_7_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_condiments"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_condiments"
-                            android:contentDescription="@string/recipes_categories_condiments" />
+                            app:srcCompat="@drawable/previews_condiments" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -507,9 +509,9 @@
                             android:id="@+id/recipes_categories_8_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_bread_and_pizza"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_bread_and_pizza"
-                            android:contentDescription="@string/recipes_categories_bread_and_pizza" />
+                            app:srcCompat="@drawable/previews_bread_and_pizza" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -565,9 +567,9 @@
                             android:id="@+id/recipes_categories_9_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_drinks"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/previews_drinks"
-                            android:contentDescription="@string/recipes_categories_drinks" />
+                            app:srcCompat="@drawable/previews_drinks" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -611,9 +613,9 @@
                             android:id="@+id/recipes_categories_10_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/recipes_categories_see_all"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/pattern"
-                            android:contentDescription="@string/recipes_categories_see_all" />
+                            app:srcCompat="@drawable/pattern" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -638,15 +640,6 @@
             </TableRow>
 
         </TableLayout>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipes_categories_tablelayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -143,8 +144,8 @@ public class ScannerActivity extends AppCompatActivity {
         Log.d(TAG, "barcode found:" + barcodeData);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String dataProvider = sharedPref.getString(getResources().getString(R.string.shared_pref_data_provider_key), "OFF");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String dataProvider = sharedPreferences.getString("barcode_api", getResources().getString(R.string.api_key_off));
         model.getProductInfo(barcodeData, dataProvider);
 
         //Stop Camera

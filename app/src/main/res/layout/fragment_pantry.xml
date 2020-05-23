@@ -81,7 +81,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/category_product_textview">
@@ -168,9 +170,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_meat"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_meat"
-                                android:contentDescription="@string/pantry_categories_meat" />
+                                app:srcCompat="@drawable/previews_meat" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -221,9 +223,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_fish"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_fish"
-                                android:contentDescription="@string/pantry_categories_fish" />
+                                app:srcCompat="@drawable/previews_fish" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -274,9 +276,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_pasta_and_rice"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_pasta_and_rice"
-                                android:contentDescription="@string/pantry_categories_pasta_and_rice" />
+                                app:srcCompat="@drawable/previews_pasta_and_rice" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -327,9 +329,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_milk_and_cheese"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_milk_and_cheese"
-                                android:contentDescription="@string/pantry_categories_milk_and_cheese" />
+                                app:srcCompat="@drawable/previews_milk_and_cheese" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -380,9 +382,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_ice_cream_and_frozen_food"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_ice_cream_and_frozen_food"
-                                android:contentDescription="@string/pantry_categories_ice_cream_and_frozen_food" />
+                                app:srcCompat="@drawable/previews_ice_cream_and_frozen_food" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -433,9 +435,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_bread_and_pizza"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_bread_and_bakery"
-                                android:contentDescription="@string/pantry_categories_bread_and_pizza" />
+                                app:srcCompat="@drawable/previews_bread_and_bakery" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -486,9 +488,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_breakfast_and_sweets"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_breakfast_and_sweets"
-                                android:contentDescription="@string/pantry_categories_breakfast_and_sweets" />
+                                app:srcCompat="@drawable/previews_breakfast_and_sweets" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -539,9 +541,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_oil_and_condiments"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_oil_and_condiments"
-                                android:contentDescription="@string/pantry_categories_oil_and_condiments" />
+                                app:srcCompat="@drawable/previews_oil_and_condiments" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -592,9 +594,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_water_and_drinks"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/previews_water_and_drinks"
-                                android:contentDescription="@string/pantry_categories_water_and_drinks" />
+                                app:srcCompat="@drawable/previews_water_and_drinks" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -645,9 +647,9 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/pantry_categories_see_all"
                                 android:scaleType="centerCrop"
-                                app:srcCompat="@drawable/pattern"
-                                android:contentDescription="@string/pantry_categories_see_all" />
+                                app:srcCompat="@drawable/pattern" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -671,15 +673,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/category_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

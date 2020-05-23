@@ -2,6 +2,7 @@ package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
@@ -58,7 +60,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         holder.product_name.setText(product.getProduct_name());
         holder.product_category.setText(product.getCategory());
-        if(product.getImageUrl() != null)
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.product_icon.getContext());
+        if(sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null)
         {
             Picasso.get().load(product.getImageUrl()).into(holder.product_icon);
         }

@@ -32,7 +32,7 @@
     <string name="pantry_categories_ice_cream_and_frozen_food">Ice cream and frozen food</string>
     <string name="pantry_categories_bread_and_pizza">Bread and pizza</string>
     <string name="pantry_categories_breakfast_and_sweets">Breakfast and sweets</string>
-    <string name="pantry_categories_oil_and_condiments">Oil and coniments</string>
+    <string name="pantry_categories_oil_and_condiments">Oil and condiments</string>
     <string name="pantry_categories_water_and_drinks">Water and drinks</string>
     <string name="pantry_categories_see_all">See all</string>
     <string name="title_new_product">New product</string>
@@ -40,7 +40,6 @@
     <string name="error_not_a_category">Select one of the categories</string>
     <string name="scanner_alert_dialog_title">Barcode scanned</string>
     <string name="scanner_alert_dialog_data_source_label">Data provided by</string>
-    <string name="shared_pref_data_provider_key" translatable="false">shared_pref_data_provider_key</string>
     <string name="category_product_profile">Category</string>
     <string name="quantity_product_profile">Quantity</string>
     <string name="brand_product_profile">Brand</string>
@@ -49,4 +48,23 @@
     <string name="remaining_day">days remaining</string>
     <string name="new_product_input_purchase_date">Purchase date</string>
     <string name="new_product_input_brand">Brand</string>
+    <string name="title_preferences">Preferences</string>
+    <string name="preferences_appearance">Appearance</string>
+    <string name="preferences_dark_mode_title">Dark mode</string>
+    <string name="preferences_image_icon_title" >Show image (icon)</string>
+    <string name="preferences_image_icon_summary">Show image of the product instead of the icon of the category</string>
+    <string name="preferences_image_thumbnail_title">Show image (thumbnail)</string>
+    <string name="preferences_image_thumbnail_summary">Show image of the product instead of the thumbnail of the category</string>
+    <string name="preferences_about">About</string>
+    <string name="preferences_version_title">Version</string>
+    <string name="preferences_developer_title">Developer</string>
+    <string name="preferences_developer_summary" translatable="false">Gruppo Pape @ Unimib - Matteo Sangalli, Mattia Sgro, Giuseppe Ziccardi</string>
+    <string name="preferences_feedback_title">Send feedback</string>
+    <string name="preferences_feedback_summary">Report technical issues or suggest new features</string>
+    <string name="preferences_general">General</string>
+    <string name="api_key_ebay" translatable="false">ebay</string>
+    <string name="api_key_off" translatable="false">off</string>
+    <string name="preferences_barcode_api_title">Select barcode Api</string>
+    <string name="api_text_off" translatable="false">Open Food Facts</string>
+    <string name="api_text_ebay" translatable="false">Ebay</string>
 </resources>

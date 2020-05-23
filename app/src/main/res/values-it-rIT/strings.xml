@@ -49,4 +49,18 @@
     <string name="scanner_alert_dialog_data_source_label">Dati forniti da</string>
     <string name="new_product_input_purchase_date">Data di acquisto</string>
     <string name="new_product_input_brand">Marca</string>
+    <string name="title_preferences">Preferenze</string>
+    <string name="preferences_appearance">Aspetto</string>
+    <string name="preferences_dark_mode_title">Modalità scura</string>
+    <string name="preferences_image_icon_title">Mostra immagine (icona)</string>
+    <string name="preferences_image_icon_summary">Mostra l\'immagine del prodotto invece dell\'icona della categoria</string>
+    <string name="preferences_image_thumbnail_title">Mostra immagine (anteprima)</string>
+    <string name="preferences_image_thumbnail_summary">Mostra l\'immagine del prodotto invece dell\'anteprima della categoria</string>
+    <string name="preferences_about">Informazioni</string>
+    <string name="preferences_version_title">Versione</string>
+    <string name="preferences_developer_title">Sviluppatore</string>
+    <string name="preferences_feedback_title">Invia un feedback</string>
+    <string name="preferences_feedback_summary">Segnala un problema o suggerisci nuove funzioni</string>
+    <string name="preferences_general">Generale</string>
+    <string name="preferences_barcode_api_title">Seleziona l\'Api per il barcode</string>
 </resources>

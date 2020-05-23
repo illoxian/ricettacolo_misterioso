@@ -1,7 +1,9 @@
 package com.pape.ricettacolomisterioso.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -52,7 +54,8 @@ public class Product_profile extends AppCompatActivity {
         productProfileBinding.quantityValueTextView.setText("500g");
         productProfileBinding.brandValueTextView.setText(product.getBrand());
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
-        if(product.getImageUrl() != null)
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(sharedPreferences.getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
         {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             Picasso.get().load(product.getImageUrl()).into(productProfileBinding.categoryImage);
@@ -67,10 +70,11 @@ public class Product_profile extends AppCompatActivity {
     public void updateExpiringView(Date expiring, Date purchase_date){
         expiring = ExcludeTime(expiring);
         purchase_date = ExcludeTime(purchase_date);
-        Date today = ExcludeTime(Calendar.getInstance().getTime());
+        Date today = Calendar.getInstance().getTime();
+        Date today_not_time = ExcludeTime(today);
 
-        int daysRemaining = time_in_day_remain(expiring,today);
-        int progress = percentual_for_bar(purchase_date,expiring,today);
+        int daysRemaining = time_in_day_remain(expiring,today_not_time);
+        int progress = percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
 
         String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
         productProfileBinding.expiringValueTextView.setText(daysRemainingString);
