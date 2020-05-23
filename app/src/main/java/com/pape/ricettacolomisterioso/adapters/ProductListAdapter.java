@@ -2,10 +2,13 @@ package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.ui.Product_profile;
+import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
@@ -25,10 +30,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         // each data item is just a string in this case
         TextView product_name;
         TextView product_category;
+        ImageView product_icon;
         public ProductListViewHolder(View view) {
             super(view);
             product_name = view.findViewById(R.id.text_view_product_list_item_name);
             product_category = view.findViewById(R.id.text_view_product_list_item_category);
+            product_icon = view.findViewById(R.id.image_view_product_list_item_category);
         }
     }
 
@@ -47,8 +54,20 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
-        holder.product_name.setText(products.get(position).getProduct_name());
-        holder.product_category.setText(products.get(position).getCategory());
+        Product product = products.get(position);
+
+        holder.product_name.setText(product.getProduct_name());
+        holder.product_category.setText(product.getCategory());
+        if(product.getImageUrl() != null)
+        {
+            Picasso.get().load(product.getImageUrl()).into(holder.product_icon);
+        }
+        else {
+            holder.product_icon.setImageDrawable(holder.itemView.getResources().getDrawable(
+                    products.get(position).getCategoryIconId(holder.itemView.getContext())));
+        }
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

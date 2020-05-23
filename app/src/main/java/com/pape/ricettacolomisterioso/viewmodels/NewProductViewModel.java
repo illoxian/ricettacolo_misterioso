@@ -25,5 +25,8 @@ public class NewProductViewModel extends ViewModel {
         ProductsRepository.getInstance().getProducts(products);
         return products;
     }
+    public void addProduct(Product product){
+        ProductsRepository.getInstance().addProduct(product);
+    }
 }
 

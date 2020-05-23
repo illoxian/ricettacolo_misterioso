@@ -1,15 +1,23 @@
 package com.pape.ricettacolomisterioso.models;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.pape.ricettacolomisterioso.R;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "products")
 public class Product implements Parcelable {
@@ -187,5 +195,27 @@ public class Product implements Parcelable {
         this.category = in.readString();
         this.expirationDate = new Date(in.readLong());
         this.purchaseDate = new Date(in.readLong());
+    }
+
+    public int getCategoryIconId(Context context){
+        Resources res = context.getResources();
+        TypedArray icons = res.obtainTypedArray(R.array.categoriesIcon);
+        List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
+
+        int index = categories.indexOf(getCategory());
+        int resourceId = icons.getResourceId(index, -1);
+        icons.recycle();
+        return resourceId;
+    }
+
+    public int getCategoryPreviewId(Context context){
+        Resources res = context.getResources();
+        TypedArray previews = res.obtainTypedArray(R.array.categoriesPreviews);
+        List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
+
+        int index = categories.indexOf(getCategory());
+        int resourceId = previews.getResourceId(index, -1);
+        previews.recycle();
+        return resourceId;
     }
 }

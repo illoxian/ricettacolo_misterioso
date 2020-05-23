@@ -225,22 +225,7 @@ public class ScannerActivity extends AppCompatActivity {
             code_view.setText(product.getBarcode());
             String dataSourceText = getResources().getString(R.string.scanner_alert_dialog_data_source_label) + " " + product.getDataSource();
             data_source_view.setText(dataSourceText);
-            //handle Image
-            Target target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    image_view.setImageBitmap(bitmap);
-                }
-                @Override
-                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                    image_view.setImageDrawable(errorDrawable);
-                }
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    image_view.setImageDrawable(placeHolderDrawable);
-                }
-            };
-            Picasso.get().load(product.getImageUrl()).into(target);
+            Picasso.get().load(product.getImageUrl()).into(image_view);
 
             String positiveText = getString(android.R.string.ok);
             builder.setPositiveButton(positiveText,

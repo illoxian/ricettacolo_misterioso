@@ -2,18 +2,24 @@ package com.pape.ricettacolomisterioso.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -33,129 +39,47 @@ public class Product_profile extends AppCompatActivity {
 
         Product product = getIntent().getBundleExtra("product").getParcelable("product");
 
-        updateTopImage(product.getCategory());
-
-        Date purchase_date= null;
-        try {
-            purchase_date = new SimpleDateFormat("dd/MM/yyyy").parse("01/05/2020");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        product.setPurchaseDate(purchase_date);
-
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String purchase_date_string = dateFormat.format(product.getPurchaseDate());
-
-
-
-        updateProductInformation(product.getProduct_name(),
-                                product.getCategory(),
-                                "500g",
-                                product.getBrand(),
-                                purchase_date_string);
-
-
+        updateProductInformation(product);
+        updateExpiringView(product.getExpirationDate(), product.getPurchaseDate());
 
         Log.d(TAG, product.toString());
-        updateExpiringView(product.getExpirationDate(), product.getPurchaseDate());
+
     }
 
-    public void updateTopImage(final String product_category){
-        if(product_category.equals(getString(R.string.pantry_categories_bread_and_pizza)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_bread_and_bakery);
-        else if(product_category.equals(getString(R.string.pantry_categories_breakfast_and_sweets)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_breakfast_and_sweets);
-        else if(product_category.equals(getString(R.string.pantry_categories_fish)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_fish);
-        else if(product_category.equals(getString(R.string.pantry_categories_fruits_and_vegetables)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_fruits_and_vegetables);
-        else if(product_category.equals(getString(R.string.pantry_categories_ice_cream_and_frozen_food)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_ice_cream_and_frozen_food);
-        else if(product_category.equals(getString(R.string.pantry_categories_meat)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_meat);
-        else if(product_category.equals(getString(R.string.pantry_categories_milk_and_cheese)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_milk_and_cheese);
-        else if(product_category.equals(getString(R.string.pantry_categories_oil_and_condiments)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_oil_and_condiments);
-        else if(product_category.equals(getString(R.string.pantry_categories_pasta_and_rice)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_pasta_and_rice);
-        else if(product_category.equals(getString(R.string.pantry_categories_water_and_drinks)))
-            productProfileBinding.categoryImage.setImageResource(R.drawable.previews_water_and_drinks);
+    public void updateProductInformation(Product product){
+        productProfileBinding.productNameTextView.setText(product.getProduct_name());
+        productProfileBinding.categoryValueTextView.setText(product.getCategory());
+        productProfileBinding.quantityValueTextView.setText("500g");
+        productProfileBinding.brandValueTextView.setText(product.getBrand());
+        productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
+        if(product.getImageUrl() != null)
+        {
+            productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            Picasso.get().load(product.getImageUrl()).into(productProfileBinding.categoryImage);
+        }
+        else{
+            productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(this));
+        }
+
     }
-
-    public void updateProductInformation(final String product_name,
-                                         final String product_category,
-                                         final String product_quantity,
-                                         final String product_brand,
-                                         final String product_purchase_date){
-        productProfileBinding.productNameTextView.setText(product_name);
-        productProfileBinding.categoryValueTextView.setText(product_category);
-        productProfileBinding.quantityValueTextView.setText(product_quantity);
-        productProfileBinding.brandValueTextView.setText(product_brand);
-        productProfileBinding.purchaseDateValueTextView.setText(product_purchase_date);
-    }
-
-    /*public void updateExpiringView(String expiring, String purchase_date){
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date today = new Date();
-        Date todayWithZeroTime = null;
-        try {
-            todayWithZeroTime = formatter.parse(formatter.format(today));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date expiring_date= null;
-        try {
-            expiring_date = new SimpleDateFormat("dd/MM/yyyy").parse(expiring);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Date purchase= null;
-        try {
-            purchase = new SimpleDateFormat("dd/MM/yyyy").parse(purchase_date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(TAG, expiring_date.getTime() + " " + purchase.toString());
-        String remaining_day = time_in_day_remain(expiring_date,todayWithZeroTime)+getString(R.string.remaining_day);
-        productProfileBinding.expiringValueTextView.setText(remaining_day);
-        productProfileBinding.progressBar.setProgress(percentual_for_bar(purchase,expiring_date,todayWithZeroTime));
-    }*/
-
-
 
     public void updateExpiringView(Date expiring, Date purchase_date){
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date today = new Date();
-        Date todayWithZeroTime = null;
-        try {
-            todayWithZeroTime = formatter.parse(formatter.format(today));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            expiring = formatter.parse(formatter.format(expiring));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        expiring = ExcludeTime(expiring);
+        purchase_date = ExcludeTime(purchase_date);
+        Date today = ExcludeTime(Calendar.getInstance().getTime());
 
-        try {
-            purchase_date = formatter.parse(formatter.format(purchase_date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        int daysRemaining = time_in_day_remain(expiring,today);
+        int progress = percentual_for_bar(purchase_date,expiring,today);
 
-        String remaining_day = time_in_day_remain(expiring,todayWithZeroTime)+getString(R.string.remaining_day);
-        productProfileBinding.expiringValueTextView.setText(remaining_day);
-        productProfileBinding.progressBar.setProgress(percentual_for_bar(purchase_date,expiring,todayWithZeroTime));
+        String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
+        productProfileBinding.expiringValueTextView.setText(daysRemainingString);
+        productProfileBinding.progressBar.setProgress(progress);
     }
 
-    public long time_in_day_remain(Date expiring, Date today){
+    public int time_in_day_remain(Date expiring, Date today){
         long time_in_millisecond = expiring.getTime() -  today.getTime();
-        return TimeUnit.DAYS.convert(time_in_millisecond, TimeUnit.MILLISECONDS);
+        return (int)TimeUnit.DAYS.convert(time_in_millisecond, TimeUnit.MILLISECONDS);
     }
 
 
@@ -164,5 +88,17 @@ public class Product_profile extends AppCompatActivity {
         long tod_pur = today.getTime() - purchase.getTime();
         double percentual_value_for_progress_bar = ((double)tod_pur/(double)exp_pur)*100;
         return (int)Math.round(percentual_value_for_progress_bar);
+    }
+
+    private Date ExcludeTime(Date date)
+    {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+        final int month = c.get(Calendar.MONTH);
+        final int year = c.get(Calendar.YEAR);
+        c.clear();
+        c.set(year, month, day);
+        return c.getTime();
     }
 }

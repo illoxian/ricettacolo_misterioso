@@ -58,6 +58,20 @@ public class ProductsRepository {
         return instance;
     }
 
+    public void addProduct(Product product) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    appDatabase.productDao().insertProduct(product);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
     public void getProducts(MutableLiveData<List<Product>> products) {
         Runnable runnable = new Runnable() {
             @Override
