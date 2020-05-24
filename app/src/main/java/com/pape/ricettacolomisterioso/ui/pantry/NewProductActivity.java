@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.pantry;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -27,6 +27,7 @@ import java.util.List;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.ui.MainActivity;
 import com.pape.ricettacolomisterioso.viewmodels.NewProductViewModel;
 
 public class NewProductActivity extends AppCompatActivity {
@@ -232,7 +233,7 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     private void addProductAsync(){
-        int id = (int)MainActivity.db.productDao().insertProduct(product);
+        int id = (int) MainActivity.db.productDao().insertProduct(product);
         Log.d(TAG, "addProductAsync: "+id);
         liveData = model.getProducts();
     }

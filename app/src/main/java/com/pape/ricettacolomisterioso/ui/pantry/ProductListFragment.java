@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso;
+package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.os.Bundle;
 
@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductListBinding;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -25,17 +26,17 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentProductList#newInstance} factory method to
+ * Use the {@link ProductListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentProductList extends Fragment {
+public class ProductListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "FragmentProductList";
     private FragmentProductListBinding binding;
     private ProductListViewModel model;
     private MutableLiveData<List<Product>> liveData;
-    public FragmentProductList() {
+    public ProductListFragment() {
         // Required empty public constructor
     }
 
@@ -48,8 +49,8 @@ public class FragmentProductList extends Fragment {
      * @return A new instance of fragment FragmentProductList.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentProductList newInstance(String param1, String param2) {
-        FragmentProductList fragment = new FragmentProductList();
+    public static ProductListFragment newInstance(String param1, String param2) {
+        ProductListFragment fragment = new ProductListFragment();
         return fragment;
     }
 

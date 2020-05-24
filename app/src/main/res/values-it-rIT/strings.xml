@@ -47,4 +47,6 @@
     <string name="error_empty_field">Questo campo non può essere vuoto</string>
     <string name="scanner_alert_dialog_title">Codice a barre scansionato</string>
     <string name="scanner_alert_dialog_data_source_label">Dati forniti da</string>
+    <string name="item_shopping_list">Elemento</string>
+    <string name="item_counter_shopping_list">1</string>
 </resources>
