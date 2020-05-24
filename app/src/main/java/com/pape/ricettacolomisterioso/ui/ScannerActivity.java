@@ -3,13 +3,10 @@ package com.pape.ricettacolomisterioso.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -37,7 +34,6 @@ import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.viewmodels.ScannerViewModel;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.IOException;
 

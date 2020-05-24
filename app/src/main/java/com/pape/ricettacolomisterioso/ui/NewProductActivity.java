@@ -1,7 +1,5 @@
 package com.pape.ricettacolomisterioso.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -12,32 +10,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
+import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.viewmodels.NewProductViewModel;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
-import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.repositories.ProductsRepository;
-
 public class NewProductActivity extends AppCompatActivity {
 
     private static final String TAG = "NewProductActivity";
     private ActivityNewProductBinding binding;
+    private NewProductViewModel model;
     private Calendar c;
     private DatePickerDialog datePickerDialog;
-    List<String> CATEGORIES;
+    private List<String> CATEGORIES;
 
     int LAUNCH_SCANNER_ACTIVITY = 1;
 
-    Product product;
+    private Product product;
     private Date expirationDate;
     private Date purchaseDate;
+    private MutableLiveData<Long> insertId; //livedata for the id returned from the insert to db
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,20 @@ public class NewProductActivity extends AppCompatActivity {
         binding = ActivityNewProductBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        //livedata observer for the id returned from the insert to db
+        model = new ViewModelProvider(this).get(NewProductViewModel.class);
+        final Observer<Long> observer = new Observer<Long>() {
+            @Override
+            public void onChanged(Long insertId) {
+                if(insertId>=0){
+                    Toast.makeText(getApplicationContext(), R.string.new_product_toast_success, Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        };
+        insertId = model.getInsertId();
+        insertId.observe(this, observer);
 
         initTextInputs();
         initScannerButton();
@@ -239,7 +258,7 @@ public class NewProductActivity extends AppCompatActivity {
         }
 
         if(isValid){
-            ProductsRepository.getInstance().addProduct(product);
+            insertId = model.addProduct(product);
         }
     }
 }
