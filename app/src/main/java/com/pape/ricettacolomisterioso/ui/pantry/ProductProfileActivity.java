@@ -25,12 +25,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class Product_profile extends AppCompatActivity {
+public class ProductProfileActivity extends AppCompatActivity {
     private ActivityProductProfileBinding productProfileBinding;
-    final static long MILLISECOND = 1000;
-    final static long SECOND = 60;
-    final static long MINUTE = 60;
-    final static long HOUR = 24;
     final static String TAG = "Product_profile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

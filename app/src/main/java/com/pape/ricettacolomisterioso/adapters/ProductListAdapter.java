@@ -3,8 +3,6 @@ package com.pape.ricettacolomisterioso.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.ui.pantry.Product_profile;
+import com.pape.ricettacolomisterioso.ui.pantry.ProductProfileActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
@@ -75,7 +72,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Product_profile.class);
+                Intent intent = new Intent(v.getContext(), ProductProfileActivity.class);
                 Bundle product = new Bundle();
                 product.putParcelable("product", products.get(position));
                 intent.putExtra("product", product);

@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.ui.pantry.NewProductActivity;
 import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 import com.pape.ricettacolomisterioso.databinding.FragmentPantryBinding;
 import java.util.ArrayList;

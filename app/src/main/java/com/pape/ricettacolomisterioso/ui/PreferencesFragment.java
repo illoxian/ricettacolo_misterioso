@@ -1,10 +1,12 @@
-package com.pape.ricettacolomisterioso;
+package com.pape.ricettacolomisterioso.ui;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.pape.ricettacolomisterioso.R;
 
 public class PreferencesFragment extends PreferenceFragmentCompat {
 

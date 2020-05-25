@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/navigation_preferences"
-        android:name="com.pape.ricettacolomisterioso.PreferencesFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.PreferencesFragment"
         android:label="@string/title_preferences"
         tools:layout="@xml/preferences" />
 

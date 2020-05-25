@@ -19,7 +19,7 @@
 
         <activity android:name=".ui.pantry.ScannerActivity" />
         <activity
-            android:name=".ui.pantry.Product_profile"
+            android:name=".ui.pantry.ProductProfileActivity"
             android:theme="@style/Theme.MyTheme.DayNight.NoActionBar"
             android:parentActivityName=".ui.MainActivity"
             >

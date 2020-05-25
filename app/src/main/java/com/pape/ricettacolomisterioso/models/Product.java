@@ -3,7 +3,6 @@ package com.pape.ricettacolomisterioso.models;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -12,8 +11,6 @@ import androidx.room.PrimaryKey;
 
 import com.pape.ricettacolomisterioso.R;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,9 +18,8 @@ import java.util.List;
 
 @Entity(tableName = "products")
 public class Product implements Parcelable {
-    /*@PrimaryKey(autoGenerate = true)
-    private int id;*/
-    @PrimaryKey @NotNull
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String product_name;
     private String imageUrl;
     private String brand;
@@ -50,13 +46,13 @@ public class Product implements Parcelable {
         this.purchaseDate = purchaseDate;
     }
 
-    /*public int getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }*/
+    }
 
     public String getProduct_name() {
         return product_name;
@@ -137,7 +133,7 @@ public class Product implements Parcelable {
     @Override
     public String toString() {
         return "Product{" +
-
+                ", id='" + id + '\'' +
                 ", product_name='" + product_name + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", brand='" + brand + '\'' +
@@ -157,7 +153,7 @@ public class Product implements Parcelable {
     // write your object's data to the passed-in Parcel
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        //out.writeInt(this.id);
+        out.writeInt(this.id);
         out.writeString(this.product_name);
         out.writeString(this.imageUrl);
         out.writeString(this.brand);
@@ -186,7 +182,7 @@ public class Product implements Parcelable {
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private Product(Parcel in) {
 
-        //this.id = in.readInt();
+        this.id = in.readInt();
         this.product_name = in.readString();
         this.imageUrl = in.readString();
         this.brand = in.readString();
