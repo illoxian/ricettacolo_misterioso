@@ -1,8 +1,10 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -71,6 +74,35 @@ public class NewProductActivity extends AppCompatActivity {
         initDatePicker();
     }
 
+    private void initScannerButton() {
+        binding.buttonScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    startScannerActivity();
+                } else {
+                    ActivityCompat.requestPermissions(NewProductActivity.this, new
+                            String[]{Manifest.permission.CAMERA}, ScannerActivity.REQUEST_CAMERA_PERMISSION);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, String[] permissions, int[] grantResults) {
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && requestCode==ScannerActivity.REQUEST_CAMERA_PERMISSION) {
+            startScannerActivity();
+        }
+    }
+
+    private void startScannerActivity(){
+        Intent i = new Intent(this, ScannerActivity.class);
+        startActivityForResult(i, LAUNCH_SCANNER_ACTIVITY);
+    }
+
     private void initTextInputs(){
         binding.textInputName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,20 +129,6 @@ public class NewProductActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, CATEGORIES);
         binding.textInputCategory.setAdapter(adapter);
-    }
-
-    private void initScannerButton() {
-        binding.buttonScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startScannerActivity();
-            }
-        });
-    }
-
-    private void startScannerActivity(){
-        Intent i = new Intent(this, ScannerActivity.class);
-        startActivityForResult(i, LAUNCH_SCANNER_ACTIVITY);
     }
 
     private void initFAB(){
