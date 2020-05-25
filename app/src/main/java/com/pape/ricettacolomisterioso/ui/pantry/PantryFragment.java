@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,19 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.internal.$Gson$Preconditions;
-import com.pape.ricettacolomisterioso.FragmentProductList;
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.ui.pantry.NewProductActivity;
 import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
-import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
 import com.pape.ricettacolomisterioso.databinding.FragmentPantryBinding;
 import java.util.ArrayList;
 import java.util.List;

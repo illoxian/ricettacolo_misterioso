@@ -17,9 +17,9 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".ui.ScannerActivity" />
+        <activity android:name=".ui.pantry.ScannerActivity" />
         <activity
-            android:name=".ui.Product_profile"
+            android:name=".ui.pantry.Product_profile"
             android:theme="@style/Theme.MyTheme.DayNight.NoActionBar"
             android:parentActivityName=".ui.MainActivity"
             >
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.NewProductActivity"
+            android:name=".ui.pantry.NewProductActivity"
             android:label="@string/title_new_product"
             android:parentActivityName=".ui.MainActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->

@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.pantry;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;

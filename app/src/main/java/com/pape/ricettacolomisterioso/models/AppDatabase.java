@@ -6,8 +6,9 @@ import androidx.room.TypeConverters;
 
 import com.pape.ricettacolomisterioso.utils.Converters;
 
-@Database(entities = {Product.class}, version = 1)
+@Database(entities = {Product.class, Item.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ProductDao productDao();
+    public abstract ItemDao itemDao();
 }

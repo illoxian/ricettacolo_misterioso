@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.ui.Product_profile;
+import com.pape.ricettacolomisterioso.ui.pantry.Product_profile;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;

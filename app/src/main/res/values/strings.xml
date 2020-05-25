@@ -45,6 +45,8 @@
     <string name="brand_product_profile">Brand</string>
     <string name="expiring_product_profile">Expiring</string>
     <string name="purchase_date_product_profile">Purchase date</string>
+    <string name="item_shopping_list">Shopping item</string>
+    <string name="item_counter_shopping_list">1</string>
     <string name="remaining_day">days remaining</string>
     <string name="new_product_input_purchase_date">Purchase date</string>
     <string name="new_product_input_brand">Brand</string>
