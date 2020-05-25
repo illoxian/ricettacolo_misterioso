@@ -63,7 +63,7 @@ public class ProductListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Integer res = FragmentProductListArgs.fromBundle(getArguments()).getCategory();
+        Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.productListRecyclerView.setLayoutManager(layoutManager);
 

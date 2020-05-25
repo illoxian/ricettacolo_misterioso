@@ -17,7 +17,7 @@ import com.pape.ricettacolomisterioso.models.Item;
 
 import java.util.List;
 
-public class ShoppingListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
+public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ShoppingListViewHolder> {
     private List<Item> items;
     private LayoutInflater layoutInflater;
 
@@ -27,8 +27,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ProductListAdapter
 
         public ShoppingListViewHolder(View view) {
             super(view);
-            item_name =;  // bind the view in the layoutxml
-            item_counter =; //same as above
+            //item_name =;  // bind the view in the layoutxml
+            //item_counter =; /* same as above */
 
         }
 
@@ -39,11 +39,16 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ProductListAdapter
         layoutInflater = LayoutInflater.from(context);
     }
 
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
     @NonNull
     @Override
-    public ShoppingListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.layoutInflater.inflate(R.layout.shopping_list_item, parent, false);
-        return new ShoppingListViewHolder(view);
+    public ShoppingListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
     }
 
     @Override

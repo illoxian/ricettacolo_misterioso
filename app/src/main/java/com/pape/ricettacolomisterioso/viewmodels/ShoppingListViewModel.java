@@ -15,10 +15,6 @@ public class ShoppingListViewModel extends ViewModel {
 
     private MutableLiveData<List<Item>> items;
 
-    public MutableLiveData<List<Item>> getAllItems() {
-        //should i make a shopping list items repository?
-    }
-
 
 
     private MutableLiveData<String> mText;
