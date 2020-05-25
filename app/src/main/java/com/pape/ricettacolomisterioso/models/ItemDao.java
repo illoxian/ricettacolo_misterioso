@@ -20,6 +20,9 @@ public interface ItemDao {
     long insertItem(Item item);
 
     @Delete
-    void delete(Item item);
+    int delete(Item item);
+
+    @Query("UPDATE items SET isSelected=:isSelected WHERE id = :id")
+    int updateIsSelected(long id, Boolean isSelected);
 
 }
