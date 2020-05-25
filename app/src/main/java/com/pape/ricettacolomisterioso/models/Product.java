@@ -1,21 +1,25 @@
 package com.pape.ricettacolomisterioso.models;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import org.jetbrains.annotations.NotNull;
+import com.pape.ricettacolomisterioso.R;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "products")
 public class Product implements Parcelable {
-    /*@PrimaryKey(autoGenerate = true)
-    private int id;*/
-    @PrimaryKey @NotNull
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String product_name;
     private String imageUrl;
     private String brand;
@@ -42,13 +46,13 @@ public class Product implements Parcelable {
         this.purchaseDate = purchaseDate;
     }
 
-    /*public int getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }*/
+    }
 
     public String getProduct_name() {
         return product_name;
@@ -129,7 +133,7 @@ public class Product implements Parcelable {
     @Override
     public String toString() {
         return "Product{" +
-
+                ", id='" + id + '\'' +
                 ", product_name='" + product_name + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", brand='" + brand + '\'' +
@@ -149,7 +153,7 @@ public class Product implements Parcelable {
     // write your object's data to the passed-in Parcel
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        //out.writeInt(this.id);
+        out.writeInt(this.id);
         out.writeString(this.product_name);
         out.writeString(this.imageUrl);
         out.writeString(this.brand);
@@ -178,7 +182,7 @@ public class Product implements Parcelable {
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private Product(Parcel in) {
 
-        //this.id = in.readInt();
+        this.id = in.readInt();
         this.product_name = in.readString();
         this.imageUrl = in.readString();
         this.brand = in.readString();
@@ -187,5 +191,27 @@ public class Product implements Parcelable {
         this.category = in.readString();
         this.expirationDate = new Date(in.readLong());
         this.purchaseDate = new Date(in.readLong());
+    }
+
+    public int getCategoryIconId(Context context){
+        Resources res = context.getResources();
+        TypedArray icons = res.obtainTypedArray(R.array.categoriesIcon);
+        List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
+
+        int index = categories.indexOf(getCategory());
+        int resourceId = icons.getResourceId(index, -1);
+        icons.recycle();
+        return resourceId;
+    }
+
+    public int getCategoryPreviewId(Context context){
+        Resources res = context.getResources();
+        TypedArray previews = res.obtainTypedArray(R.array.categoriesPreviews);
+        List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
+
+        int index = categories.indexOf(getCategory());
+        int resourceId = previews.getResourceId(index, -1);
+        previews.recycle();
+        return resourceId;
     }
 }

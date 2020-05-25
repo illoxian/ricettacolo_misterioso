@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.NewProductActivity">
+    tools:context=".ui.pantry.NewProductActivity">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_scan"
@@ -102,19 +102,18 @@
             android:hint="@string/new_product_input_category"
             android:inputType="text"
             android:textCursorDrawable="@null" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_expiration_date"
         style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:hint="@string/new_product_input_expiration_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@id/textInputLayout_purchase_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_category">
 
@@ -125,6 +124,52 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="date"
+            android:textCursorDrawable="@null" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_purchase_date"
+        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/new_product_input_purchase_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/textInputLayout_expiration_date"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_category">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_purchase_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:inputType="date"
+            android:textCursorDrawable="@null" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_brand"
+        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/new_product_input_brand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_expiration_date">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/baseline_edit_24"
+            android:inputType="text"
             android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 

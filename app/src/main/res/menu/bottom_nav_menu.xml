@@ -9,14 +9,17 @@
         android:id="@+id/navigation_pantry"
         android:icon="@drawable/baseline_kitchen_24"
         android:title="@string/title_pantry" />
-
     <item
         android:id="@+id/navigation_recipes"
         android:icon="@drawable/baseline_restaurant_menu_24"
         android:title="@string/title_recipes" />
     <item
-        android:id="@id/navigation_menu"
+        android:id="@+id/navigation_menu"
         android:icon="@drawable/baseline_menu_book_24"
         android:title="@string/title_menu" />
+    <item
+        android:id="@+id/navigation_preferences"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/title_preferences" />
 
 </menu>

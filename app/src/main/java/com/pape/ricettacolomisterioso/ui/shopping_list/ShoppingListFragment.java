@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.shopping_list;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +13,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.databinding.FragmentProductListBinding;
+import com.pape.ricettacolomisterioso.ui.pantry.ProductListFragment;
+import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
 import com.pape.ricettacolomisterioso.viewmodels.ShoppingListViewModel;
 
 public class ShoppingListFragment extends Fragment {
+    private static final String TAG = "ShoppingListFragment";
+/**    private ShoppingListFragmentBinding binding;
+
 
     private ShoppingListViewModel shoppingListViewModel;
 
@@ -32,5 +38,5 @@ public class ShoppingListFragment extends Fragment {
             }
         });
         return root;
-    }
+    }**/
 }

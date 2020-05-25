@@ -1,12 +1,13 @@
 package com.pape.ricettacolomisterioso.repositories;
 
 import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.pape.ricettacolomisterioso.models.AppDatabase;
 import com.pape.ricettacolomisterioso.models.EbayProductApiResponse;
-import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.models.OFFProductApiResponse;
+import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.services.EbayService;
 import com.pape.ricettacolomisterioso.services.FoodService;
 import com.pape.ricettacolomisterioso.ui.MainActivity;
@@ -58,6 +59,22 @@ public class ProductsRepository {
         return instance;
     }
 
+    public void addProduct(Product product, MutableLiveData<Long> insertId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    long id = appDatabase.productDao().insertProduct(product);
+                    insertId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
     public void getProducts(MutableLiveData<List<Product>> products) {
         Runnable runnable = new Runnable() {
             @Override
@@ -65,6 +82,21 @@ public class ProductsRepository {
                 try {
                     Log.d(TAG, "run: getProducts()");
                     products.postValue(appDatabase.productDao().getAll());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
+    public void getProductsByCategory(MutableLiveData<List<Product>> products, String category){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d(TAG, "run: getProducts() "+category);
+                    products.postValue(appDatabase.productDao().findByCategory(category));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

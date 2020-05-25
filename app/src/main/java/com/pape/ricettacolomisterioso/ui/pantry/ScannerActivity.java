@@ -1,15 +1,12 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -27,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -36,7 +34,6 @@ import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.viewmodels.ScannerViewModel;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.IOException;
 
@@ -143,8 +140,8 @@ public class ScannerActivity extends AppCompatActivity {
         Log.d(TAG, "barcode found:" + barcodeData);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String dataProvider = sharedPref.getString(getResources().getString(R.string.shared_pref_data_provider_key), "OFF");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String dataProvider = sharedPreferences.getString("barcode_api", getResources().getString(R.string.api_key_off));
         model.getProductInfo(barcodeData, dataProvider);
 
         //Stop Camera
@@ -225,22 +222,7 @@ public class ScannerActivity extends AppCompatActivity {
             code_view.setText(product.getBarcode());
             String dataSourceText = getResources().getString(R.string.scanner_alert_dialog_data_source_label) + " " + product.getDataSource();
             data_source_view.setText(dataSourceText);
-            //handle Image
-            Target target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    image_view.setImageBitmap(bitmap);
-                }
-                @Override
-                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                    image_view.setImageDrawable(errorDrawable);
-                }
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    image_view.setImageDrawable(placeHolderDrawable);
-                }
-            };
-            Picasso.get().load(product.getImageUrl()).into(target);
+            Picasso.get().load(product.getImageUrl()).into(image_view);
 
             String positiveText = getString(android.R.string.ok);
             builder.setPositiveButton(positiveText,

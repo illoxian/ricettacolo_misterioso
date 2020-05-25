@@ -1,4 +1,4 @@
-package com.pape.ricettacolomisterioso.ui;
+package com.pape.ricettacolomisterioso.ui.recipes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.viewmodels.MenuViewModel;
+import com.pape.ricettacolomisterioso.viewmodels.RecipesViewModel;
 
-public class MenuFragment extends Fragment {
+public class RecipesFragment extends Fragment {
 
-    private MenuViewModel menuViewModel;
+    private static final String TAG = "RECIPES_FRAGMENT";
+    private RecipesViewModel recipesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        menuViewModel =
-                ViewModelProviders.of(this).get(MenuViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_shoppinglist, container, false);
+        recipesViewModel =
+                ViewModelProviders.of(this).get(RecipesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_recipes, container, false);
+
         return root;
     }
-
 }
