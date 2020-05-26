@@ -70,4 +70,8 @@
     <string name="api_text_off" translatable="false">Open Food Facts</string>
     <string name="api_text_ebay" translatable="false">Ebay</string>
     <string name="new_product_toast_success">Product added successfully</string>
+    <string name="shopping_list_dialog_title">Add to shopping list</string>
+    <string name="item_shopping_list_delete">Delete item</string>
+    <string name="shopping_list_dialog_name">Product name</string>
+    <string name="shopping_list_dialog_quantity">Quantity</string>
 </resources>

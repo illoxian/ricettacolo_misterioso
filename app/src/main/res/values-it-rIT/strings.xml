@@ -66,4 +66,8 @@
     <string name="preferences_general">Generale</string>
     <string name="preferences_barcode_api_title">Seleziona l\'Api per il barcode</string>
     <string name="new_product_toast_success">Prodotto aggiunto correttamente</string>
+    <string name="shopping_list_dialog_title">Aggiungi alla lista</string>
+    <string name="item_shopping_list_delete">Elimina prodotto</string>
+    <string name="shopping_list_dialog_name">Nome del prodotto</string>
+    <string name="shopping_list_dialog_quantity">Quantità</string>
 </resources>

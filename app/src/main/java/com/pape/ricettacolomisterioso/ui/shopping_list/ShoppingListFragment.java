@@ -57,7 +57,7 @@ public class ShoppingListFragment extends Fragment {
 
         model.getInsertId().observe(getViewLifecycleOwner(), new Observer<Long>() {
             @Override
-            public void onChanged(@Nullable Long insertId) {
+            public void onChanged(Long insertId) {
                 Log.d(TAG, "onChanged: InsertId:" + insertId);
                 if(insertId>=0)
                     model.getAllItems();
@@ -87,7 +87,7 @@ public class ShoppingListFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_shopping_list, null);
         builder.setView(dialogView);
-        builder.setTitle("Aggiungi alla lista");
+        builder.setTitle(R.string.shopping_list_dialog_title);
 
         // Set up the inputs
         TextView item_name = dialogView.findViewById(R.id.shopping_list_dialog_input_name);
@@ -117,10 +117,10 @@ public class ShoppingListFragment extends Fragment {
                 String quantity = item_quantity.getText().toString();
 
                 // if quantity is empty, set it to 1
-                if (quantity.equals(""))
+                if (quantity.isEmpty())
                     quantity = "1";
                 // if itemName is empty, the dialog will not close and an error is shown
-                if (itemName.equals(""))
+                if (itemName.isEmpty())
                     item_name.setError(getString(R.string.error_empty_field));
                 else {
                     model.addItem(new Item(itemName, Integer.parseInt(quantity), false));

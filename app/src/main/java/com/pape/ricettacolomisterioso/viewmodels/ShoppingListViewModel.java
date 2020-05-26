@@ -47,23 +47,19 @@ public class ShoppingListViewModel extends ViewModel {
         return deleteId;
     }
 
-    public MutableLiveData<List<Item>> getAllItems(){
+    public void getAllItems(){
         ShoppingListRepository.getInstance().getItems(getItems());
-        return items;
     }
 
-    public MutableLiveData<Long> addItem(Item item){
+    public void addItem(Item item){
         ShoppingListRepository.getInstance().addItem(item, getInsertId());
-        return insertId;
     }
 
-    public MutableLiveData<Integer> updateIsSelected(Long itemId, boolean isSelected){
+    public void updateIsSelected(Long itemId, boolean isSelected){
         ShoppingListRepository.getInstance().updateIsSelected(itemId, isSelected, getUpdateId());
-        return updateId;
     }
 
-    public MutableLiveData<Integer> delete(Item item){
+    public void delete(Item item){
         ShoppingListRepository.getInstance().delete(item, getDeleteId());
-        return deleteId;
     }
 }
