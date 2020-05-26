@@ -1,5 +1,6 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ExpiringProductListAdapter;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -38,6 +40,7 @@ public class PantryFragment extends Fragment {
     private FragmentPantryBinding binding;
     private ExpiringProductListViewModel model;
     private MutableLiveData<List<Product>> liveData;
+    private int NEW_PRODUCT_ADDED = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPantryBinding.inflate(getLayoutInflater());
@@ -55,7 +58,7 @@ public class PantryFragment extends Fragment {
         binding.expiringButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Navigation.findNavController(view).navigate(PantryFragmentDirections.showExpiringProductListAction());
             }
         });
 
@@ -102,7 +105,7 @@ public class PantryFragment extends Fragment {
 
     private void startNewProductActivity(){
         Intent intent = new Intent(this.getActivity(), NewProductActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,NEW_PRODUCT_ADDED);
     }
 
     public int getCardViewStringRes(CardView cardView){
@@ -161,4 +164,22 @@ public class PantryFragment extends Fragment {
         liveData = model.getMostExpiringProduct();
         liveData.observe(requireActivity(), observer);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_PRODUCT_ADDED) {
+            if(resultCode == Activity.RESULT_OK){
+                long insertId = data.getLongExtra("insertId",-1);
+                if(insertId>=0) {
+                    Snackbar.make(getView(), R.string.new_product_toast_success, Snackbar.LENGTH_LONG).show();
+                    getMostExpiringProducts();
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }
+
 }

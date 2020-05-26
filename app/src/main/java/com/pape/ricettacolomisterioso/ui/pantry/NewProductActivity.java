@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -60,7 +62,9 @@ public class NewProductActivity extends AppCompatActivity {
             @Override
             public void onChanged(Long insertId) {
                 if(insertId>=0){
-                    Toast.makeText(getApplicationContext(), R.string.new_product_toast_success, Toast.LENGTH_LONG).show();
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("insertId",insertId);
+                    setResult(Activity.RESULT_OK,returnIntent);
                     finish();
                 }
             }

@@ -31,7 +31,7 @@ public class ExpiringProductListViewModel extends ViewModel {
         }
 
         Log.d(TAG, "getAllProducts: getProductsUpdate");
-        ProductsRepository.getInstance().getMostExpiringProducts(products);
+        ProductsRepository.getInstance().getAllProductsOrderByExpirationDate(products);
         return products;
     }
 }

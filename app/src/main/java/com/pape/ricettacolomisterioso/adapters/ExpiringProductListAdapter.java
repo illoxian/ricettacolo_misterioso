@@ -76,13 +76,20 @@ public class ExpiringProductListAdapter extends RecyclerView.Adapter<ExpiringPro
         Date today_not_time = Functions.ExcludeTime(today);
 
         int daysRemaining = Functions.time_in_day_remain(expiring,today_not_time);
-        int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+        if(daysRemaining > 0) {
+            int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+            String daysRemainingString = daysRemaining + " " + context.getString(R.string.remaining_day);
+            holder.product_days_remains.setText(daysRemainingString);
+            holder.product_progress_bar.setProgress(progress);
+        } else if(daysRemaining == 0){
+            holder.product_days_remains.setText(context.getString(R.string.product_expired_today));
+            holder.product_progress_bar.setProgress(100);
+        }else {
+            String ExpiredFromXDays = context.getString(R.string.product_expired_from) + Math.abs(daysRemaining) + context.getString(R.string.days);
+            holder.product_days_remains.setText(ExpiredFromXDays);
+            holder.product_progress_bar.setProgress(100);
+        }
 
-        String daysRemainingString = daysRemaining + " " + context.getString(R.string.remaining_day);
-        holder.product_days_remains.setText(daysRemainingString);
-        holder.product_progress_bar.setProgress(progress);
-
-        Log.d(TAG, products.get(position).toString() + daysRemainingString + progress);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.product_icon.getContext());
         if(sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null)
         {

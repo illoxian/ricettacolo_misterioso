@@ -71,11 +71,20 @@ public class ProductProfileActivity extends AppCompatActivity {
         Date today_not_time = Functions.ExcludeTime(today);
 
         int daysRemaining = Functions.time_in_day_remain(expiring,today_not_time);
-        int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
 
-        String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
-        productProfileBinding.expiringValueTextView.setText(daysRemainingString);
-        productProfileBinding.progressBar.setProgress(progress);
+        if(daysRemaining > 0) {
+            int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+            String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
+            productProfileBinding.expiringValueTextView.setText(daysRemainingString);
+            productProfileBinding.progressBar.setProgress(progress);
+        }else if(daysRemaining == 0) {
+            productProfileBinding.expiringValueTextView.setText(getString(R.string.product_expired_today));
+            productProfileBinding.progressBar.setProgress(100);
+        }else {
+            String ExpiredFromXDays = getString(R.string.product_expired_from) + Math.abs(daysRemaining) + getString(R.string.days);
+            productProfileBinding.expiringValueTextView.setText(ExpiredFromXDays);
+            productProfileBinding.progressBar.setProgress(100);
+        }
     }
 
 }
