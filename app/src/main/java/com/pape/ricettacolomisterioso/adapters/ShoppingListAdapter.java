@@ -1,6 +1,7 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,17 +60,26 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         Item item = items.get(position);
         holder.item_checkbox.setChecked(item.isSelected());
         holder.item_name.setText(item.getItemName());
-        holder.item_quantity.setText(item.getQuantity()+"");
+        holder.item_quantity.setText(item.getQuantity()+" "+holder.itemView.getResources().getString(R.string.measure_unit_piece_abbreviation));
         holder.item_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 model.updateIsSelected(item.getId(), isChecked);
+                if(isChecked){
+                    holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    //moveItemToEnd(holder.getAdapterPosition()); //move to the end
+                }
+                else{
+                    holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    //moveItemToTop(holder.getAdapterPosition()); //move to the top
+                }
             }
         });
         holder.item_image_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 model.delete(item);
+                removeItemAt(holder.getAdapterPosition());
             }
         });
     }
@@ -79,4 +89,38 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         return items.size();
     }
 
+
+    public void removeItemAt(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, items.size());
+    }
+
+    public void insertItem(Item item) {
+        int position = items.size();
+        items.add(position, item);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, items.size());
+    }
+
+    public void updateItem(Item item, int position) {
+        items.set(position, item);
+        notifyItemChanged(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition){
+        Item item = items.get(fromPosition);
+        items.remove(fromPosition);
+        items.add(toPosition, item);
+
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void moveItemToEnd(int fromPosition){
+        moveItem(fromPosition, items.size()-1);
+    }
+
+    public void moveItemToTop(int fromPosition){
+        moveItem(fromPosition, 0);
+    }
 }

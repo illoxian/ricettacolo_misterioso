@@ -70,4 +70,5 @@
     <string name="item_shopping_list_delete">Elimina prodotto</string>
     <string name="shopping_list_dialog_name">Nome del prodotto</string>
     <string name="shopping_list_dialog_quantity">Quantità</string>
+    <string name="measure_unit_piece_abbreviation">pz.</string>
 </resources>

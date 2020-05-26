@@ -30,6 +30,7 @@ public class ShoppingListFragment extends Fragment {
     private static final String TAG = "ShoppingListFragment";
     private FragmentShoppinglistBinding binding;
     private ShoppingListViewModel model;
+    private ShoppingListAdapter mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class ShoppingListFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Item> items) {
                 Log.d(TAG, "onChanged: Items:" + items);
-                ShoppingListAdapter mAdapter = new ShoppingListAdapter(getActivity(), items);
+                mAdapter = new ShoppingListAdapter(getActivity(), items);
                 binding.shoppingListRecyclerView.setAdapter(mAdapter);
             }
         });
@@ -59,8 +60,6 @@ public class ShoppingListFragment extends Fragment {
             @Override
             public void onChanged(Long insertId) {
                 Log.d(TAG, "onChanged: InsertId:" + insertId);
-                if(insertId>=0)
-                    model.getAllItems();
             }
         });
 
@@ -68,8 +67,6 @@ public class ShoppingListFragment extends Fragment {
             @Override
             public void onChanged(Integer deleteId) {
                 Log.d(TAG, "onChanged: deleteId:" + deleteId);
-                if(deleteId>0)
-                    model.getAllItems();
             }
         });
 
@@ -123,7 +120,9 @@ public class ShoppingListFragment extends Fragment {
                 if (itemName.isEmpty())
                     item_name.setError(getString(R.string.error_empty_field));
                 else {
-                    model.addItem(new Item(itemName, Integer.parseInt(quantity), false));
+                    Item item_to_insert = new Item(itemName, Integer.parseInt(quantity), false);
+                    model.addItem(item_to_insert);
+                    mAdapter.insertItem(item_to_insert);
                     dialog.dismiss();
                 }
             }
