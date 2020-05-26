@@ -1,6 +1,8 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
@@ -12,9 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
+import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.repositories.ShoppingListRepository;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -60,6 +65,17 @@ public class ProductProfileActivity extends AppCompatActivity {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(this));
         }
+        productProfileBinding.addShoppingListImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingListRepository.getInstance().addItem(new Item(product.getProduct_name(), 1, false), null);
+                Snackbar.make(v, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG).show();
+                DrawableCompat.setTint(
+                        DrawableCompat.wrap(productProfileBinding.addShoppingListImage.getDrawable()),
+                        ContextCompat.getColor(v.getContext(), R.color.pink_a200)
+                );
+            }
+        });
 
     }
 

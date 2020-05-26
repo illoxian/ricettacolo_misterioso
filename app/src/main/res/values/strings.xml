@@ -75,4 +75,5 @@
     <string name="shopping_list_dialog_name">Product name</string>
     <string name="shopping_list_dialog_quantity">Quantity</string>
     <string name="measure_unit_piece_abbreviation">pc.</string>
+    <string name="product_added_to_shopping_list">Product added to shopping list</string>
 </resources>
