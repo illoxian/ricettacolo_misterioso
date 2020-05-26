@@ -14,18 +14,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.adapters.ExpiringProductListAdapter;
+import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.viewmodels.ExpiringProductListViewModel;
 import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 import com.pape.ricettacolomisterioso.databinding.FragmentPantryBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.pape.ricettacolomisterioso.ui.pantry.ProductProfileActivity.TAG;
+
 public class PantryFragment extends Fragment {
 
     private PantryViewModel pantryViewModel;
     private FragmentPantryBinding binding;
+    private ExpiringProductListViewModel model;
+    private MutableLiveData<List<Product>> liveData;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPantryBinding.inflate(getLayoutInflater());
@@ -37,6 +49,16 @@ public class PantryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getMostExpiringProducts();
+
+        binding.expiringButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         List<CardView> cardViews = new ArrayList<>();
         cardViews.add(binding.fruitsAndVegetablesCardView);
         cardViews.add(binding.meatCardView);
@@ -122,5 +144,21 @@ public class PantryFragment extends Fragment {
 
         return res;
 
+    }
+
+    public void getMostExpiringProducts(){
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.expiringProductPreviewRecyclerView.setLayoutManager(layoutManager);
+        model =  new ViewModelProvider(this).get(ExpiringProductListViewModel.class);
+        final Observer<List<Product>> observer = new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> product) {
+                ExpiringProductListAdapter mAdapter = new ExpiringProductListAdapter(getActivity(), product);
+                binding.expiringProductPreviewRecyclerView.setAdapter(mAdapter);
+                Log.d(TAG, product.toString());
+            }
+        };
+        liveData = model.getMostExpiringProduct();
+        liveData.observe(requireActivity(), observer);
     }
 }
