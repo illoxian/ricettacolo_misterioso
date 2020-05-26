@@ -70,4 +70,9 @@
     <string name="api_text_off" translatable="false">Open Food Facts</string>
     <string name="api_text_ebay" translatable="false">Ebay</string>
     <string name="new_product_toast_success">Product added successfully</string>
+    <string name="new_recipe_input_name">Recipe Name</string>
+    <string name="new_recipe_input_category">Recipe Category</string>
+    <string name="new_recipe_input_insert_date">Insert Date</string>
+    <string name="recipe_ingredients_button_remove">remove</string>
+    <string name="new_recipe_fragment">New Recipe</string>
 </resources>
