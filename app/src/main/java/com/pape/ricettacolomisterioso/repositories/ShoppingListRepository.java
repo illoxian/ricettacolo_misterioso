@@ -96,4 +96,37 @@ public class ShoppingListRepository {
         new Thread(runnable).start();
     }
 
+    public void delete(String itemName, MutableLiveData<Integer> deleteId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    int id = appDatabase.itemDao().delete(itemName);
+                    Log.d(TAG, "run: deleteId:"+id);
+                    deleteId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
+    public void findItemFromName(String itemName, MutableLiveData<Item> item) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Item returnItem = appDatabase.itemDao().findItemInShoppingList(itemName);
+                    item.postValue(returnItem);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
 }

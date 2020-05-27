@@ -1,42 +1,39 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.preference.PreferenceManager;
-
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.repositories.ShoppingListRepository;
+import com.pape.ricettacolomisterioso.viewmodels.ProductProfileViewModel;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
 public class ProductProfileActivity extends AppCompatActivity {
     private ActivityProductProfileBinding productProfileBinding;
+    private ProductProfileViewModel model;
     final static String TAG = "Product_profile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         productProfileBinding = ActivityProductProfileBinding.inflate(getLayoutInflater());
+        model = new ViewModelProvider(this).get(ProductProfileViewModel.class);
         View view = productProfileBinding.getRoot();
         setContentView(view);
 
@@ -55,6 +52,8 @@ public class ProductProfileActivity extends AppCompatActivity {
         productProfileBinding.quantityValueTextView.setText("500g");
         productProfileBinding.brandValueTextView.setText(product.getBrand());
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
+
+        // image or category thumbnail
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(sharedPreferences.getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
         {
@@ -65,18 +64,33 @@ public class ProductProfileActivity extends AppCompatActivity {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(this));
         }
-        productProfileBinding.addShoppingListImage.setOnClickListener(new View.OnClickListener() {
+
+        // shopping list button
+        model.getFindItem().observe(this, new Observer<Item>() {
             @Override
-            public void onClick(View v) {
-                ShoppingListRepository.getInstance().addItem(new Item(product.getProduct_name(), 1, false), null);
-                Snackbar.make(v, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG).show();
-                DrawableCompat.setTint(
-                        DrawableCompat.wrap(productProfileBinding.addShoppingListImage.getDrawable()),
-                        ContextCompat.getColor(v.getContext(), R.color.pink_a200)
-                );
+            public void onChanged(Item item) {
+                if(item == null) setColorAddToShoppingListIcon(false);
+                else setColorAddToShoppingListIcon(true);
             }
         });
 
+        productProfileBinding.addShoppingListImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(productProfileBinding.addShoppingListImage.getColorFilter()==null){
+                    model.addItemToShoppingList(product.getProduct_name());
+                    setColorAddToShoppingListIcon(true);
+                    Snackbar.make(v, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG).show();
+                }
+                else{
+                    model.deleteItemFromShoppingList(product.getProduct_name());
+                    setColorAddToShoppingListIcon(false);
+                    Snackbar.make(v, R.string.product_removed_from_shopping_list, Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        model.findItemInShoppingList(product.getProduct_name());
     }
 
     public void updateExpiringView(Date expiring, Date purchase_date){
@@ -116,5 +130,12 @@ public class ProductProfileActivity extends AppCompatActivity {
         c.clear();
         c.set(year, month, day);
         return c.getTime();
+    }
+
+    private void setColorAddToShoppingListIcon(boolean lightUp){
+        if(lightUp)
+            productProfileBinding.addShoppingListImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.pink_a200), android.graphics.PorterDuff.Mode.SRC_IN);
+        else
+            productProfileBinding.addShoppingListImage.setColorFilter(null);
     }
 }

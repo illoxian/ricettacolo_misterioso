@@ -72,4 +72,5 @@
     <string name="shopping_list_dialog_quantity">Quantità</string>
     <string name="measure_unit_piece_abbreviation">pz.</string>
     <string name="product_added_to_shopping_list">Prodotto aggiunto alla lista della spesa</string>
+    <string name="product_removed_from_shopping_list">Prodotto rimosso dalla lista della spesa</string>
 </resources>

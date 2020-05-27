@@ -13,6 +13,8 @@ public class ProductProfileViewModel extends ViewModel {
 
     private MutableLiveData<Product> product;
     private MutableLiveData<Long> insertId;
+    private MutableLiveData<Item> findItem;
+    private MutableLiveData<Integer> deleteId;
 
     public MutableLiveData<Product> getProduct(){
         if (product == null) {
@@ -28,6 +30,20 @@ public class ProductProfileViewModel extends ViewModel {
         return insertId;
     }
 
+    public MutableLiveData<Item> getFindItem() {
+        if (findItem == null) {
+            findItem = new MutableLiveData<>();
+        }
+        return findItem;
+    }
+
+    public MutableLiveData<Integer> getDeleteId() {
+        if (deleteId == null) {
+            deleteId = new MutableLiveData<>();
+        }
+        return deleteId;
+    }
+
     public void addItemToShoppingList(Item item){
         ShoppingListRepository.getInstance().addItem(item, getInsertId());
     }
@@ -35,7 +51,15 @@ public class ProductProfileViewModel extends ViewModel {
         addItemToShoppingList(new Item(itemName, quantity, false));
     }
     public void addItemToShoppingList(String itemName){
-        addItemToShoppingList(new Item(itemName, 1, false));
+        addItemToShoppingList(itemName, 1);
+    }
+
+    public void findItemInShoppingList(String itemName){
+        ShoppingListRepository.getInstance().findItemFromName(itemName, getFindItem());
+    }
+
+    public void deleteItemFromShoppingList(String itemName){
+        ShoppingListRepository.getInstance().delete(itemName, getDeleteId());
     }
 
 
