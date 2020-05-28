@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,21 +26,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ExpiringProductListAdapter;
+import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.viewmodels.ExpiringProductListViewModel;
 import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 import com.pape.ricettacolomisterioso.databinding.FragmentPantryBinding;
+import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.pape.ricettacolomisterioso.ui.pantry.ProductProfileActivity.TAG;
 
 public class PantryFragment extends Fragment {
 
     private PantryViewModel pantryViewModel;
     private FragmentPantryBinding binding;
     private ExpiringProductListViewModel model;
+    private ProductListViewModel model_product;
     private MutableLiveData<List<Product>> liveData;
+    private static String TAG = "PantryFragment";
     private int NEW_PRODUCT_ADDED = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,18 +93,72 @@ public class PantryFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.pantry_app_bar_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setIconified(true);
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                binding.categoryLayout.setVisibility(View.VISIBLE);
+                binding.expiringCard.setVisibility(View.VISIBLE);
+                binding.categoryProductTextview.setVisibility(View.VISIBLE);
+                binding.pantryFragmentRecyclerView.setVisibility(View.GONE);
+                return false;
+            }
+        });
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        onSearched(query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        binding.categoryLayout.setVisibility(View.GONE);
+                        binding.expiringCard.setVisibility(View.GONE);
+                        binding.categoryProductTextview.setVisibility(View.GONE);
+                        binding.pantryFragmentRecyclerView.setVisibility(View.VISIBLE);
+
+                        onSearched(newText);
+                        return false;
+                    }
+                });
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.app_bar_add){
-            Log.d("PantryFragment", "onOptionsItemSelected: Add");
+            Log.d(TAG, "onOptionsItemSelected: Add");
             startNewProductActivity();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onSearched(String newString){
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.pantryFragmentRecyclerView.setLayoutManager(layoutManager);
+
+        model_product =  new ViewModelProvider(requireActivity()).get(ProductListViewModel.class);
+        final Observer<List<Product>> observer = new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> product) {
+                ProductListAdapter mAdapter = new ProductListAdapter(getActivity(), product);
+                binding.pantryFragmentRecyclerView.setAdapter(mAdapter);
+                Log.d(TAG, product.toString());
+            }
+        };
+        liveData = model_product.getProductsSearched(newString);
+
+        liveData.observe(requireActivity(), observer);
     }
 
     private void startNewProductActivity(){

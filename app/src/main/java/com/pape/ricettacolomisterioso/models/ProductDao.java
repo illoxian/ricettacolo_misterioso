@@ -28,6 +28,9 @@ public interface ProductDao {
     @Query("SELECT * FROM products ORDER BY expirationDate")
     List<Product> getProductOrderByExpirationDate();
 
+    @Query("SELECT * FROM products WHERE product_name LIKE :product_name ||'%'")
+    List<Product> getSearchedProducts(String product_name);
+
     @Insert
     void insertAll(Product... products);
 

@@ -135,6 +135,21 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
+    public void getProductSearched(MutableLiveData<List<Product>> products, String product_name){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d(TAG, "run: getProductSearched() ");
+                    products.postValue(appDatabase.productDao().getSearchedProducts(product_name));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
     public void getProductInfoOFF(MutableLiveData<Product> product, String code) {
         Call<OFFProductApiResponse> call = foodService.getProductInfo(code, Constants.FOOD_API_USER_AGENT);
         // It shows the use of method enqueue to do the HTTP request asynchronously.

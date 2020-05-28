@@ -40,7 +40,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public ProductListAdapter(Context context, List<Product> products) {
         this.products = products;
-        layoutInflater = LayoutInflater.from(context);
+        if(context != null)
+            layoutInflater = LayoutInflater.from(context);
     }
 
     // Create new views (invoked by the layout manager)
