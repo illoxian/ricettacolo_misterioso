@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider">
@@ -87,23 +87,30 @@
                 android:layout_weight="1"
                 android:text="TextView" />
 
-                <Button
-                    android:id="@+id/new_recipe_ingredient_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="Add" />
+            <Button
+                android:id="@+id/new_recipe_ingredient_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Add" />
 
 
-                <EditText
-                    android:id="@+id/new_recipe_ingredient_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/new_recipe_ingredient_add"/>
-            </RelativeLayout>
+            <EditText
+                android:id="@+id/new_recipe_ingredient_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/new_recipe_ingredient_add"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/new_recipe_ingredients_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -112,30 +119,30 @@
         android:layout_height="wrap_content"
 
         android:layout_margin="16dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_recipe_ingredient_linear_layout">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
-
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/new_recipe_step_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
 
-                <Button
+
+            <Button
                     android:id="@+id/new_recipe_step_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="Add" />
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/new_recipe_step_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -145,6 +152,12 @@
                     android:layout_toLeftOf="@id/new_recipe_step_add" />
 
             </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/new_recipe_steps_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 
 

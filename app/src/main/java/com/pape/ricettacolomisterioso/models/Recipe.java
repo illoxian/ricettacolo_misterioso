@@ -11,21 +11,20 @@ import java.util.List;
 
 @Entity(tableName = "recipes")
 public class Recipe implements Parcelable {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String recipe_name;
     private String recipe_category;
-    private String recipe_brief;
     private List<String> ingredients;
     private List<String> steps;
 
     public Recipe () {}
-    public Recipe(int id, String recipe_name, String recipe_category, String recipe_brief, List<String> ingredients, List<String> steps) {
+    public Recipe(int id, String recipe_name, String recipe_category, List<String> ingredients, List<String> steps) {
         this.id = id;
         this.recipe_name = recipe_name;
         this.recipe_category = recipe_category;
-        this.recipe_brief = recipe_brief;
+
         this.ingredients = ingredients;
         this.steps = steps;
     }
@@ -54,13 +53,6 @@ public class Recipe implements Parcelable {
         this.recipe_category = recipe_category;
     }
 
-    public String getRecipe_brief() {
-        return recipe_brief;
-    }
-
-    public void setRecipe_brief(String recipe_brief) {
-        this.recipe_brief = recipe_brief;
-    }
 
     public List<String> getIngredients() {
         return ingredients;
@@ -84,7 +76,6 @@ public class Recipe implements Parcelable {
                 "id=" + id +
                 ", recipe_name='" + recipe_name + '\'' +
                 ", recipe_category='" + recipe_category + '\'' +
-                ", recipe_brief='" + recipe_brief + '\'' +
                 ", ingredients=" + ingredients +
                 ", steps=" + steps +
                 '}';
@@ -96,7 +87,6 @@ public class Recipe implements Parcelable {
         id = in.readInt();
         recipe_name = in.readString();
         recipe_category = in.readString();
-        recipe_brief = in.readString();
         if (in.readByte() == 0x01) {
             ingredients = new ArrayList<String>();
             in.readList(ingredients, String.class.getClassLoader());
@@ -121,7 +111,6 @@ public class Recipe implements Parcelable {
         dest.writeInt(id);
         dest.writeString(recipe_name);
         dest.writeString(recipe_category);
-        dest.writeString(recipe_brief);
         if (ingredients == null) {
             dest.writeByte((byte) (0x00));
         } else {

@@ -1,52 +1,144 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
-import android.app.DatePickerDialog;
+
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.vision.text.Line;
+import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.FragmentNewRecipeBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
+import com.pape.ricettacolomisterioso.viewmodels.NewRecipeViewModel;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 public class NewRecipeFragment extends Fragment {
     private static final String TAG = "NewRecipeFragment";
-    private Calendar c;
-    private DatePickerDialog datePickerDialog;
     private List<String> CATEGORIES;
     private FragmentNewRecipeBinding binding;
 
     private Recipe recipe;
-    private Date insertDate;
     private MutableLiveData<Long> insertId;
-
-/*
-    Button buttonAdd;
-    LinearLayout container;
-    TextView reList, info;
-
-*/
+    private NewRecipeViewModel model;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentNewRecipeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
+        initAddIngredient();
+        initAddStep();
+
         setHasOptionsMenu(true);
+        initTextInputs();
+        initFAB();
+
+
+        model = new ViewModelProvider(this).get(NewRecipeViewModel.class);
+        final Observer<Long> observer = new Observer<Long>() {
+            @Override
+            public void onChanged(Long insertId) {
+                if(insertId>=0) {
+                    Toast.makeText(getContext(), R.string.new_recipe_toast_succes, Toast.LENGTH_LONG).show();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.popBackStack();
+                }
+            }
+        };
+        insertId = model.getInsertId();
+        insertId.observe(this.getActivity(), observer);
+
         return view;
     }
 
+
+    private void initTextInputs(){
+        binding.textInputRecipeName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.textInputLayoutRecipeName.setError(null);
+            }
+        });
+
+        binding.textInputRecipeCategory.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.textInputLayoutRecipeCategory.setError(null);
+            }
+        });
+        CATEGORIES = Arrays.asList(getResources().getStringArray(R.array.recipeCategoriesString));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, CATEGORIES);
+        binding.textInputRecipeCategory.setAdapter(adapter);
+
+    }
+
+
+    private void initFAB(){
+        binding.newRecipeFab.setOnClickListener(v -> addRecipe());
+    }
+    private void initAddIngredient() {
+        binding.newRecipeIngredientAdd.setOnClickListener(v -> {
+
+        });
+
+    }
+    private void initAddStep(){
+        EditText textIn = binding.newRecipeStepText;
+        binding.newRecipeStepAdd.setOnClickListener(v -> {
+            Log.d(TAG, "ButtonClicked");
+            final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View addView = inflater.inflate(R.layout.new_recipe_item, null);
+            Button buttonRemove = addView.findViewById(R.id.new_recipe_step_remove);
+ /*
+            EditText tw = addView.findViewById(R.id.new_recipe_step_text_new);
+            tw.setText(textIn.getText().toString());
+
+            final View.OnClickListener thisListener = v1 -> ((LinearLayout)addView.getParent()).removeView(addView);
+
+            buttonRemove.setOnClickListener(thisListener);
+ */          LinearLayout container = binding.newRecipeStepsContainer;
+            container.addView(buttonRemove);
+            Log.d(TAG, container.toString());
+
+
+
+
+        });
+
+    }
 
 
     private void addRecipe(){
@@ -54,6 +146,7 @@ public class NewRecipeFragment extends Fragment {
 
         recipe.setRecipe_name(binding.textInputRecipeName.getText().toString());
         recipe.setRecipe_category(binding.textInputRecipeCategory.getText().toString());
+
         List<String> ingredients = new ArrayList<String>();
         List<String> steps = new ArrayList<String>();
         int nIngredients=0;
@@ -69,86 +162,30 @@ public class NewRecipeFragment extends Fragment {
         }*/
         recipe.setIngredients(ingredients);
         recipe.setSteps(steps);
+        boolean isValid = true;
 
-
-    }
-/*
-
-
-        private static final String[] NUMBER = new String[] {
-                "One", "Two", "Three", "Four", "Five",
-                "Six", "Seven", "Eight", "Nine", "Ten"
-        };
-        ArrayAdapter<String> adapter;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-
-            adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_dropdown_item_1line, NUMBER);
-
-            textIn = (AutoCompleteTextView)findViewById(R.id.textin);
-            textIn.setAdapter(adapter);
-
-            buttonAdd = (Button)findViewById(R.id.add);
-            container = (LinearLayout) findViewById(R.id.container);
-            reList = (TextView)findViewById(R.id.relist);
-            reList.setMovementMethod(new ScrollingMovementMethod());
-            info = (TextView)findViewById(R.id.info);
-            info.setMovementMethod(new ScrollingMovementMethod());
-
-            buttonAdd.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    LayoutInflater layoutInflater =
-                            (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View addView = layoutInflater.inflate(R.layout.row, null);
-                    AutoCompleteTextView textOut = (AutoCompleteTextView)addView.findViewById(R.id.textout);
-                    textOut.setAdapter(adapter);
-                    textOut.setText(textIn.getText().toString());
-                    Button buttonRemove = (Button)addView.findViewById(R.id.remove);
-
-                    final View.OnClickListener thisListener = new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            info.append("thisListener called:\t" + this + "\n");
-                            info.append("Remove addView: " + addView + "\n\n");
-                            ((LinearLayout)addView.getParent()).removeView(addView);
-
-                            listAllAddView();
-                        }
-                    };
-
-                    buttonRemove.setOnClickListener(thisListener);
-                    container.addView(addView);
-
-                    info.append(
-                            "thisListener:\t" + thisListener + "\n"
-                                    + "addView:\t" + addView + "\n\n"
-                    );
-
-                    listAllAddView();
-                }
-            });
+        //ProductName
+        if(recipe.getRecipe_name().equals("")){
+            binding.textInputLayoutRecipeName.setError(getResources().getString((R.string.error_empty_field)));
+            binding.textInputLayoutRecipeName.requestFocus();
+            isValid = false;
+        }
+        //Category
+        if(recipe.getRecipe_category().equals("")){
+            binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_empty_field)));
+            if(isValid) binding.textInputLayoutRecipeCategory.requestFocus();
+            isValid = false;
+        }
+        else if(!CATEGORIES.contains(recipe.getRecipe_category())) {
+            binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_not_a_category)));
+            if (isValid) binding.textInputLayoutRecipeCategory.requestFocus();
+            isValid = false;
         }
 
-        private void listAllAddView(){
-            reList.setText("");
-
-            int childCount = container.getChildCount();
-            for(int i=0; i<childCount; i++){
-                View thisChild = container.getChildAt(i);
-                reList.append(thisChild + "\n");
-
-                AutoCompleteTextView childTextView = (AutoCompleteTextView) thisChild.findViewById(R.id.textout);
-                String childTextViewValue = childTextView.getText().toString();
-                reList.append("= " + childTextViewValue + "\n");
-            }
-        }
-
+        if(isValid){
+            insertId = model.addRecipe(recipe);
+         }
     }
-*/
+
 
 }

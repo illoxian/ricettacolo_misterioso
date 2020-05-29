@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -277,6 +278,7 @@ public class NewProductActivity extends AppCompatActivity {
 
         if(isValid){
             insertId = model.addProduct(product);
-        }
+            Log.d(TAG, "Added a product"+ product);
+            Log.d(TAG, "id afterInsertion: "+ insertId);        }
     }
 }
