@@ -36,4 +36,13 @@ public class ProductListViewModel extends ViewModel {
         return products;
     }
 
+    public MutableLiveData<List<Product>> getProductsSearched(String product_name){
+        if (products == null) {
+            products = new MutableLiveData<>();
+        }
+
+        Log.d(TAG, "getAllProducts: getProductsUpdate");
+        ProductsRepository.getInstance().getProductSearched(products, product_name);
+        return products;
+    }
 }

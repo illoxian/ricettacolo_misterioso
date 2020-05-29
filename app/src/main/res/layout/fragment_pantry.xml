@@ -13,10 +13,21 @@
             android:layout_height="wrap_content"
             tools:context=".ui.pantry.PantryFragment">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pantry_fragment_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/expiring_card"
                 android:layout_width="0dp"
-                android:layout_height="250dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -43,6 +54,17 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_chainStyle="packed" />
 
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/expiring_product_preview_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/expiring_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_expiring_products"
+                        app:layout_constraintVertical_bias="0.381" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/expiring_button"

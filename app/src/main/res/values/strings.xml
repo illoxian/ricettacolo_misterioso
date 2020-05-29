@@ -53,7 +53,7 @@
     <string name="title_preferences">Preferences</string>
     <string name="preferences_appearance">Appearance</string>
     <string name="preferences_dark_mode_title">Dark mode</string>
-    <string name="preferences_image_icon_title" >Show image (icon)</string>
+    <string name="preferences_image_icon_title">Show image (icon)</string>
     <string name="preferences_image_icon_summary">Show image of the product instead of the icon of the category</string>
     <string name="preferences_image_thumbnail_title">Show image (thumbnail)</string>
     <string name="preferences_image_thumbnail_summary">Show image of the product instead of the thumbnail of the category</string>
@@ -70,6 +70,11 @@
     <string name="api_text_off" translatable="false">Open Food Facts</string>
     <string name="api_text_ebay" translatable="false">Ebay</string>
     <string name="new_product_toast_success">Product added successfully</string>
+    <string name="product_expired_today">Expired today</string>
+    <string name="product_expired_from">"Expired from "</string>
+    <string name="days"> days</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shopping_list_dialog_title">Add to shopping list</string>
     <string name="item_shopping_list_delete">Delete item</string>
     <string name="shopping_list_dialog_name">Product name</string>

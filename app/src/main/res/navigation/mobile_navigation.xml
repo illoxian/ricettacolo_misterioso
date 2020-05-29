@@ -13,6 +13,12 @@
         <action
             android:id="@+id/showFragmentProductListAction"
             app:destination="@id/fragmentProductList"/>
+        <action
+            android:id="@+id/showExpiringProductListAction"
+            app:destination="@id/expiringProductList" />
+        <action
+            android:id="@+id/action_navigation_pantry_to_fragmentProductList"
+            app:destination="@id/fragmentProductList" />
 
     </fragment>
 
@@ -47,5 +53,10 @@
         android:name="com.pape.ricettacolomisterioso.ui.PreferencesFragment"
         android:label="@string/title_preferences"
         tools:layout="@xml/preferences" />
+    <fragment
+        android:id="@+id/expiringProductList"
+        android:name="com.pape.ricettacolomisterioso.ui.pantry.ExpiringProductListFragment"
+        android:label="fragment_expiring_product_list"
+        tools:layout="@layout/fragment_expiring_product_list" />
 
 </navigation>

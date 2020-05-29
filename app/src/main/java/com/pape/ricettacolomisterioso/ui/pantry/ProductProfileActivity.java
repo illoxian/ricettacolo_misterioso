@@ -17,6 +17,7 @@ import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.ProductProfileViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -94,42 +95,26 @@ public class ProductProfileActivity extends AppCompatActivity {
     }
 
     public void updateExpiringView(Date expiring, Date purchase_date){
-        expiring = ExcludeTime(expiring);
-        purchase_date = ExcludeTime(purchase_date);
+        expiring = Functions.ExcludeTime(expiring);
+        purchase_date = Functions.ExcludeTime(purchase_date);
         Date today = Calendar.getInstance().getTime();
-        Date today_not_time = ExcludeTime(today);
+        Date today_not_time = Functions.ExcludeTime(today);
 
-        int daysRemaining = time_in_day_remain(expiring,today_not_time);
-        int progress = percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+        int daysRemaining = Functions.time_in_day_remain(expiring,today_not_time);
 
-        String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
-        productProfileBinding.expiringValueTextView.setText(daysRemainingString);
-        productProfileBinding.progressBar.setProgress(progress);
-    }
-
-    public int time_in_day_remain(Date expiring, Date today){
-        long time_in_millisecond = expiring.getTime() -  today.getTime();
-        return (int)TimeUnit.DAYS.convert(time_in_millisecond, TimeUnit.MILLISECONDS);
-    }
-
-
-    public int percentual_for_bar(Date purchase, Date expiring, Date today){
-        long exp_pur = expiring.getTime() - purchase.getTime();
-        long tod_pur = today.getTime() - purchase.getTime();
-        double percentual_value_for_progress_bar = ((double)tod_pur/(double)exp_pur)*100;
-        return (int)Math.round(percentual_value_for_progress_bar);
-    }
-
-    private Date ExcludeTime(Date date)
-    {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        final int day = c.get(Calendar.DAY_OF_MONTH);
-        final int month = c.get(Calendar.MONTH);
-        final int year = c.get(Calendar.YEAR);
-        c.clear();
-        c.set(year, month, day);
-        return c.getTime();
+        if(daysRemaining > 0) {
+            int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+            String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
+            productProfileBinding.expiringValueTextView.setText(daysRemainingString);
+            productProfileBinding.progressBar.setProgress(progress);
+        }else if(daysRemaining == 0) {
+            productProfileBinding.expiringValueTextView.setText(getString(R.string.product_expired_today));
+            productProfileBinding.progressBar.setProgress(100);
+        }else {
+            String ExpiredFromXDays = getString(R.string.product_expired_from) + Math.abs(daysRemaining) + getString(R.string.days);
+            productProfileBinding.expiringValueTextView.setText(ExpiredFromXDays);
+            productProfileBinding.progressBar.setProgress(100);
+        }
     }
 
     private void setColorAddToShoppingListIcon(boolean lightUp){

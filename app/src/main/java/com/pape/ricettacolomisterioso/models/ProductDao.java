@@ -22,6 +22,15 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE category LIKE :category")
     List<Product> findByCategory(String category);
 
+    @Query("SELECT * FROM products ORDER BY expirationDate LIMIT 3")
+    List<Product> getMostExpiringProduct();
+
+    @Query("SELECT * FROM products ORDER BY expirationDate")
+    List<Product> getProductOrderByExpirationDate();
+
+    @Query("SELECT * FROM products WHERE product_name LIKE :product_name ||'%'")
+    List<Product> getSearchedProducts(String product_name);
+
     @Insert
     void insertAll(Product... products);
 
