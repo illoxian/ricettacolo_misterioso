@@ -12,7 +12,7 @@
         android:id="@+id/image_view_expiring_product_list_item_category"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,13 +40,13 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="Spaghetti"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnSurface"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_view_expiring_product_list_item_category"
-        android:ellipsize="end"
-        android:singleLine="true"/>
+        app:layout_constraintStart_toStartOf="@+id/text_view_expiring_product_list_item_category" />
 
     <ProgressBar
         android:id="@+id/progressBar_expiring_item"
@@ -54,7 +54,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:indeterminate="false"
         android:inputType="date"
         android:max="100"

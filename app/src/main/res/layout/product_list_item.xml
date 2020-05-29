@@ -40,7 +40,7 @@
         android:layout_marginBottom="16dp"
         android:text="Spaghetti"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnSurface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_view_product_list_item_category" />
 
