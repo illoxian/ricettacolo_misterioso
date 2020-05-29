@@ -22,9 +22,49 @@ import com.pape.ricettacolomisterioso.viewmodels.ShoppingListViewModel;
 import java.util.List;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ShoppingListViewHolder> {
+
+    private static final String TAG = "ShoppingListAdapter";
+
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
+    }
+
     private List<Item> items;
     private LayoutInflater layoutInflater;
-    private ShoppingListViewModel model;
+    private OnItemClickListener onItemClickListener;
+
+    public ShoppingListAdapter(Context context, List<Item> items, OnItemClickListener onItemClickListener) {
+        this.layoutInflater = LayoutInflater.from(context);
+        this.items = items;
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @NonNull
+    @Override
+    public ShoppingListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = this.layoutInflater.inflate(R.layout.shopping_list_item, parent, false);
+        return new ShoppingListViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ShoppingListViewHolder holder, int position) {
+        ((ShoppingListViewHolder) holder).bind(items.get(position), this.onItemClickListener);
+    }
+
+    @Override
+    public int getItemCount() {
+        if(items != null)
+            return items.size();
+        else return 0;
+    }
+
+    public void setData(List<Item> data) {
+        if (data != null) {
+            this.items = data;
+            notifyDataSetChanged();
+        }
+    }
+
 
     public static class ShoppingListViewHolder extends RecyclerView.ViewHolder {
         CheckBox item_checkbox;
@@ -40,54 +80,52 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             item_image_delete = view.findViewById(R.id.imageView_shopping_list_item_delete);
         }
 
-    }
+        void bind(Item item, OnItemClickListener onItemClickListener){
 
-    public ShoppingListAdapter(Context context, List<Item> items) {
-        this.items = items;
-        model = ViewModelProviders.of((FragmentActivity) context).get(ShoppingListViewModel.class);
-        layoutInflater = LayoutInflater.from(context);
-    }
+            item_checkbox.setChecked(item.isSelected());
+            item_name.setText(item.getItemName());
+            item_quantity.setText(item.getQuantity()+" "+itemView.getContext().getResources().getString(R.string.measure_unit_piece_abbreviation));
 
-    @NonNull
-    @Override
-    public ShoppingListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = this.layoutInflater.inflate(R.layout.shopping_list_item, parent, false);
-        return new ShoppingListViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ShoppingListViewHolder holder, int position) {
-        Item item = items.get(position);
-        holder.item_checkbox.setChecked(item.isSelected());
-        holder.item_name.setText(item.getItemName());
-        holder.item_quantity.setText(item.getQuantity()+" "+holder.itemView.getResources().getString(R.string.measure_unit_piece_abbreviation));
-        holder.item_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                model.updateIsSelected(item.getId(), isChecked);
-                if(isChecked){
-                    holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    //moveItemToEnd(holder.getAdapterPosition()); //move to the end
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(item);
                 }
-                else{
-                    holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                    //moveItemToTop(holder.getAdapterPosition()); //move to the top
+            });
+
+            /*item_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    model.updateIsSelected(item.getId(), isChecked);
+                    if(isChecked){
+                        holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        //moveItemToEnd(holder.getAdapterPosition()); //move to the end
+                    }
+                    else{
+                        holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                        //moveItemToTop(holder.getAdapterPosition()); //move to the top
+                    }
                 }
-            }
-        });
-        holder.item_image_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                model.delete(item);
-                removeItemAt(holder.getAdapterPosition());
-            }
-        });
+            });
+
+            holder.item_image_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    model.delete(item);
+                    removeItemAt(holder.getAdapterPosition());
+                }
+            });*/
+        }
+
     }
 
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
+
+
+
+
+
+
+
 
 
     public void removeItemAt(int position) {

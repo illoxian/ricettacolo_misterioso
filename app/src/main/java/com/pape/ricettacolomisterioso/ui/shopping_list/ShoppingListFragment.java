@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,10 +28,20 @@ import com.pape.ricettacolomisterioso.viewmodels.ShoppingListViewModel;
 import java.util.List;
 
 public class ShoppingListFragment extends Fragment {
+
     private static final String TAG = "ShoppingListFragment";
-    private FragmentShoppinglistBinding binding;
+
     private ShoppingListViewModel model;
     private ShoppingListAdapter mAdapter;
+
+    private FragmentShoppinglistBinding binding;
+
+    public ShoppingListFragment() {
+    }
+
+    public static ShoppingListFragment newInstance() {
+        return new ShoppingListFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,18 +52,26 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        model = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ShoppingListViewModel.class);
-        //model =  new ViewModelProvider(this).get(ShoppingListViewModel.class);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        //model = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ShoppingListViewModel.class);
+        model =  new ViewModelProvider(this).get(ShoppingListViewModel.class);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.shoppingListRecyclerView.setLayoutManager(layoutManager);
+
+        mAdapter = new ShoppingListAdapter(getActivity(), model.getItems().getValue(), new ShoppingListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Item item) {
+                Log.d(TAG, "onItemClick:"+item.getItemName().toString());
+            }
+        });
+        binding.shoppingListRecyclerView.setAdapter(mAdapter);
 
         model.getItems().observe(getViewLifecycleOwner(), new Observer<List<Item>>() {
             @Override
             public void onChanged(@Nullable List<Item> items) {
                 Log.d(TAG, "onChanged: Items:" + items);
-                mAdapter = new ShoppingListAdapter(getActivity(), items);
-                binding.shoppingListRecyclerView.setAdapter(mAdapter);
+                mAdapter.setData(model.getItems().getValue());
             }
         });
 
