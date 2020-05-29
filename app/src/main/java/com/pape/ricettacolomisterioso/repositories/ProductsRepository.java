@@ -52,12 +52,12 @@ public class ProductsRepository {
         ebayService = retrofit2.create(EbayService.class);
     }
 
-    public static synchronized ProductsRepository getInstance() {
-        if (instance == null) {
-            instance = new ProductsRepository();
+        public static synchronized ProductsRepository getInstance() {
+            if (instance == null) {
+                instance = new ProductsRepository();
+            }
+            return instance;
         }
-        return instance;
-    }
 
     public void addProduct(Product product, MutableLiveData<Long> insertId) {
 

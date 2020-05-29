@@ -281,6 +281,7 @@ public class NewProductActivity extends AppCompatActivity {
 
         if(isValid){
             insertId = model.addProduct(product);
-        }
+            Log.d(TAG, "Added a product"+ product);
+            Log.d(TAG, "id afterInsertion: "+ insertId);        }
     }
 }

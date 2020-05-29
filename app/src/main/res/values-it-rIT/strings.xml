@@ -66,6 +66,12 @@
     <string name="preferences_general">Generale</string>
     <string name="preferences_barcode_api_title">Seleziona l\'Api per il barcode</string>
     <string name="new_product_toast_success">Prodotto aggiunto correttamente</string>
+    <string name="new_recipe_input_name">Recipe Name</string>
+    <string name="new_recipe_input_category">Recipe Category</string>
+    <string name="new_recipe_input_insert_date">Insert Date</string>
+    <string name="recipe_ingredients_button_remove">remove</string>
+    <string name="new_recipe_fragment">New Recipe</string>
+    <string name="new_recipe_toast_succes">New Recipe Successfully Added</string>
     <string name="product_expired_today">Scaduto oggi</string>
     <string name="product_expired_from">"Scaduto da "</string>
     <string name="days">" giorni"</string>
