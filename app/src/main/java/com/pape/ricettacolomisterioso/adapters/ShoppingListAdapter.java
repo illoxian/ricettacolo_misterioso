@@ -117,11 +117,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         notifyItemRangeChanged(position, items.size());
     }
 
-    public void insertItem(Item item) {
-        int position = items.size();
+    public void insertItemAt(Item item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
         notifyItemRangeChanged(position, items.size());
+    }
+
+    public void insertItem(Item item) {
+        insertItemAt(item, items.size());
     }
 
     public void updateItem(Item item, int position) {

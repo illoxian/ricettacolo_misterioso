@@ -2,6 +2,7 @@ package com.pape.ricettacolomisterioso.ui.shopping_list;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +12,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ShoppingListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentShoppinglistBinding;
@@ -23,6 +28,8 @@ import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.viewmodels.ShoppingListViewModel;
 
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -105,8 +112,68 @@ public class ShoppingListFragment extends Fragment {
             }
         });
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.shoppingListRecyclerView);
+
         model.getAllItems();
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT /*| ItemTouchHelper.RIGHT*/) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+
+        Item deletedItem = null;
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+
+             switch (direction){
+                 case ItemTouchHelper.LEFT:
+                     deletedItem = model.getItems().getValue().get(position);
+                     model.delete(deletedItem);
+                     mAdapter.removeItemAt(position);
+                     Snackbar snackbar = Snackbar.make(binding.shoppingListRecyclerView,
+                             deletedItem.getItemName() + " " + getString(R.string.removed_from_shopping_list),
+                              Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
+                         @Override
+                         public void onClick(View v) {
+                             mAdapter.insertItemAt(deletedItem, position);
+                             model.addItem(deletedItem);
+                         }
+                     });
+                     snackbar.setAnchorView(binding.FabAddItem);
+                     snackbar.show();
+                     break;
+                 /*case ItemTouchHelper.RIGHT:
+
+                     break;*/
+             }
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red_400))
+                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_24)
+                    .addSwipeLeftLabel(getString(R.string.Delete))
+                    .setSwipeLeftLabelColor(ContextCompat.getColor(getContext(), R.color.white_50))
+                    .setSwipeLeftActionIconTint(ContextCompat.getColor(getContext(), R.color.white_50))
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
+
+
+
+
 
     private void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
