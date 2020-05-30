@@ -11,13 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Item;
-import com.pape.ricettacolomisterioso.viewmodels.ShoppingListViewModel;
 
 import java.util.List;
 
@@ -25,18 +22,20 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     private static final String TAG = "ShoppingListAdapter";
 
-    public interface OnItemClickListener {
+    public interface OnItemInteractions {
         void onItemClick(Item item);
+        void onItemClickDelete(Item item, int position);
+        void onItemCheckChanged(Item item, boolean check, TextView textViewName);
     }
 
     private List<Item> items;
     private LayoutInflater layoutInflater;
-    private OnItemClickListener onItemClickListener;
+    private OnItemInteractions onItemInteractions;
 
-    public ShoppingListAdapter(Context context, List<Item> items, OnItemClickListener onItemClickListener) {
+    public ShoppingListAdapter(Context context, List<Item> items, OnItemInteractions onItemInteractions) {
         this.layoutInflater = LayoutInflater.from(context);
         this.items = items;
-        this.onItemClickListener = onItemClickListener;
+        this.onItemInteractions = onItemInteractions;;
     }
 
     @NonNull
@@ -48,7 +47,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ShoppingListViewHolder holder, int position) {
-        ((ShoppingListViewHolder) holder).bind(items.get(position), this.onItemClickListener);
+        ((ShoppingListViewHolder) holder).bind(items.get(position), this.onItemInteractions);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             item_image_delete = view.findViewById(R.id.imageView_shopping_list_item_delete);
         }
 
-        void bind(Item item, OnItemClickListener onItemClickListener){
+        void bind(Item item, OnItemInteractions onItemInteractions){
 
             item_checkbox.setChecked(item.isSelected());
             item_name.setText(item.getItemName());
@@ -89,42 +88,26 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick(item);
+                    onItemInteractions.onItemClick(item);
                 }
             });
 
-            /*item_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    model.updateIsSelected(item.getId(), isChecked);
-                    if(isChecked){
-                        holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        //moveItemToEnd(holder.getAdapterPosition()); //move to the end
-                    }
-                    else{
-                        holder.item_name.setPaintFlags(holder.item_name.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                        //moveItemToTop(holder.getAdapterPosition()); //move to the top
-                    }
-                }
-            });
-
-            holder.item_image_delete.setOnClickListener(new View.OnClickListener() {
+            item_image_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    model.delete(item);
-                    removeItemAt(holder.getAdapterPosition());
+                    onItemInteractions.onItemClickDelete(item, getAdapterPosition());
                 }
-            });*/
+            });
+
+            item_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemInteractions.onItemCheckChanged(item, isChecked, item_name);
+                }
+            });
         }
 
     }
-
-
-
-
-
-
-
 
 
 
@@ -160,5 +143,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     public void moveItemToTop(int fromPosition){
         moveItem(fromPosition, 0);
+    }
+
+    public void setItemStrikethrough(boolean isChecked, TextView textViewName) {
+        if(isChecked){
+            textViewName.setPaintFlags(textViewName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        else{
+            textViewName.setPaintFlags(textViewName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
     }
 }

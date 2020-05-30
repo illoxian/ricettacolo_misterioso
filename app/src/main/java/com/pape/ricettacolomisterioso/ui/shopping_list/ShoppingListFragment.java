@@ -12,12 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ShoppingListAdapter;
@@ -59,10 +56,22 @@ public class ShoppingListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.shoppingListRecyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new ShoppingListAdapter(getActivity(), model.getItems().getValue(), new ShoppingListAdapter.OnItemClickListener() {
+        mAdapter = new ShoppingListAdapter(getActivity(), model.getItems().getValue(), new ShoppingListAdapter.OnItemInteractions() {
             @Override
             public void onItemClick(Item item) {
                 Log.d(TAG, "onItemClick:"+item.getItemName().toString());
+            }
+
+            @Override
+            public void onItemClickDelete(Item item, int position) {
+                model.delete(item);
+                mAdapter.removeItemAt(position);
+            }
+
+            @Override
+            public void onItemCheckChanged(Item item, boolean isChecked, TextView textViewName) {
+                model.updateIsSelected(item.getId(), isChecked);
+                mAdapter.setItemStrikethrough(isChecked, textViewName);
             }
         });
         binding.shoppingListRecyclerView.setAdapter(mAdapter);
