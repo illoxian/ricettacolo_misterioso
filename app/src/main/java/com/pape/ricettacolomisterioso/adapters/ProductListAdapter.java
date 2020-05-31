@@ -86,4 +86,34 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public int getItemCount() {
         return products.size();
     }
+
+
+    public void removeProductAt(int position) {
+        products.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, products.size());
+    }
+
+    public void insertProductAt(Product product, int position) {
+        products.add(position, product);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, products.size());
+    }
+
+    public void insertItem(Product product) {
+        insertProductAt(product, products.size());
+    }
+
+    public void updateProduct(Product product, int position) {
+        products.set(position, product);
+        notifyItemChanged(position);
+    }
+
+    public void moveProduct(int fromPosition, int toPosition){
+        Product product = products.get(fromPosition);
+        products.remove(fromPosition);
+        products.add(toPosition, product);
+
+        notifyItemMoved(fromPosition, toPosition);
+    }
 }

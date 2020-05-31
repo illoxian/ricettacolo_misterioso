@@ -15,6 +15,22 @@ public class ProductListViewModel extends ViewModel {
     private static final String TAG = "ProductListViewModel";
 
     private MutableLiveData<List<Product>> products;
+    private MutableLiveData<Integer> deleteId;
+    private MutableLiveData<Long> insertId;
+
+    public MutableLiveData<Integer> getDeleteId() {
+        if (deleteId == null) {
+            deleteId = new MutableLiveData<>();
+        }
+        return deleteId;
+    }
+
+    public MutableLiveData<Long> getInsertId() {
+        if (insertId == null) {
+            insertId = new MutableLiveData<>();
+        }
+        return insertId;
+    }
 
     public MutableLiveData<List<Product>> getProductsByCategory(String category) {
         if (products == null) {
@@ -44,5 +60,13 @@ public class ProductListViewModel extends ViewModel {
         Log.d(TAG, "getAllProducts: getProductsUpdate");
         ProductsRepository.getInstance().getProductSearched(products, product_name);
         return products;
+    }
+
+    public void delete(Product product){
+        ProductsRepository.getInstance().delete(product, getDeleteId());
+    }
+
+    public void addProduct(Product product){
+        ProductsRepository.getInstance().addItem(product, getInsertId());
     }
 }
