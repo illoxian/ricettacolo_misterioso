@@ -24,7 +24,7 @@
 
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView_week_previous"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:text="25 Mag - 31 Giu" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView_week_next"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
