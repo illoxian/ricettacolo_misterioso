@@ -38,7 +38,7 @@ public interface ProductDao {
     long insertProduct(Product product);
 
     @Delete
-    void delete(Product product);
+    int delete(Product product);
 }
 
 

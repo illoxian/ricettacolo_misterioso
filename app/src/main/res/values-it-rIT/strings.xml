@@ -86,4 +86,5 @@
     <string name="removed_from_shopping_list">rimosso dalla lista della spesa</string>
     <string name="Undo">Annulla</string>
     <string name="Delete">Elimina</string>
+    <string name="Add_to_shopping_list_swipe">Aggiungi</string>
 </resources>
