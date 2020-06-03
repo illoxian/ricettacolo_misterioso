@@ -1,7 +1,12 @@
 package com.pape.ricettacolomisterioso.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+
+import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.repositories.DailyMenuRepository;
+import com.pape.ricettacolomisterioso.utils.Functions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,48 +20,71 @@ public class MenuViewModel extends ViewModel {
 
     private int weekOffset;
 
-    private MutableLiveData<List<Date>> days;
+    private MutableLiveData<List<DailyMenu>> dailyMenus;
+    private MutableLiveData<Long> insertId;
 
     public MenuViewModel() {
         weekOffset = 0;
     }
 
-    public MutableLiveData<List<Date>> getDays() {
-        if (days == null) {
-            days = new MutableLiveData<>();
+    public MutableLiveData<List<DailyMenu>> getDailyMenus() {
+        if (dailyMenus == null) {
+            dailyMenus = new MutableLiveData<>();
         }
-        return days;
+        return dailyMenus;
     }
+
+    public MutableLiveData<Long> getInsertId() {
+        if (insertId == null) {
+            insertId = new MutableLiveData<>();
+        }
+        return insertId;
+    }
+
 
     public void ChangeWeek(int offset){
         weekOffset += offset;
-        getWeekDays();
+        getWeekDailyMenus();
     }
 
-    private void getWeekDays(){
+    private List<Date> getWeekDays(){
         Calendar c1 = Calendar.getInstance();
         int weekOfYear = c1.get(Calendar.WEEK_OF_YEAR);
 
         weekOfYear += weekOffset;
         c1.set(Calendar.WEEK_OF_YEAR, weekOfYear);
 
-        List<Date> dayList = new ArrayList<>();
+        List<Date> days = new ArrayList<>();
         for(int i=0; i<7; i++){
             int day = ((Calendar.MONDAY + 7 + i - 1) % 7)+1;
             c1.set(Calendar.DAY_OF_WEEK, day);
-            dayList.add(c1.getTime());
+            days.add(Functions.ExcludeTime(c1.getTime()));
         }
-        days.postValue(dayList);
+        return days;
     }
 
     public String getWeekRangeString() {
         SimpleDateFormat format = new SimpleDateFormat("d MMM", Locale.getDefault());
 
-        if (getDays().getValue().size() > 0) {
-            String startDayString = format.format(getDays().getValue().get(0).getTime());
-            String endDayString = format.format(getDays().getValue().get(getDays().getValue().size()-1).getTime());
+        List<Date> days = getWeekDays();
+
+        if (days.size() > 0) {
+            String startDayString = format.format(days.get(0).getTime());
+            String endDayString = format.format(days.get(days.size()-1).getTime());
             return startDayString + " - " + endDayString;
         }
         return null;
+    }
+
+    private void getWeekDailyMenus(){
+
+        List<Date> days = getWeekDays();
+        List<DailyMenu> menus = new ArrayList<>();
+
+        DailyMenuRepository.getInstance().getDailyMenusFromTo(dailyMenus, days);
+    }
+
+    public void insert(DailyMenu dailyMenu){
+        DailyMenuRepository.getInstance().insert(dailyMenu, getInsertId());
     }
 }

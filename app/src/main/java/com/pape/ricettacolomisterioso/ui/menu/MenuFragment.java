@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.pape.ricettacolomisterioso.adapters.MenuListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentMenuBinding;
+import com.pape.ricettacolomisterioso.models.DailyMenu;
 import com.pape.ricettacolomisterioso.viewmodels.MenuViewModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,15 +56,29 @@ public class MenuFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.menuRecyclerview.setLayoutManager(layoutManager);
 
-        mAdapter = new MenuListAdapter(getActivity(), model.getDays().getValue());
+        mAdapter = new MenuListAdapter(getActivity(), model.getDailyMenus().getValue(), new MenuListAdapter.OnItemInteractions() {
+            @Override
+            public void onRecipeClick(String recipe, Date day, int slot) {
+                if(recipe==null){
+                    Log.d(TAG, "onRecipeClick: Aggiungi una ricetta");
+                    List<String> list = new ArrayList<>();
+                    list.add("aaaa");
+                    model.insert(new DailyMenu(day, list));
+                    model.ChangeWeek(0);
+                }
+                else{
+                    Log.d(TAG, "onRecipeClick: "+ recipe);
+                }
+            }
+        });
         binding.menuRecyclerview.setAdapter(mAdapter);
 
-        model.getDays().observe(getViewLifecycleOwner(), new Observer<List<Date>>() {
+        model.getDailyMenus().observe(getViewLifecycleOwner(), new Observer<List<DailyMenu>>() {
             @Override
-            public void onChanged(@Nullable List<Date> days) {
-                Log.d(TAG, "onChanged: Items:" + days);
+            public void onChanged(@Nullable List<DailyMenu> dailyMenus) {
+                Log.d(TAG, "onChanged: Items:" + dailyMenus);
                 binding.toolbarTitle.setText(model.getWeekRangeString());
-                mAdapter.setData(model.getDays().getValue());
+                mAdapter.setData(model.getDailyMenus().getValue());
             }
         });
 
