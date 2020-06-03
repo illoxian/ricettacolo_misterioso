@@ -1,17 +1,11 @@
 package com.pape.ricettacolomisterioso.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import java.util.Date;
 import java.util.List;
 
-@Entity(tableName = "daily_menus")
 public class DailyMenu {
 
-    @PrimaryKey
     private Date day;
-
     private List<String> recipes;
 
     public DailyMenu() {

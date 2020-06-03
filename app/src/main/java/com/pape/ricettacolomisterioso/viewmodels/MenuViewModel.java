@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.models.DailyRecipe;
 import com.pape.ricettacolomisterioso.repositories.DailyMenuRepository;
 import com.pape.ricettacolomisterioso.utils.Functions;
 
@@ -81,10 +82,10 @@ public class MenuViewModel extends ViewModel {
         List<Date> days = getWeekDays();
         List<DailyMenu> menus = new ArrayList<>();
 
-        DailyMenuRepository.getInstance().getDailyMenusFromTo(dailyMenus, days);
+        DailyMenuRepository.getInstance().getDailyMenus(dailyMenus, days);
     }
 
-    public void insert(DailyMenu dailyMenu){
-        DailyMenuRepository.getInstance().insert(dailyMenu, getInsertId());
+    public void insert(DailyRecipe dailyRecipe){
+        DailyMenuRepository.getInstance().insert(dailyRecipe, getInsertId());
     }
 }

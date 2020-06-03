@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.pape.ricettacolomisterioso.adapters.MenuListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentMenuBinding;
 import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.models.DailyRecipe;
 import com.pape.ricettacolomisterioso.viewmodels.MenuViewModel;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +50,6 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        //model = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ShoppingListViewModel.class);
         model =  new ViewModelProvider(this).get(MenuViewModel.class);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -61,9 +60,7 @@ public class MenuFragment extends Fragment {
             public void onRecipeClick(String recipe, Date day, int slot) {
                 if(recipe==null){
                     Log.d(TAG, "onRecipeClick: Aggiungi una ricetta");
-                    List<String> list = new ArrayList<>();
-                    list.add("aaaa");
-                    model.insert(new DailyMenu(day, list));
+                    model.insert(new DailyRecipe(day, "sss", slot));
                     model.ChangeWeek(0);
                 }
                 else{
