@@ -16,46 +16,45 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ExpiringProductListAdapter;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
-import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.viewmodels.ExpiringProductListViewModel;
-import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 import com.pape.ricettacolomisterioso.databinding.FragmentPantryBinding;
-import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
+import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PantryFragment extends Fragment {
 
-    private PantryViewModel pantryViewModel;
-    private FragmentPantryBinding binding;
-    private ExpiringProductListViewModel model;
-    private ProductListViewModel model_product;
-    private MutableLiveData<List<Product>> liveData;
     private static String TAG = "PantryFragment";
+
+    private PantryViewModel model;
+    private ExpiringProductListAdapter expiringAdapter;
+    private ProductListAdapter searchAdapter;
+
+    private FragmentPantryBinding binding;
+
     private int NEW_PRODUCT_ADDED = 0;
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPantryBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
         setHasOptionsMenu(true);
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        model =  new ViewModelProvider(this).get(PantryViewModel.class);
 
         getMostExpiringProducts();
 
@@ -144,21 +143,37 @@ public class PantryFragment extends Fragment {
 
     public void onSearched(String newString){
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.pantryFragmentRecyclerView.setLayoutManager(layoutManager);
 
-        model_product =  new ViewModelProvider(requireActivity()).get(ProductListViewModel.class);
-        final Observer<List<Product>> observer = new Observer<List<Product>>() {
+        searchAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
             @Override
-            public void onChanged(List<Product> product) {
-                ProductListAdapter mAdapter = new ProductListAdapter(getActivity(), product);
-                binding.pantryFragmentRecyclerView.setAdapter(mAdapter);
-                Log.d(TAG, product.toString());
+            public void onItemClick(Product product) {
+                Intent intent = new Intent(getContext(), ProductProfileActivity.class);
+                Bundle productBundle = new Bundle();
+                productBundle.putParcelable("product", product);
+                intent.putExtra("product", productBundle);
+                startActivity(intent);
             }
-        };
-        liveData = model_product.getProductsSearched(newString);
 
-        liveData.observe(requireActivity(), observer);
+            @Override
+            public void onItemClickAddToShoppingList(Product product) {
+                model.addProductToShoppingList(product.getProduct_name());
+                Snackbar snackbar = Snackbar.make(getView(), R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG);
+                snackbar.setAnchorView(getActivity().findViewById(R.id.nav_view));
+                snackbar.show();
+            }
+        });
+        binding.pantryFragmentRecyclerView.setAdapter(searchAdapter);
+
+        model.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                searchAdapter.setData(model.getProducts().getValue());
+            }
+        });
+
+        model.getProductsSearched(newString);
     }
 
     private void startNewProductActivity(){
@@ -208,19 +223,31 @@ public class PantryFragment extends Fragment {
     }
 
     public void getMostExpiringProducts(){
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.expiringProductPreviewRecyclerView.setLayoutManager(layoutManager);
-        model =  new ViewModelProvider(this).get(ExpiringProductListViewModel.class);
-        final Observer<List<Product>> observer = new Observer<List<Product>>() {
+
+        expiringAdapter = new ExpiringProductListAdapter(getActivity(), model.getMostExpiringProducts().getValue(), new ExpiringProductListAdapter.OnItemInteractions() {
             @Override
-            public void onChanged(List<Product> product) {
-                ExpiringProductListAdapter mAdapter = new ExpiringProductListAdapter(getActivity(), product);
-                binding.expiringProductPreviewRecyclerView.setAdapter(mAdapter);
-                Log.d(TAG, product.toString());
+            public void onItemClick(Product product) {
+                Intent intent = new Intent(getActivity(), ProductProfileActivity.class);
+                Bundle productBundle = new Bundle();
+                productBundle.putParcelable("product", product);
+                intent.putExtra("product", productBundle);
+                startActivity(intent);
             }
-        };
-        liveData = model.getMostExpiringProduct();
-        liveData.observe(requireActivity(), observer);
+        });
+        binding.expiringProductPreviewRecyclerView.setAdapter(expiringAdapter);
+
+        model.getMostExpiringProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(@Nullable List<Product> products) {
+                Log.d(TAG, "onChanged: Items:" + products);
+                expiringAdapter.setData(model.getMostExpiringProducts().getValue());
+            }
+        });
+
+        model.getAllMostExpiringProducts();
     }
 
     @Override

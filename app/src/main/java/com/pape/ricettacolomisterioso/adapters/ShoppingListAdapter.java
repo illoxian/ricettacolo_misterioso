@@ -35,7 +35,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     public ShoppingListAdapter(Context context, List<Item> items, OnItemInteractions onItemInteractions) {
         this.layoutInflater = LayoutInflater.from(context);
         this.items = items;
-        this.onItemInteractions = onItemInteractions;;
+        this.onItemInteractions = onItemInteractions;
     }
 
     @NonNull

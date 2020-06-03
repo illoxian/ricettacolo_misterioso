@@ -46,9 +46,11 @@
 
     <ImageView
         android:id="@+id/image_view_product_list_item_add_shopping_list"
+        style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="16dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/image_view_product_list_item_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/image_view_product_list_item_category"
