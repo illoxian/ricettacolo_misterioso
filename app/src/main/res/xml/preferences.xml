@@ -12,7 +12,8 @@
             app:summary="%s"
             app:iconSpaceReserved="false"
             app:entries="@array/barcodeApiKey"
-            app:entryValues="@array/barcodeApiText"/>
+            app:entryValues="@array/barcodeApiText"
+            app:defaultValue="@string/api_key_off"/>
 
     </PreferenceCategory>
 
