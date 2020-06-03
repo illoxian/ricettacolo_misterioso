@@ -1,11 +1,14 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.utils.Functions;
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -97,10 +101,15 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
                 else
                     recipe=null;
 
-                if(recipe == null)
-                    tv.setText("Aggiungi Ricetta");
-                else
+                if(recipe == null){
+                    tv.setText(R.string.menu_add_recipe);
+                    card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSurface));
+                }
+                else{
                     tv.setText(recipe);
+                    card.setCardBackgroundColor(itemView.getResources().getColor(R.color.yellow_500_light));
+                }
+
 
                 final int slot = i;
                 card.setOnClickListener(new View.OnClickListener() {

@@ -91,4 +91,8 @@
     <string name="removed_from_shopping_list">removed from shopping list</string>
     <string name="Undo">Undo</string>
     <string name="Delete">Delete</string>
+    <string name="menu_dialog_name">Recipe name</string>
+    <string name="Add_to_shopping_list_swipe">Add</string>
+    <string name="menu_dialog_title">Add to menu</string>
+    <string name="menu_add_recipe">Add recipe</string>
 </resources>

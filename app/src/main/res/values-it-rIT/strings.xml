@@ -87,4 +87,7 @@
     <string name="Undo">Annulla</string>
     <string name="Delete">Elimina</string>
     <string name="Add_to_shopping_list_swipe">Aggiungi</string>
+    <string name="menu_dialog_name">Nome della ricetta</string>
+    <string name="menu_dialog_title">Aggiungi al menu</string>
+    <string name="menu_add_recipe">Aggiungi ricetta</string>
 </resources>

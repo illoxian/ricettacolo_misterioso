@@ -47,7 +47,6 @@ public class DailyMenuRepository {
 
                             if(recipe != null) recipes.add(recipe.getRecipe());
                             else recipes.add(null);
-                            Log.d(TAG, "run: "+recipes.toString());
                         }
                         menus.add(new DailyMenu(days.get(i), recipes));
                     }
