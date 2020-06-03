@@ -82,4 +82,9 @@
     <string name="measure_unit_piece_abbreviation">pz.</string>
     <string name="product_added_to_shopping_list">Prodotto aggiunto alla lista della spesa</string>
     <string name="product_removed_from_shopping_list">Prodotto rimosso dalla lista della spesa</string>
+    <string name="added_to_shopping_list">aggiunto alla lista della spesa</string>
+    <string name="removed_from_shopping_list">rimosso dalla lista della spesa</string>
+    <string name="Undo">Annulla</string>
+    <string name="Delete">Elimina</string>
+    <string name="Add_to_shopping_list_swipe">Aggiungi</string>
 </resources>

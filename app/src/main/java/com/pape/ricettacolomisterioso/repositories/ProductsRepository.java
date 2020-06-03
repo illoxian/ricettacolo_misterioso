@@ -150,6 +150,40 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
+    public void delete(Product product, MutableLiveData<Integer> deleteId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    int id = appDatabase.productDao().delete(product);
+                    Log.d(TAG, "run: deleteId:"+id);
+                    deleteId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
+    public void addItem(Product product, MutableLiveData<Long> insertId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    long id = appDatabase.productDao().insertProduct(product);
+                    insertId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
+
     public void getProductInfoOFF(MutableLiveData<Product> product, String code) {
         Call<OFFProductApiResponse> call = foodService.getProductInfo(code, Constants.FOOD_API_USER_AGENT);
         // It shows the use of method enqueue to do the HTTP request asynchronously.
