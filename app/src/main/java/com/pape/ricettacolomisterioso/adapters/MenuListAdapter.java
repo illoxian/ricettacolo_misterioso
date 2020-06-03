@@ -1,16 +1,12 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,13 +15,9 @@ import com.pape.ricettacolomisterioso.models.DailyMenu;
 import com.pape.ricettacolomisterioso.utils.Functions;
 
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuListViewHolder> {
@@ -49,7 +41,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
     @NonNull
     @Override
     public MenuListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = this.layoutInflater.inflate(R.layout.menu_row2, parent, false);
+        View view = this.layoutInflater.inflate(R.layout.menu_row, parent, false);
         return new MenuListViewHolder(view);
     }
 
@@ -103,11 +95,13 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
 
                 if(recipe == null){
                     tv.setText(R.string.menu_add_recipe);
+                    tv.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnSurface));
                     card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSurface));
                 }
                 else{
                     tv.setText(recipe);
-                    card.setCardBackgroundColor(itemView.getResources().getColor(R.color.yellow_500_light));
+                    tv.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnPrimary));
+                    card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorPrimaryVariant));
                 }
 
 
