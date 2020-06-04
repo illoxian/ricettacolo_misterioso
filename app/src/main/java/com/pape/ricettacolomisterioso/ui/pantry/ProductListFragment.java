@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,31 +33,16 @@ import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProductListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProductListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "FragmentProductList";
     private FragmentProductListBinding binding;
     private ProductListViewModel model;
     private MutableLiveData<List<Product>> liveData;
     private ProductListAdapter mAdapter;
     public ProductListFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentProductList.
-     */
     // TODO: Rename and change types and number of parameters
     public static ProductListFragment newInstance(String param1, String param2) {
         ProductListFragment fragment = new ProductListFragment();
@@ -71,7 +58,7 @@ public class ProductListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setHasOptionsMenu(true);
         Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.productListRecyclerView.setLayoutManager(layoutManager);
@@ -146,4 +133,13 @@ public class ProductListFragment extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            Navigation.findNavController(getView()).navigateUp();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

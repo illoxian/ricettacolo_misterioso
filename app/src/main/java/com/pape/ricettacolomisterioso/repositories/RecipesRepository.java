@@ -74,5 +74,22 @@ public class RecipesRepository {
         }).start();
 
     }
+    public void delete(Recipe recipe, MutableLiveData<Integer> deleteId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    int id = appDatabase.recipeDao().delete(recipe);
+                    Log.d(TAG, "run: deleteId:"+id);
+                    deleteId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
 
 }

@@ -1,40 +1,52 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
 
+
 import android.content.Context;
+import android.os.Binder;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
+
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.viewbinding.ViewBinding;
 
-import com.google.android.gms.vision.text.Line;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentNewRecipeBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.viewmodels.NewRecipeViewModel;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.getCodeCacheDir;
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class NewRecipeFragment extends Fragment {
     private static final String TAG = "NewRecipeFragment";
@@ -45,18 +57,19 @@ public class NewRecipeFragment extends Fragment {
     private MutableLiveData<Long> insertId;
     private NewRecipeViewModel model;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentNewRecipeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        initAddIngredient();
-        initAddStep();
-
         setHasOptionsMenu(true);
         initTextInputs();
-        initFAB();
+
+       // initStepsCardView();
+
+
 
 
         model = new ViewModelProvider(this).get(NewRecipeViewModel.class);
@@ -65,17 +78,30 @@ public class NewRecipeFragment extends Fragment {
             public void onChanged(Long insertId) {
                 if(insertId>=0) {
                     Toast.makeText(getContext(), R.string.new_recipe_toast_succes, Toast.LENGTH_LONG).show();
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.popBackStack();
+                    Navigation.findNavController(getView()).popBackStack();
                 }
             }
         };
         insertId = model.getInsertId();
         insertId.observe(this.getActivity(), observer);
-
+        int count = container.getChildCount();
+        Log.d(TAG, "count"+count);
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //initIngredientsCardView(view);
+
+        initCardView(binding.newRecipeIngredientsAddButton,
+                view.findViewById(R.id.new_recipe_ingredientList_linearLayout),
+                R.layout.new_recipe_item);
+
+        initCardView(binding.newRecipeStepsAddButton,
+                view.findViewById(R.id.new_recipe_stepList_linearLayout),
+                R.layout.new_recipe_item);
+    }
 
     private void initTextInputs(){
         binding.textInputRecipeName.addTextChangedListener(new TextWatcher() {
@@ -105,41 +131,33 @@ public class NewRecipeFragment extends Fragment {
 
     }
 
-
-    private void initFAB(){
-        binding.newRecipeFab.setOnClickListener(v -> addRecipe());
-    }
-    private void initAddIngredient() {
-        binding.newRecipeIngredientAdd.setOnClickListener(v -> {
-
+    private void initCardView(Button button, LinearLayout layoutToInflate, int itemToInflate ) {
+        button.setOnClickListener(v-> {
+            LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View addView = layoutInflater.inflate(itemToInflate, null);
+            layoutToInflate.addView(addView);
+            layoutToInflate.getChildAt(layoutToInflate.getChildCount() -1).requestFocus();
         });
-
-    }
-    private void initAddStep(){
-        EditText textIn = binding.newRecipeStepText;
-        binding.newRecipeStepAdd.setOnClickListener(v -> {
-            Log.d(TAG, "ButtonClicked");
-            final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View addView = inflater.inflate(R.layout.new_recipe_item, null);
-            Button buttonRemove = addView.findViewById(R.id.new_recipe_step_remove);
- /*
-            EditText tw = addView.findViewById(R.id.new_recipe_step_text_new);
-            tw.setText(textIn.getText().toString());
-
-            final View.OnClickListener thisListener = v1 -> ((LinearLayout)addView.getParent()).removeView(addView);
-
-            buttonRemove.setOnClickListener(thisListener);
- */          LinearLayout container = binding.newRecipeStepsContainer;
-            container.addView(buttonRemove);
-            Log.d(TAG, container.toString());
-
-
-
-
-        });
-
     }
 
+
+
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.new_recipe_app_bar_menu, menu);
+
+    }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id==R.id.new_recipe_app_bar_add) {
+            addRecipe();
+            return true;
+        }
+        if (id==android.R.id.home) {
+            Navigation.findNavController(getView()).navigateUp();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void addRecipe(){
         if(recipe==null) recipe = new Recipe();
@@ -147,21 +165,7 @@ public class NewRecipeFragment extends Fragment {
         recipe.setRecipe_name(binding.textInputRecipeName.getText().toString());
         recipe.setRecipe_category(binding.textInputRecipeCategory.getText().toString());
 
-        List<String> ingredients = new ArrayList<String>();
-        List<String> steps = new ArrayList<String>();
-        int nIngredients=0;
-        int nSteps=0;
-        for (int i =0; i<nIngredients; i++) {
-            String curr = binding.newRecipeIngredientText.getText().toString();
-            ingredients.add(curr);
 
-        }
-/*        for (int i=0; i<nSteps; i++) {
-            String curr = binding.newRecipeStepText.getText().toString();
-            steps.add(curr);
-        }*/
-        recipe.setIngredients(ingredients);
-        recipe.setSteps(steps);
         boolean isValid = true;
 
         //ProductName
@@ -183,9 +187,46 @@ public class NewRecipeFragment extends Fragment {
         }
 
         if(isValid){
+
+            List<String> ingredients = new ArrayList<String>();
+            List<String> steps = new ArrayList<String>();
+
+            LinearLayout ingBind = binding.newRecipeIngredientListLinearLayout;
+            LinearLayout stepBind = binding.newRecipeStepListLinearLayout;
+
+            for (int i=0; i < ingBind.getChildCount(); i++ ) {
+                TextInputLayout text = (TextInputLayout) ingBind.getChildAt(i);
+                String prov = text.getEditText().getText().toString();
+                if( prov.length() == 0 ) { }
+                else { ingredients.add(prov);
+                Log.d(TAG, "ingredient n"+ (i+1) + ">  " + prov);
+                }
+
+            }
+
+            for (int i=0; i < stepBind.getChildCount(); i++ ) {
+                TextInputLayout text = (TextInputLayout) stepBind.getChildAt(i);
+                String prov = text.getEditText().getText().toString();
+                if( prov.length() == 0 ) { }
+                else {
+                steps.add(prov);
+                Log.d(TAG, "step n"+ (i+1) + ">  " + prov); }
+            }
+
+
+
+
+
+
+
+
+            recipe.setIngredients(ingredients);
+            recipe.setSteps(steps);
+
             insertId = model.addRecipe(recipe);
          }
     }
+
 
 
 }

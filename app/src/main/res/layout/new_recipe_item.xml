@@ -1,27 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/new_recipe_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/new_recipe_item_layout">
-    <TextView
-        android:id="@+id/new_recipe_step_counter_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView" />
-    <Button
-        android:id="@+id/new_recipe_step_remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="Remove" />
-    <EditText
-        android:id="@+id/new_recipe_step_text_new"
+    android:layout_margin="8dp"
+    android:orientation="vertical">-->
+
+    <com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/new_recipe_step_remove" />
-</RelativeLayout>
+    android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:paddingStart="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+<!--
+</LinearLayout>
+-->

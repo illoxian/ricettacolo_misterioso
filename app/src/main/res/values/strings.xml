@@ -79,7 +79,6 @@
     <string name="product_expired_today">Expired today</string>
     <string name="product_expired_from">"Expired from "</string>
     <string name="days"> days</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="shopping_list_dialog_title">Add to shopping list</string>
     <string name="item_shopping_list_delete">Delete item</string>
     <string name="shopping_list_dialog_name">Product name</string>
@@ -91,4 +90,5 @@
     <string name="removed_from_shopping_list">removed from shopping list</string>
     <string name="Undo">Undo</string>
     <string name="Delete">Delete</string>
+    <string name="Add_to_shopping_list_swipe">Add</string>
 </resources>

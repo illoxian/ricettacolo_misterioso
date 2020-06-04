@@ -28,7 +28,7 @@ public interface RecipeDao {
     long insert(Recipe recipe);
 
     @Delete
-    void delete(Recipe recipe);
+    int delete(Recipe recipe);
 }
 
 

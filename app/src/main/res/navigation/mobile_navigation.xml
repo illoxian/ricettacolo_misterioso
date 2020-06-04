@@ -28,11 +28,15 @@
         android:label="@string/title_recipes"
         tools:layout="@layout/fragment_recipes" >
         <action
-            android:id="@+id/action_navigation_recipes_to_recipeListFragment"
+            android:id="@+id/showRecipeslistFragmentAction"
             app:destination="@id/recipeListFragment" />
         <action
             android:id="@+id/action_add_new_recipe"
-            app:destination="@id/newRecipeFragment" />
+            app:destination="@id/newRecipeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -67,7 +71,11 @@
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.pape.ricettacolomisterioso.ui.recipes.RecipeListFragment"
-        android:label="RecipeListFragment" />
+        android:label="RecipeListFragment" >
+        <argument
+            android:name="Category"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/expiringProductList"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.ExpiringProductListFragment"

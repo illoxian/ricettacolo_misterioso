@@ -10,7 +10,6 @@
         <item>@string/recipes_categories_main_courses</item>
         <item>@string/recipes_categories_side_dishes</item>
         <item>@string/recipes_categories_single_courses</item>
-        <item>@string/recipes_categories_appetizers</item>
     </string-array>
     <string-array name="categoriesString">
         <item>@string/pantry_categories_fruits_and_vegetables</item>

@@ -86,6 +86,7 @@ public class PantryFragment extends Fragment {
                     int res = getCardViewStringRes(cardView);
                     PantryFragmentDirections.ShowFragmentProductListAction action = PantryFragmentDirections.showFragmentProductListAction(res);
                     Navigation.findNavController(view).navigate(action);
+
                 }
             });
     }

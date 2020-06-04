@@ -132,6 +132,7 @@
                 android:weightSum="2">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_appetizers_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_weight="1"
@@ -177,6 +178,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_first_courses_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_marginStart="8dp"
@@ -236,6 +238,7 @@
                 android:weightSum="2">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_main_courses_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_weight="1"
@@ -281,6 +284,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_desserts_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_marginStart="8dp"
@@ -340,6 +344,7 @@
                 android:weightSum="2">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_side_dishes_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_weight="1"
@@ -385,6 +390,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_single_courses_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_marginStart="8dp"
@@ -444,6 +450,7 @@
                 android:weightSum="2">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_condiments_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_weight="1"
@@ -489,6 +496,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_bread_and_pizza_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_marginStart="8dp"
@@ -548,6 +556,7 @@
                 android:weightSum="2">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_drinks_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_weight="1"
@@ -593,6 +602,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/recipes_see_all_cardView"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     android:layout_marginStart="8dp"
