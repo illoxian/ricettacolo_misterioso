@@ -87,4 +87,5 @@
     <string name="Undo">Annulla</string>
     <string name="Delete">Elimina</string>
     <string name="Add_to_shopping_list_swipe">Aggiungi</string>
+    <string name="item_new_recipe_delete">item_new_recipe_delete</string>
 </resources>

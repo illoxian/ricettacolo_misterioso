@@ -1,12 +1,18 @@
 package com.pape.ricettacolomisterioso.models;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.pape.ricettacolomisterioso.R;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity(tableName = "recipes")
@@ -138,5 +144,26 @@ public class Recipe implements Parcelable {
         }
     };
 
+    public int getCategoryIconId(Context context){
+        Resources res = context.getResources();
+        TypedArray icons = res.obtainTypedArray(R.array.recipeCategoriesIcon);
+        List categories = Arrays.asList(res.getStringArray(R.array.recipeCategoriesString));
+
+        int index = categories.indexOf(getRecipe_category());
+        int resourceId = icons.getResourceId(index, -1);
+        icons.recycle();
+        return resourceId;
+    }
+
+    public int getCategoryPreviewId(Context context){
+        Resources res = context.getResources();
+        TypedArray previews = res.obtainTypedArray(R.array.recipeCategoriesPreviews);
+        List categories = Arrays.asList(res.getStringArray(R.array.recipeCategoriesString));
+
+        int index = categories.indexOf(getRecipe_category());
+        int resourceId = previews.getResourceId(index, -1);
+        previews.recycle();
+        return resourceId;
+    }
 
 }

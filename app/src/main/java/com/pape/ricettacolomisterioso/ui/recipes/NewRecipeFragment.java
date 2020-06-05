@@ -3,7 +3,9 @@ package com.pape.ricettacolomisterioso.ui.recipes;
 
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Layout;
@@ -20,11 +22,15 @@ import android.widget.ArrayAdapter;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -33,6 +39,8 @@ import androidx.navigation.Navigation;
 import androidx.viewbinding.ViewBinding;
 
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
@@ -57,12 +65,29 @@ public class NewRecipeFragment extends Fragment {
     private MutableLiveData<Long> insertId;
     private NewRecipeViewModel model;
 
+/*
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        BottomNavigationView navBar = getActivity().findViewById(R.id.nav_view);
+
+        navBar.setVisibility(View.VISIBLE);
+    }
+*/
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+/*
+
+        BottomNavigationView navBar = getActivity().findViewById(R.id.nav_view);
+        navBar.setVisibility(View.GONE);
+*/
+
         binding = FragmentNewRecipeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
 
         setHasOptionsMenu(true);
         initTextInputs();
@@ -136,7 +161,25 @@ public class NewRecipeFragment extends Fragment {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View addView = layoutInflater.inflate(itemToInflate, null);
             layoutToInflate.addView(addView);
-            layoutToInflate.getChildAt(layoutToInflate.getChildCount() -1).requestFocus();
+            layoutToInflate.getChildAt(layoutToInflate.getChildCount()-1).requestFocus();
+            TextInputLayout textInputLayout = (TextInputLayout)layoutToInflate.getChildAt(layoutToInflate.getChildCount()-1);
+            textInputLayout.setEndIconVisible(true);
+            textInputLayout.setEndIconActivated(true);
+            textInputLayout.setEndIconOnClickListener(v1 -> {
+                layoutToInflate.removeView(textInputLayout);
+            });
+
+     /*       addView.findViewById()
+            final View.OnClickListener removeListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    layoutToInflate.removeView((View)button1.getParent());
+                }
+            };
+            button1.setOnClickListener(removeListener);
+*/
+
+
         });
     }
 

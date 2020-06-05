@@ -91,4 +91,8 @@
     <string name="Undo">Undo</string>
     <string name="Delete">Delete</string>
     <string name="Add_to_shopping_list_swipe">Add</string>
+    <string name="item_new_recipe_delete">item_new_recipe_delete</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

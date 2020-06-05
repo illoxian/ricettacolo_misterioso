@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="recipeCategoriesString">
-        <item>@string/recipes_categories_appetizers</item>
-        <item>@string/recipes_categories_bread_and_pizza</item>
-        <item>@string/recipes_categories_condiments</item>
-        <item>@string/recipes_categories_desserts</item>
-        <item>@string/recipes_categories_drinks</item>
-        <item>@string/recipes_categories_first_courses</item>
-        <item>@string/recipes_categories_main_courses</item>
-        <item>@string/recipes_categories_side_dishes</item>
-        <item>@string/recipes_categories_single_courses</item>
-    </string-array>
     <string-array name="categoriesString">
         <item>@string/pantry_categories_fruits_and_vegetables</item>
         <item>@string/pantry_categories_meat</item>
@@ -48,6 +37,42 @@
         <item>@drawable/icon_categories_water_and_drinks</item>
     </integer-array>
 
+    <string-array name="recipeCategoriesString">
+        <item>@string/recipes_categories_appetizers</item>
+        <item>@string/recipes_categories_bread_and_pizza</item>
+        <item>@string/recipes_categories_condiments</item>
+        <item>@string/recipes_categories_desserts</item>
+        <item>@string/recipes_categories_drinks</item>
+        <item>@string/recipes_categories_first_courses</item>
+        <item>@string/recipes_categories_main_courses</item>
+        <item>@string/recipes_categories_side_dishes</item>
+        <item>@string/recipes_categories_single_courses</item>
+    </string-array>
+
+    <integer-array name="recipeCategoriesIcon">
+        <item>@drawable/icon_categories_appetizers</item>
+        <item>@drawable/icon_categories_pizza</item>
+        <item>@drawable/icon_categories_condiments</item>
+        <item>@drawable/icon_categories_desserts</item>
+        <item>@drawable/icon_categories_drinks</item>
+        <item>@drawable/icon_categories_first_courses</item>
+        <item>@drawable/icon_categories_main_courses</item>
+        <item>@drawable/icon_categories_side_dishes</item>
+        <item>@drawable/icon_categories_single_courses</item>
+    </integer-array>
+
+    <integer-array name="recipeCategoriesPreviews">
+        <item>@drawable/previews_fruits_and_vegetables</item>
+        <item>@drawable/previews_meat</item>
+        <item>@drawable/previews_fish</item>
+        <item>@drawable/previews_pasta_and_rice</item>
+        <item>@drawable/previews_milk_and_cheese</item>
+        <item>@drawable/previews_ice_cream_and_frozen_food</item>
+        <item>@drawable/previews_bread_and_pizza</item>
+        <item>@drawable/previews_breakfast_and_sweets</item>
+        <item>@drawable/previews_oil_and_condiments</item>
+        <item>@drawable/previews_water_and_drinks</item>
+    </integer-array>
     <string-array name="barcodeApiText">
         <item>@string/api_key_off</item>
         <item>@string/api_key_ebay</item>

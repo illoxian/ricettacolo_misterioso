@@ -75,11 +75,23 @@
         <argument
             android:name="Category"
             app:argType="integer" />
+        <action
+            android:id="@+id/showRecipeProfile"
+            app:destination="@id/recipeProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/expiringProductList"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.ExpiringProductListFragment"
         android:label="fragment_expiring_product_list"
         tools:layout="@layout/fragment_expiring_product_list" />
+    <fragment
+        android:id="@+id/recipeProfileFragment"
+        android:name="com.pape.ricettacolomisterioso.RecipeProfileFragment"
+        android:label="fragment_recipe_profile"
+        tools:layout="@layout/fragment_recipe_profile" >
+        <argument
+            android:name="Recipe"
+            app:argType="com.pape.ricettacolomisterioso.models.Recipe" />
+    </fragment>
 
 </navigation>
