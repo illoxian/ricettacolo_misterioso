@@ -95,4 +95,7 @@
     <string name="Add_to_shopping_list_swipe">Add</string>
     <string name="menu_dialog_title">Add to menu</string>
     <string name="menu_add_recipe">Add recipe</string>
+    <string name="preferences_notifications">Notifications</string>
+    <string name="preferences_notifications_launch_dinner">Notications launch/dinner</string>
+    <string name="preferences_notifications_launch_dinner_summary">Remind me today\'s menu</string>
 </resources>

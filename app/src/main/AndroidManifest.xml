@@ -17,6 +17,8 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
+        <receiver android:name=".NotificationsReceiver" />
+
         <activity android:name=".ui.pantry.ScannerActivity" />
         <activity
             android:name=".ui.pantry.ProductProfileActivity"

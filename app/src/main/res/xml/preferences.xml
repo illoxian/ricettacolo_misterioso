@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        app:key="appearance_general"
+        app:key="general_category"
         app:title="@string/preferences_general"
         app:iconSpaceReserved="false">
 
@@ -18,7 +18,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:key="appearance_category"
+        app:key="appearence_category"
         app:title="@string/preferences_appearance"
         app:iconSpaceReserved="false">
 
@@ -38,6 +38,20 @@
             app:title="@string/preferences_image_thumbnail_title"
             app:summary="@string/preferences_image_thumbnail_summary"
             app:iconSpaceReserved="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="notifications_category"
+        app:title="@string/preferences_notifications"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:key="notifications_launch_dinner"
+            app:title="@string/preferences_notifications_launch_dinner"
+            app:summary="@string/preferences_notifications_launch_dinner_summary"
+            app:iconSpaceReserved="false"
+            app:defaultValue="true"/>
 
     </PreferenceCategory>
 
