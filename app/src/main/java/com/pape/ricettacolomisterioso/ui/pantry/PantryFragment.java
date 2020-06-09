@@ -1,8 +1,10 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +49,7 @@ public class PantryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPantryBinding.inflate(getLayoutInflater());
         setHasOptionsMenu(true);
+
         return binding.getRoot();
     }
 
@@ -90,6 +93,7 @@ public class PantryFragment extends Fragment {
             });
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.pantry_app_bar_menu, menu);
@@ -127,6 +131,34 @@ public class PantryFragment extends Fragment {
                         return false;
                     }
                 });
+            }
+        });
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                binding.categoryLayout.setVisibility(View.VISIBLE);
+                binding.expiringCard.setVisibility(View.VISIBLE);
+                binding.categoryProductTextview.setVisibility(View.VISIBLE);
+                binding.pantryFragmentRecyclerView.setVisibility(View.GONE);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        onSearched(query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        binding.categoryLayout.setVisibility(View.GONE);
+                        binding.expiringCard.setVisibility(View.GONE);
+                        binding.categoryProductTextview.setVisibility(View.GONE);
+                        binding.pantryFragmentRecyclerView.setVisibility(View.VISIBLE);
+
+                        onSearched(newText);
+                        return false;
+                    }
+                });
+
             }
         });
     }
