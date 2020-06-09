@@ -32,6 +32,7 @@ import com.pape.ricettacolomisterioso.databinding.FragmentProductListBinding;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.ui.MainActivity;
 import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
+import com.pape.ricettacolomisterioso.viewmodels.RecipeListViewModel;
 
 import java.util.List;
 
@@ -68,6 +69,8 @@ public class ProductListFragment extends Fragment {
         Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.productListRecyclerView.setLayoutManager(layoutManager);
+        model = new ViewModelProvider(this).get(ProductListViewModel.class);
+
 
         mAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
             @Override
@@ -89,8 +92,6 @@ public class ProductListFragment extends Fragment {
         });
         binding.productListRecyclerView.setAdapter(mAdapter);
 
-        Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
-
         model.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
@@ -106,7 +107,7 @@ public class ProductListFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -135,9 +136,9 @@ public class ProductListFragment extends Fragment {
                     });
                     snackbar.show();
                     break;
-                 case ItemTouchHelper.RIGHT:
+/*                 case ItemTouchHelper.RIGHT:
 
-                     break;
+                     break;*/
             }
         }
 

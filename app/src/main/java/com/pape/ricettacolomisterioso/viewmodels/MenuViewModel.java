@@ -54,7 +54,7 @@ public class MenuViewModel extends ViewModel {
 
         weekOfYear += weekOffset;
         c1.set(Calendar.WEEK_OF_YEAR, weekOfYear);
-
+        c1.setFirstDayOfWeek(Calendar.MONDAY);
         List<Date> days = new ArrayList<>();
         for(int i=0; i<7; i++){
             int day = ((Calendar.MONDAY + 7 + i - 1) % 7)+1;
