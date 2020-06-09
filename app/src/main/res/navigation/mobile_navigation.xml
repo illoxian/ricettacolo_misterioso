@@ -86,7 +86,7 @@
         tools:layout="@layout/fragment_expiring_product_list" />
     <fragment
         android:id="@+id/recipeProfileFragment"
-        android:name="com.pape.ricettacolomisterioso.RecipeProfileFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.recipes.RecipeProfileFragment"
         android:label="fragment_recipe_profile"
         tools:layout="@layout/fragment_recipe_profile" >
         <argument

@@ -62,16 +62,15 @@
     </integer-array>
 
     <integer-array name="recipeCategoriesPreviews">
-        <item>@drawable/previews_fruits_and_vegetables</item>
-        <item>@drawable/previews_meat</item>
-        <item>@drawable/previews_fish</item>
-        <item>@drawable/previews_pasta_and_rice</item>
-        <item>@drawable/previews_milk_and_cheese</item>
-        <item>@drawable/previews_ice_cream_and_frozen_food</item>
+        <item>@drawable/previews_appetizers</item>
         <item>@drawable/previews_bread_and_pizza</item>
-        <item>@drawable/previews_breakfast_and_sweets</item>
-        <item>@drawable/previews_oil_and_condiments</item>
-        <item>@drawable/previews_water_and_drinks</item>
+        <item>@drawable/previews_condiments</item>
+        <item>@drawable/previews_desserts</item>
+        <item>@drawable/previews_drinks</item>
+        <item>@drawable/previews_first_courses</item>
+        <item>@drawable/previews_main_courses</item>
+        <item>@drawable/previews_side_dishes</item>
+        <item>@drawable/previews_single_courses</item>
     </integer-array>
     <string-array name="barcodeApiText">
         <item>@string/api_key_off</item>

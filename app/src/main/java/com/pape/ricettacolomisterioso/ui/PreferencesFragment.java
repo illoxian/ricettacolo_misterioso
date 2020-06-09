@@ -3,6 +3,7 @@ package com.pape.ricettacolomisterioso.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.navigation.NavController;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -16,7 +17,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
 
         //set version summary
         Preference versionPreference = findPreference("version");
-        versionPreference.setSummary(requireContext().getResources().getString(R.string.app_name) + " 0.1"); //version harcoded, change this when implementing app versions
+        versionPreference.setSummary(requireContext().getResources().getString(R.string.app_name) + " 0.1"); //version hardcoded, change this when implementing app versions
 
         //set listener to switch instantly to dark mode and vice versa
         Preference darkModePreference = findPreference("dark_mode");

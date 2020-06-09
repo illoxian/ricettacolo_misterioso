@@ -20,9 +20,13 @@
 
 ### 	Menu Settimanale
 
-#### 		Scheda odierna
+#### 		View Settimanale
 
-#### 		View Settimanale/Mensile
+#### Inserimento di pranzo e cena
+
+
+
+
 
 
 

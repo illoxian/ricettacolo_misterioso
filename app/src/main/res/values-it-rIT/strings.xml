@@ -88,4 +88,7 @@
     <string name="Delete">Elimina</string>
     <string name="Add_to_shopping_list_swipe">Aggiungi</string>
     <string name="item_new_recipe_delete">item_new_recipe_delete</string>
+    <string name="category_recipe_profile">Categoria</string>
+    <string name="preferences_shopping_title">New Shopping List Fragment</string>
+    <string name="hello_blank_fragment">Leccami lo scroto</string>
 </resources>
