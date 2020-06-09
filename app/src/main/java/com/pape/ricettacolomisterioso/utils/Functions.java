@@ -1,5 +1,13 @@
 package com.pape.ricettacolomisterioso.utils;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
+
+import androidx.annotation.ColorInt;
+
+import com.pape.ricettacolomisterioso.R;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +36,14 @@ public class Functions {
         c.clear();
         c.set(year, month, day);
         return c.getTime();
+    }
+
+    public static @ColorInt int getThemeColor(Context context, int ResId){
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(ResId, typedValue, true);
+        @ColorInt int color = typedValue.data;
+        return color;
     }
 
 }

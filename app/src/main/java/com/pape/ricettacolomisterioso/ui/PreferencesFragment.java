@@ -34,6 +34,20 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+        Preference launchDinnerNotificationsPreference = findPreference("notifications_launch_dinner");
+
+        launchDinnerNotificationsPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                boolean selectedValue = (boolean) newValue;
+                if(selectedValue)
+                    MainActivity.SetAlarmManager(getContext());
+                else
+                    MainActivity.ClearAlarmManager();
+                return true;
+            }
+        });
     }
 
 }

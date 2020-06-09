@@ -4,26 +4,23 @@
 
     <style name="Theme.MyApp" parent="Base.Theme.MyApp">
 
-        <item name="colorPrimary">@color/yellow_500</item>
-        <item name="colorPrimaryVariant">@color/yellow_500_dark</item>
-        <item name="colorSecondary">@color/pink_a200</item>
-        <item name="colorSecondaryVariant">@color/pink_a200_dark</item>
-
         <item name="android:colorBackground">@color/black_900</item>
         <item name="colorSurface">@color/black_800</item>
         <item name="colorError">@color/red_200</item>
 
         <item name="colorOnPrimary">@color/black_900</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorOnSecondary">@color/white_50</item>
         <item name="colorOnBackground">@color/white_50</item>
         <item name="colorOnSurface">@color/white_50</item>
         <item name="colorOnError">@color/black_900</item>
 
         <!--Component styles-->
         <item name="bottomNavigationStyle">@style/Widget.MyTheme.BottomNavigationView.Dark</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">?android:colorBackground</item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+
 
     </style>
 </resources>

@@ -91,4 +91,10 @@
     <string name="category_recipe_profile">Categoria</string>
     <string name="preferences_shopping_title">New Shopping List Fragment</string>
     <string name="hello_blank_fragment">Leccami lo scroto</string>
+    <string name="menu_dialog_name">Nome della ricetta</string>
+    <string name="menu_dialog_title">Aggiungi al menu</string>
+    <string name="menu_add_recipe">Aggiungi ricetta</string>
+    <string name="preferences_notifications">Notifiche</string>
+    <string name="preferences_notifications_launch_dinner">Notifiche pranzo/cena</string>
+    <string name="preferences_notifications_launch_dinner_summary">Ricordami il menu del giorno</string>
 </resources>

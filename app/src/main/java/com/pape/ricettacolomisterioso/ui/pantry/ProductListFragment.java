@@ -1,13 +1,17 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -25,8 +29,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductListBinding;
-import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.ui.MainActivity;
 import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
 
 import java.util.List;
@@ -36,10 +40,12 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class ProductListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String TAG = "FragmentProductList";
-    private FragmentProductListBinding binding;
+
     private ProductListViewModel model;
-    private MutableLiveData<List<Product>> liveData;
     private ProductListAdapter mAdapter;
+
+    private FragmentProductListBinding binding;
+
     public ProductListFragment() {
     }
 
@@ -63,24 +69,41 @@ public class ProductListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.productListRecyclerView.setLayoutManager(layoutManager);
 
-        model =  new ViewModelProvider(this).get(ProductListViewModel.class);
-        final Observer<List<Product>> observer = new Observer<List<Product>>() {
+        mAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
             @Override
-            public void onChanged(List<Product> product) {
-                mAdapter = new ProductListAdapter(getActivity(), product);
-                binding.productListRecyclerView.setAdapter(mAdapter);
-                Log.d(TAG, product.toString());
+            public void onItemClick(Product product) {
+                Intent intent = new Intent(getContext(), ProductProfileActivity.class);
+                Bundle productBundle = new Bundle();
+                productBundle.putParcelable("product", product);
+                intent.putExtra("product", productBundle);
+                startActivity(intent);
             }
-        };
-        if(res == R.string.pantry_categories_see_all) liveData = model.getAllProducts();
-        else liveData = model.getProductsByCategory(getString(res));
 
-        liveData.observe(requireActivity(), observer);
+            @Override
+            public void onItemClickAddToShoppingList(Product product) {
+                model.addProductToShoppingList(product.getProduct_name());
+                Snackbar snackbar = Snackbar.make(view, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG);
+                snackbar.setAnchorView(getActivity().findViewById(R.id.nav_view));
+                snackbar.show();
+            }
+        });
+        binding.productListRecyclerView.setAdapter(mAdapter);
 
+        Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
+
+        model.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                mAdapter.setData(model.getProducts().getValue());
+                Log.d(TAG, products.toString());
+            }
+        });
+
+        if(res == R.string.pantry_categories_see_all) model.getAllProducts();
+        else model.getProductsByCategory(getString(res));
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);
-
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -98,7 +121,7 @@ public class ProductListFragment extends Fragment {
 
             switch (direction){
                 case ItemTouchHelper.LEFT:
-                    deletedItem = liveData.getValue().get(position);
+                    deletedItem = model.getProducts().getValue().get(position);
                     model.delete(deletedItem);
                     mAdapter.removeProductAt(position);
                     Snackbar snackbar = Snackbar.make(binding.productListRecyclerView,

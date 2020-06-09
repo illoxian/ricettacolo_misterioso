@@ -2,12 +2,13 @@ package com.pape.ricettacolomisterioso.viewmodels;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.repositories.ProductsRepository;
+import com.pape.ricettacolomisterioso.repositories.ShoppingListRepository;
 
 import java.util.List;
 
@@ -17,6 +18,13 @@ public class ProductListViewModel extends ViewModel {
     private MutableLiveData<List<Product>> products;
     private MutableLiveData<Integer> deleteId;
     private MutableLiveData<Long> insertId;
+
+    public MutableLiveData<List<Product>> getProducts() {
+        if (products == null) {
+            products = new MutableLiveData<>();
+        }
+        return products;
+    }
 
     public MutableLiveData<Integer> getDeleteId() {
         if (deleteId == null) {
@@ -68,5 +76,15 @@ public class ProductListViewModel extends ViewModel {
 
     public void addProduct(Product product){
         ProductsRepository.getInstance().addItem(product, getInsertId());
+    }
+
+    public void addProductToShoppingList(Item item){
+        ShoppingListRepository.getInstance().addItem(item, getInsertId());
+    }
+    public void addProductToShoppingList(String itemName, int quantity){
+        addProductToShoppingList(new Item(itemName, quantity, false));
+    }
+    public void addProductToShoppingList(String itemName){
+        addProductToShoppingList(itemName, 1);
     }
 }

@@ -40,7 +40,6 @@
         <item name="colorPrimaryDark">?attr/colorSecondaryVariant</item>
     </style>
 
-
     <!-- cardview profile -->
     <style name="Widget.MyTheme.CardView" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut</item>
