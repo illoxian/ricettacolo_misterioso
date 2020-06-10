@@ -84,6 +84,7 @@
     <string name="product_removed_from_shopping_list">Prodotto rimosso dalla lista della spesa</string>
     <string name="added_to_shopping_list">aggiunto alla lista della spesa</string>
     <string name="removed_from_shopping_list">rimosso dalla lista della spesa</string>
+    <string name="removed_from_recipes">rimossa dalle ricette</string>
     <string name="Undo">Annulla</string>
     <string name="Delete">Elimina</string>
     <string name="Add_to_shopping_list_swipe">Aggiungi</string>
@@ -97,4 +98,5 @@
     <string name="preferences_notifications">Notifiche</string>
     <string name="preferences_notifications_launch_dinner">Notifiche pranzo/cena</string>
     <string name="preferences_notifications_launch_dinner_summary">Ricordami il menu del giorno</string>
+    <string name="removed_from_products">rimosso dai prodotti</string>
 </resources>

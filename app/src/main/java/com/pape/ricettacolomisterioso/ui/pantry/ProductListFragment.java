@@ -126,7 +126,7 @@ public class ProductListFragment extends Fragment {
                     model.delete(deletedItem);
                     mAdapter.removeProductAt(position);
                     Snackbar snackbar = Snackbar.make(binding.productListRecyclerView,
-                            deletedItem.getProduct_name() + " " + getString(R.string.removed_from_shopping_list),
+                            deletedItem.getProduct_name() + " " + getString(R.string.removed_from_products),
                             Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

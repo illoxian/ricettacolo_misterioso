@@ -2,6 +2,7 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
 import android.app.ActionBar;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,14 +12,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipeListBinding;
@@ -26,6 +30,8 @@ import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.viewmodels.RecipeListViewModel;
 
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
 public class RecipeListFragment extends Fragment {
@@ -83,7 +89,61 @@ public class RecipeListFragment extends Fragment {
 
         if (res == R.string.recipes_categories_see_all) liveData = model.getAllRecipes();
         else liveData = model.getRecipesByCategory(getString(res));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.recipeListRecyclerView);
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        Recipe deletedItem = null;
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+                    deletedItem = model.getRecipes().getValue().get(position);
+                    model.delete(deletedItem);
+                    mAdapter.removeProductAt(position);
+                    Snackbar snackbar = Snackbar.make(binding.recipeListRecyclerView,
+                            deletedItem.getRecipe_name() + " " + getString(R.string.removed_from_recipes),
+                            Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mAdapter.insertProductAt(deletedItem, position);
+                            model.addRecipe(deletedItem);
+                        }
+                    });
+                    snackbar.show();
+                    break;
+/*                 case ItemTouchHelper.RIGHT:
+
+                     break;*/
+            }
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red_400))
+                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_24)
+                    .addSwipeLeftLabel(getString(R.string.Delete))
+                    .setSwipeLeftLabelColor(ContextCompat.getColor(getContext(), R.color.white_50))
+                    .setSwipeLeftActionIconTint(ContextCompat.getColor(getContext(), R.color.white_50))
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

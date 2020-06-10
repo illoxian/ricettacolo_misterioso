@@ -67,7 +67,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RecipeListViewHolder holder, int position) {
-
         ((RecipeListViewHolder) holder).bind(recipes.get(position), this.onItemInteractions);
     }
 
@@ -111,4 +110,15 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     }
 
 
+    public void removeProductAt(int position) {
+        recipes.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, recipes.size());
+    }
+
+    public void insertProductAt(Recipe recipe, int position) {
+        recipes.add(position, recipe);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, recipes.size());
+    }
 }
