@@ -4,10 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -17,7 +13,20 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        notificationHelper.createNotification();
+        int time = intent.getExtras().getInt("TIME");
+
+        String title;
+        String content;
+        if(time == 0) //launch
+        {
+            title = "Ora di pranzo!";
+            content = "Per oggi hai pianificato di cucinare";
+        }
+        else{ //dinner
+            title = "Ora di cena!";
+            content = "Per oggi hai pianificato di cucinare";
+        }
+        notificationHelper.createNotification(time, title, content, R.drawable.icon_categories_fish);
 
         Log.d(TAG, "onReceive: NotificationSended");
         /*NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "StandardChannel")

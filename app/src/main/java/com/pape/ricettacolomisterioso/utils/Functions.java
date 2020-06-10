@@ -1,11 +1,18 @@
 package com.pape.ricettacolomisterioso.utils;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
 import androidx.annotation.ColorInt;
 
+import com.pape.ricettacolomisterioso.DeviceBootReceiver;
+import com.pape.ricettacolomisterioso.NotificationReceiver;
 import com.pape.ricettacolomisterioso.R;
 
 import java.util.Calendar;
@@ -48,5 +55,65 @@ public class Functions {
 
     public static String getProductCategoryString(Context context, int categoryId){
         return context.getResources().getStringArray(R.array.categoriesString)[categoryId];
+    }
+
+    public static void SetAlarmManager(Context context)
+    {
+        //enable boot receiver
+        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+        //set alarm manager
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Calendar timeLunch = Calendar.getInstance();
+        timeLunch.setTimeInMillis(System.currentTimeMillis());
+        timeLunch.set(Calendar.HOUR_OF_DAY, 12);
+        timeLunch.set(Calendar.MINUTE, 0);
+
+        Calendar timeDinner = Calendar.getInstance();
+        timeDinner.setTimeInMillis(System.currentTimeMillis());
+        timeDinner.set(Calendar.HOUR_OF_DAY, 19);
+        timeDinner.set(Calendar.MINUTE, 0);
+
+        Intent intentLaunch = new Intent(context, NotificationReceiver.class);
+        intentLaunch.putExtra("TIME", 0);
+        PendingIntent pendingIntentLaunch = PendingIntent.getBroadcast(context, 0, intentLaunch, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intentDinner = new Intent(context, NotificationReceiver.class);
+        intentDinner.putExtra("TIME", 1);
+        PendingIntent pendingIntentDinner = PendingIntent.getBroadcast(context, 1, intentDinner, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (alarmManager != null) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeLunch.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentLaunch);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeDinner.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentDinner);
+        }
+    }
+
+    public static void ClearAlarmManager(Context context)
+    {
+        //disable boot receiver
+        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
+        //cancel alarm manager
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (alarmManager != null) {
+            Intent intentLaunch = new Intent(context, NotificationReceiver.class);
+            PendingIntent pendingIntentLaunch = PendingIntent.getBroadcast(context, 0, intentLaunch, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent intentDinner = new Intent(context, NotificationReceiver.class);
+            PendingIntent pendingIntentDinner = PendingIntent.getBroadcast(context, 1, intentDinner, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.cancel(pendingIntentLaunch);
+            alarmManager.cancel(pendingIntentDinner);
+        }
     }
 }
