@@ -46,4 +46,7 @@ public class Functions {
         return color;
     }
 
+    public static String getProductCategoryString(Context context, int categoryId){
+        return context.getResources().getStringArray(R.array.categoriesString)[categoryId];
+    }
 }

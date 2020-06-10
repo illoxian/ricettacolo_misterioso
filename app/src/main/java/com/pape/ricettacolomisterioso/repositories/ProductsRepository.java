@@ -90,7 +90,7 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
-    public void getProductsByCategory(MutableLiveData<List<Product>> products, String category){
+    public void getProductsByCategory(MutableLiveData<List<Product>> products, int category){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

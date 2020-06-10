@@ -2,7 +2,6 @@ package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.utils.Functions;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -82,7 +82,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         void bind(Product product, OnItemInteractions onItemInteractions) {
 
             product_name.setText(product.getProduct_name());
-            product_category.setText(product.getCategory());
+            product_category.setText(Functions.getProductCategoryString(itemView.getContext(), product.getCategory()));
 
             SharedPreferences sharedPreferences =PreferenceManager.getDefaultSharedPreferences(product_icon.getContext());
             if(sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null)

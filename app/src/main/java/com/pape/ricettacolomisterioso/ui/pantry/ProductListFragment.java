@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,27 +20,20 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductListBinding;
 import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.ui.MainActivity;
 import com.pape.ricettacolomisterioso.viewmodels.ProductListViewModel;
-import com.pape.ricettacolomisterioso.viewmodels.RecipeListViewModel;
 
+import java.util.Arrays;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class ProductListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+
     private static final String TAG = "FragmentProductList";
 
     private ProductListViewModel model;
@@ -50,10 +44,8 @@ public class ProductListFragment extends Fragment {
     public ProductListFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static ProductListFragment newInstance(String param1, String param2) {
-        ProductListFragment fragment = new ProductListFragment();
-        return fragment;
+    public static ProductListFragment newInstance() {
+        return new ProductListFragment();
     }
 
     @Override
@@ -101,7 +93,9 @@ public class ProductListFragment extends Fragment {
         });
 
         if(res == R.string.pantry_categories_see_all) model.getAllProducts();
-        else model.getProductsByCategory(getString(res));
+        else{
+            model.getProductsByCategory(Arrays.asList(getResources().getStringArray(R.array.categoriesString)).indexOf(getString(res)));
+        }
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);

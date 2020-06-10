@@ -40,7 +40,7 @@ public class ProductListViewModel extends ViewModel {
         return insertId;
     }
 
-    public MutableLiveData<List<Product>> getProductsByCategory(String category) {
+    public MutableLiveData<List<Product>> getProductsByCategory(int category) {
         if (products == null) {
             products = new MutableLiveData<>();
         }

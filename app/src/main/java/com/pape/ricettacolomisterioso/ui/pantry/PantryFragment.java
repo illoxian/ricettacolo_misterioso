@@ -1,10 +1,8 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -88,7 +86,6 @@ public class PantryFragment extends Fragment {
                     int res = getCardViewStringRes(cardView);
                     PantryFragmentDirections.ShowFragmentProductListAction action = PantryFragmentDirections.showFragmentProductListAction(res);
                     Navigation.findNavController(view).navigate(action);
-
                 }
             });
     }

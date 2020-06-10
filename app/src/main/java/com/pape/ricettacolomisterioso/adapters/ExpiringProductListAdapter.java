@@ -86,7 +86,7 @@ public class ExpiringProductListAdapter extends RecyclerView.Adapter<ExpiringPro
         void bind(Product product, OnItemInteractions onItemInteractions) {
 
             product_name.setText(product.getProduct_name());
-            product_category.setText(product.getCategory());
+            product_category.setText(Functions.getProductCategoryString(itemView.getContext(), product.getCategory()));
 
             Date expiring = product.getExpirationDate();
             Date purchase_date = product.getPurchaseDate();
