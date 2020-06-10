@@ -46,7 +46,6 @@ public class RecipeListFragment extends Fragment {
         return fragment;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,25 +60,31 @@ public class RecipeListFragment extends Fragment {
         setHasOptionsMenu(true);
 
         Integer res = RecipeListFragmentArgs.fromBundle(getArguments()).getCategory();
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recipeListRecyclerView.setLayoutManager(layoutManager);
-
         model = new ViewModelProvider(this).get(RecipeListViewModel.class);
-        final Observer<List<Recipe>> observer = new Observer<List<Recipe>>() {
+        mAdapter = new RecipeListAdapter(getActivity(), model.getRecipes().getValue(), new RecipeListAdapter.OnItemInteractions() {
             @Override
-            public void onChanged(List<Recipe> recipe) {
-                mAdapter = new RecipeListAdapter(getActivity(), recipe);
-                binding.recipeListRecyclerView.setAdapter(mAdapter);
-                Log.d(TAG, recipe.toString());
+            public void onItemClick(Recipe recipe, View view) {
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("recipe", recipe);
+                RecipeListFragmentDirections.ShowRecipeProfile action = RecipeListFragmentDirections.showRecipeProfile(recipe);
+                Navigation.findNavController(view).navigate(action);
             }
-        };
+        });
+        binding.recipeListRecyclerView.setAdapter(mAdapter);
+
+        model.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                mAdapter.setData(model.getRecipes().getValue());
+            }
+        });
 
         if (res == R.string.recipes_categories_see_all) liveData = model.getAllRecipes();
         else liveData = model.getRecipesByCategory(getString(res));
-
-        liveData.observe(requireActivity(), observer);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
