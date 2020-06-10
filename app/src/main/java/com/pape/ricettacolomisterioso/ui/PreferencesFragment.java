@@ -44,7 +44,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
                 if(selectedValue)
                     MainActivity.SetAlarmManager(getContext());
                 else
-                    MainActivity.ClearAlarmManager();
+                    MainActivity.ClearAlarmManager(getContext());
                 return true;
             }
         });

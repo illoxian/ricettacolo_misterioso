@@ -4,28 +4,26 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.pape.ricettacolomisterioso.NotificationsReceiver;
+import com.pape.ricettacolomisterioso.DeviceBootReceiver;
+import com.pape.ricettacolomisterioso.NotificationReceiver;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.AppDatabase;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.room.Room;
 
@@ -35,8 +33,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     public static AppDatabase db;
-    private static AlarmManager alarmManager;
-    private static PendingIntent alarmIntent;
+    private static PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        createNotificationChannel();
+        //check notifications enabled
+        if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
+            SetAlarmManager(this);
+        else
+            ClearAlarmManager(this);
+
+        //createNotificationChannel();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void createNotificationChannel() {
+    /*private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -91,29 +94,48 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-    }
+    }*/
 
     public static void SetAlarmManager(Context context)
     {
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        //enable boot receiver
+        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
 
-        Intent intent = new Intent(context, NotificationsReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
 
+        //set hour of notification
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
 
-        //long interval = AlarmManager.INTERVAL_DAY;
-        long interval = 60*1000;
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                interval, alarmIntent);
+        //set alarm manager
+        Intent intent = new Intent(context, NotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        if (alarmManager != null) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
     }
 
-    public static void ClearAlarmManager()
+    public static void ClearAlarmManager(Context context)
     {
-        if (alarmManager != null) {
-            alarmManager.cancel(alarmIntent);
+        //disable boot receiver
+        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
+        //clear alarm manager
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        if (alarmManager != null && pendingIntent != null) {
+            alarmManager.cancel(pendingIntent);
         }
     }
 
