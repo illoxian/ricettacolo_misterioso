@@ -97,4 +97,10 @@
     <string name="preferences_notifications">Notifiche</string>
     <string name="preferences_notifications_launch_dinner">Notifiche pranzo/cena</string>
     <string name="preferences_notifications_launch_dinner_summary">Ricordami il menu del giorno</string>
+    <string name="launch_dinner_notifications_channel">Promemoria pranzo/cena</string>
+    <string name="notification_lunch_time">Ora di pranzo!</string>
+    <string name="notification_dinner_time">Ora di cena!</string>
+    <string name="notification_scheduled_recipes_0">Non hai pianificato nulla. Consulta le tue ricette!</string>
+    <string name="notification_scheduled_recipes_1">Per oggi hai pianificato %1$s. Buon appetito!</string>
+    <string name="notification_scheduled_recipes_2">Per oggi hai pianificato %1$s e %2$s. Buon appetito!</string>
 </resources>

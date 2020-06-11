@@ -60,6 +60,17 @@ public class DailyMenuRepository {
         new Thread(runnable).start();
     }
 
+    public DailyMenu getDailyMenuSync(Date day) {
+        List<String> recipes = new ArrayList<>();
+        for(int j = 0; j<4; j++){
+            DailyRecipe recipe = appDatabase.menuDao().getDailyRecipes(day, j);
+
+            if(recipe != null) recipes.add(recipe.getRecipe());
+            else recipes.add(null);
+        }
+        return new DailyMenu(day, recipes);
+    }
+
     public void insert(DailyRecipe dailyRecipe, MutableLiveData<Long> insertId) {
 
         Runnable runnable = new Runnable() {
