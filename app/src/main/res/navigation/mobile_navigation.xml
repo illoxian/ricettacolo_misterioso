@@ -48,7 +48,11 @@
         android:id="@+id/navigation_menu"
         android:name="com.pape.ricettacolomisterioso.ui.menu.MenuFragment"
         android:label="@string/title_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/ShowRecipeProfileFromMenu"
+            app:destination="@id/recipeProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentProductList"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.ProductListFragment"

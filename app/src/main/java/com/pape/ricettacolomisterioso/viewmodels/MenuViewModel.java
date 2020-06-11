@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.pape.ricettacolomisterioso.models.DailyMenu;
 import com.pape.ricettacolomisterioso.models.DailyRecipe;
+import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.repositories.DailyMenuRepository;
+import com.pape.ricettacolomisterioso.repositories.RecipesRepository;
 import com.pape.ricettacolomisterioso.utils.Functions;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +25,7 @@ public class MenuViewModel extends ViewModel {
 
     private MutableLiveData<List<DailyMenu>> dailyMenus;
     private MutableLiveData<Long> insertId;
+    private MutableLiveData<List<Recipe>> recipes;
 
     public MenuViewModel() {
         weekOffset = 0;
@@ -42,6 +45,12 @@ public class MenuViewModel extends ViewModel {
         return insertId;
     }
 
+    public MutableLiveData<List<Recipe>> getRecipes() {
+        if (recipes == null) {
+            recipes = new MutableLiveData<>();
+        }
+        return recipes;
+    }
 
     public void ChangeWeek(int offset){
         weekOffset += offset;
@@ -87,5 +96,9 @@ public class MenuViewModel extends ViewModel {
 
     public void insert(DailyRecipe dailyRecipe){
         DailyMenuRepository.getInstance().insert(dailyRecipe, getInsertId());
+    }
+
+    public void getAllRecipes(){
+        RecipesRepository.getInstance().getRecipes(recipes);
     }
 }

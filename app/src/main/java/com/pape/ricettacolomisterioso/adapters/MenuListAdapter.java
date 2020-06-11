@@ -1,6 +1,8 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
@@ -16,6 +19,7 @@ import com.pape.ricettacolomisterioso.utils.Functions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +29,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
     private static final String TAG = "MenuListAdapter";
 
     public interface OnItemInteractions {
-        void onRecipeClick(String recipe, Date day, int slot);
+        void onRecipeClick(DailyMenu dailyMenu, int slot);
     }
 
     private List<DailyMenu> dailyMenus;
@@ -68,6 +72,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
     public static class MenuListViewHolder extends RecyclerView.ViewHolder {
         TextView item_name;
         private List<CardView> recipe_cards;
+        ConstraintLayout item_layout;
 
         public MenuListViewHolder(View view) {
             super(view);
@@ -77,11 +82,17 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
             recipe_cards.add(view.findViewById(R.id.menu_card2));
             recipe_cards.add(view.findViewById(R.id.menu_card3));
             recipe_cards.add(view.findViewById(R.id.menu_card4));
+            item_layout = view.findViewById(R.id.menu_row_layout);
         }
 
         void bind(DailyMenu dailyMenu, OnItemInteractions onItemInteractions){
             SimpleDateFormat format = new SimpleDateFormat("EEEE\nd MMM", Locale.getDefault());
             item_name.setText(format.format(dailyMenu.getDay()));
+
+            if(dailyMenu.getDay().getTime() == Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime()){
+                item_name.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSecondary));
+                item_name.setTypeface(null, Typeface.BOLD);
+            }
 
             for(int i=0; i<recipe_cards.size(); i++){
                 CardView card = recipe_cards.get(i);
@@ -109,7 +120,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
                 card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onItemInteractions.onRecipeClick(recipe, dailyMenu.getDay(), slot);
+                        onItemInteractions.onRecipeClick(dailyMenu, slot);
                     }
                 });
             }

@@ -87,7 +87,10 @@ public class Functions {
         intentDinner.putExtra("TIME", 1);
         PendingIntent pendingIntentDinner = PendingIntent.getBroadcast(context, 1, intentDinner, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (alarmManager != null) {
+        //boolean lunchAlarmUp = (PendingIntent.getBroadcast(context, 0, intentLaunch, PendingIntent.FLAG_NO_CREATE)!= null);
+        //boolean dinnerAlarmUp = (PendingIntent.getBroadcast(context, 1, intentDinner, PendingIntent.FLAG_NO_CREATE)!= null);
+
+        if (alarmManager != null/* && !lunchAlarmUp && !dinnerAlarmUp*/) {
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeLunch.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentLaunch);
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeDinner.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentDinner);
         }

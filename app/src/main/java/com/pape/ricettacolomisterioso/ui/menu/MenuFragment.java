@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.pape.ricettacolomisterioso.R;
@@ -21,8 +24,10 @@ import com.pape.ricettacolomisterioso.adapters.MenuListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentMenuBinding;
 import com.pape.ricettacolomisterioso.models.DailyMenu;
 import com.pape.ricettacolomisterioso.models.DailyRecipe;
+import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.viewmodels.MenuViewModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +40,7 @@ public class MenuFragment extends Fragment {
 
     private FragmentMenuBinding binding;
 
-
+    private List<String> recipesString;
 
     public MenuFragment() {
     }
@@ -60,14 +65,19 @@ public class MenuFragment extends Fragment {
         binding.menuRecyclerview.setLayoutManager(layoutManager);
 
         mAdapter = new MenuListAdapter(getActivity(), model.getDailyMenus().getValue(), new MenuListAdapter.OnItemInteractions() {
+            final View mView = view;
             @Override
-            public void onRecipeClick(String recipe, Date day, int slot) {
-                if(recipe==null){
+            public void onRecipeClick(DailyMenu dailyMenu, int slot) {
+                if(dailyMenu.getRecipes().get(slot)==null){
                     Log.d(TAG, "onRecipeClick: Aggiungi una ricetta");
-                    showDialog(day, slot);
+                    showDialog(dailyMenu.getDay(), slot);
                 }
                 else{
-                    Log.d(TAG, "onRecipeClick: "+ recipe);
+                    /*Bundle recipeBundle = new Bundle();
+                    recipeBundle.putParcelable("recipe", dailyMenu.getRecipes().get(slot));
+                    MenuFragmentDirections.ShowRecipeProfileFromMenu action = MenuFragmentDirections.ShowRecipeProfileFromMenu(dailyMenu.getRecipes().get(slot));
+                    Navigation.findNavController(mView).navigate(action);*/
+                    Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
                 }
             }
         });
@@ -96,7 +106,18 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        model.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                recipesString = new ArrayList<>();
+                for (Recipe r:model.getRecipes().getValue()) {
+                    recipesString.add(r.getRecipe_name());
+                }
+            }
+        });
+
         model.ChangeWeek(0);
+        model.getAllRecipes();
     }
 
     private void showDialog(Date day, int slot){
@@ -106,7 +127,9 @@ public class MenuFragment extends Fragment {
         builder.setTitle(R.string.menu_dialog_title);
 
         // Set up the inputs
-        TextView recipe_name = dialogView.findViewById(R.id.menu_dialog_input_name);
+        AutoCompleteTextView recipe_name = dialogView.findViewById(R.id.menu_dialog_input_name);
+        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, recipesString);
+        recipe_name.setAdapter(adapter);
 
         // Set up the buttons
         builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
@@ -134,7 +157,12 @@ public class MenuFragment extends Fragment {
                 if (recipeName.isEmpty())
                     recipe_name.setError(getString(R.string.error_empty_field));
                 else {
-                    DailyRecipe recipe_to_insert = new DailyRecipe(day, recipeName, slot);
+                    int recipeId = recipesString.indexOf(recipeName);
+                    DailyRecipe recipe_to_insert;
+                    if(recipeId<0)
+                        recipe_to_insert= new DailyRecipe(day, recipeName, slot);
+                    else
+                        /*Recipe recipe = */recipe_to_insert = new DailyRecipe(day, model.getRecipes().getValue().get(recipeId).getRecipe_name(), slot);
                     model.insert(recipe_to_insert);
                     model.ChangeWeek(0);
                     dialog.dismiss();
