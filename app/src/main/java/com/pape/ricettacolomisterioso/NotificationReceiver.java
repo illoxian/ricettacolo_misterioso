@@ -47,11 +47,11 @@ public class NotificationReceiver extends BroadcastReceiver {
         if(time == 0) //launch
         {
             title = mContext.getString(R.string.notification_lunch_time);
-            content = BuildContentString(dailyMenu.getRecipes().get(0), dailyMenu.getRecipes().get(1));
+            content = BuildContentString(dailyMenu.getRecipes().get(0).getRecipeName(), dailyMenu.getRecipes().get(1).getRecipeName());
         }
         else{ //dinner
             title = mContext.getString(R.string.notification_dinner_time);
-            content = BuildContentString(dailyMenu.getRecipes().get(2), dailyMenu.getRecipes().get(3));
+            content = BuildContentString(dailyMenu.getRecipes().get(2).getRecipeName(), dailyMenu.getRecipes().get(3).getRecipeName());
         }
 
 

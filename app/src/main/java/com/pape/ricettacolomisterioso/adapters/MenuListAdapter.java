@@ -1,8 +1,10 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.models.DailyRecipe;
 import com.pape.ricettacolomisterioso.utils.Functions;
 
 import java.text.SimpleDateFormat;
@@ -97,22 +100,35 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
             for(int i=0; i<recipe_cards.size(); i++){
                 CardView card = recipe_cards.get(i);
                 TextView tv = (TextView) card.getChildAt(0);
-                String recipe;
 
-                if(i<dailyMenu.getRecipes().size())
-                    recipe = dailyMenu.getRecipes().get(i);
+                DailyRecipe dailyRecipe = dailyMenu.getRecipes().get(i);
+                String recipeString;
+
+                if(dailyRecipe == null)
+                    recipeString = null;
                 else
-                    recipe=null;
+                    recipeString = dailyRecipe.getRecipeName();
 
-                if(recipe == null){
+                if(recipeString == null){
                     tv.setText(R.string.menu_add_recipe);
                     tv.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnSurface));
                     card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSurface));
                 }
                 else{
-                    tv.setText(recipe);
+                    tv.setText(recipeString);
                     tv.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnPrimary));
                     card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorPrimaryVariant));
+                    if(dailyRecipe.getRecipeComplex() != null){
+                        card.setClickable(true);
+                        card.setFocusable(true);
+
+                        int[] attrs = new int[]{R.attr.selectableItemBackground};
+                        TypedArray typedArray = itemView.getContext().obtainStyledAttributes(attrs);
+                        int selectableItemBackground = typedArray.getResourceId(0, 0);
+                        typedArray.recycle();
+
+                        card.setForeground(itemView.getContext().getDrawable(selectableItemBackground));
+                    }
                 }
 
 

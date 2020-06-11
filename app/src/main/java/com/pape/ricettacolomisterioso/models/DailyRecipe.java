@@ -1,6 +1,7 @@
 package com.pape.ricettacolomisterioso.models;
 
 import androidx.annotation.NonNull;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ public class DailyRecipe {
     @NonNull
     private Date day;
     private String recipe;
+    @Embedded private Recipe recipeComplex;
     @NonNull
     private int slot;
 
@@ -20,6 +22,12 @@ public class DailyRecipe {
     public DailyRecipe(Date day, String recipe, int slot) {
         this.day = day;
         this.recipe = recipe;
+        this.slot = slot;
+    }
+
+    public DailyRecipe(Date day, Recipe recipeComplex, int slot) {
+        this.day = day;
+        this.recipeComplex = recipeComplex;
         this.slot = slot;
     }
 
@@ -47,12 +55,28 @@ public class DailyRecipe {
         this.slot = slot;
     }
 
+    public Recipe getRecipeComplex() {
+        return recipeComplex;
+    }
+
+    public void setRecipeComplex(Recipe recipeComplex) {
+        this.recipeComplex = recipeComplex;
+    }
+
     @Override
     public String toString() {
+        String recipeComplexString = null;
+        if(recipeComplex!=null) recipeComplexString = recipeComplex.toString();
         return "DailyRecipe{" +
                 "day=" + day +
                 ", recipe='" + recipe + '\'' +
+                ", recipeComplex=" + recipeComplexString +
                 ", slot=" + slot +
                 '}';
+    }
+
+    public String getRecipeName() {
+        if(recipeComplex != null) return recipeComplex.getRecipe_name();
+        else return recipe;
     }
 }

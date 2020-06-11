@@ -41,11 +41,11 @@ public class DailyMenuRepository {
                     Log.d(TAG, "run: getDailyMenus()");
                     List<DailyMenu> menus = new ArrayList<>();
                     for(int i = 0; i<days.size(); i++){
-                        List<String> recipes = new ArrayList<>();
+                        List<DailyRecipe> recipes = new ArrayList<>();
                         for(int j = 0; j<4; j++){
                             DailyRecipe recipe = appDatabase.menuDao().getDailyRecipes(days.get(i), j);
 
-                            if(recipe != null) recipes.add(recipe.getRecipe());
+                            if(recipe != null) recipes.add(recipe);
                             else recipes.add(null);
                         }
                         menus.add(new DailyMenu(days.get(i), recipes));
@@ -61,11 +61,11 @@ public class DailyMenuRepository {
     }
 
     public DailyMenu getDailyMenuSync(Date day) {
-        List<String> recipes = new ArrayList<>();
+        List<DailyRecipe> recipes = new ArrayList<>();
         for(int j = 0; j<4; j++){
             DailyRecipe recipe = appDatabase.menuDao().getDailyRecipes(day, j);
 
-            if(recipe != null) recipes.add(recipe.getRecipe());
+            if(recipe != null) recipes.add(recipe);
             else recipes.add(null);
         }
         return new DailyMenu(day, recipes);

@@ -68,15 +68,18 @@ public class MenuFragment extends Fragment {
             final View mView = view;
             @Override
             public void onRecipeClick(DailyMenu dailyMenu, int slot) {
-                if(dailyMenu.getRecipes().get(slot)==null){
+                DailyRecipe dailyRecipe = dailyMenu.getRecipes().get(slot);
+                if(dailyRecipe==null){
                     Log.d(TAG, "onRecipeClick: Aggiungi una ricetta");
                     showDialog(dailyMenu.getDay(), slot);
                 }
                 else{
-                    /*Bundle recipeBundle = new Bundle();
-                    recipeBundle.putParcelable("recipe", dailyMenu.getRecipes().get(slot));
-                    MenuFragmentDirections.ShowRecipeProfileFromMenu action = MenuFragmentDirections.ShowRecipeProfileFromMenu(dailyMenu.getRecipes().get(slot));
-                    Navigation.findNavController(mView).navigate(action);*/
+                    if(dailyRecipe.getRecipeComplex()!=null){
+                        Bundle recipeBundle = new Bundle();
+                        recipeBundle.putParcelable("recipe", dailyRecipe.getRecipeComplex());
+                        MenuFragmentDirections.ShowRecipeProfileFromMenu action = MenuFragmentDirections.ShowRecipeProfileFromMenu(dailyRecipe.getRecipeComplex());
+                        Navigation.findNavController(mView).navigate(action);
+                    }
                     Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
                 }
             }
@@ -162,7 +165,7 @@ public class MenuFragment extends Fragment {
                     if(recipeId<0)
                         recipe_to_insert= new DailyRecipe(day, recipeName, slot);
                     else
-                        /*Recipe recipe = */recipe_to_insert = new DailyRecipe(day, model.getRecipes().getValue().get(recipeId).getRecipe_name(), slot);
+                        recipe_to_insert = new DailyRecipe(day, model.getRecipes().getValue().get(recipeId), slot);
                     model.insert(recipe_to_insert);
                     model.ChangeWeek(0);
                     dialog.dismiss();
