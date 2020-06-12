@@ -76,6 +76,7 @@ public class NewProductActivity extends AppCompatActivity {
         initScannerButton();
         initFAB();
         initDatePicker();
+
     }
 
     private void initScannerButton() {

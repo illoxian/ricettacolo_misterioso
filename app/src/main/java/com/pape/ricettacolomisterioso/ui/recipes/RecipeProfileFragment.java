@@ -1,12 +1,8 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,13 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
-import com.pape.ricettacolomisterioso.databinding.FragmentRecipeListBinding;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipeProfileBinding;
-import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.models.Recipe;
-import com.pape.ricettacolomisterioso.viewmodels.ProductProfileViewModel;
 import com.pape.ricettacolomisterioso.viewmodels.RecipeProfileViewModel;
 
 import java.util.ArrayList;
@@ -60,12 +59,41 @@ public class RecipeProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
+
         binding = FragmentRecipeProfileBinding.inflate(getLayoutInflater());
         model = new ViewModelProvider(this).get(RecipeProfileViewModel.class);
        /* Recipe recipe = RecipeProfileFragmentArgs.fromBundle(getArguments()).getRecipe();
 
         inflateRecipeInfo(recipe);*/
     }
+
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.GONE);
+
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onDetach() {
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        super.onDetach();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+    }
+
 
 
     public void inflateRecipeInfo (Recipe recipe){
