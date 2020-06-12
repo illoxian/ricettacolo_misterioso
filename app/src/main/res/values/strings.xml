@@ -108,4 +108,5 @@
     <string name="notification_scheduled_recipes_0">There are no planned recipes. Explore your recipes!</string>
     <string name="notification_scheduled_recipes_1">You planned %1$s for today. Enjoy your meal!</string>
     <string name="notification_scheduled_recipes_2" >You planned %1$s and %2$s for today. Enjoy your meal!</string>
+    <string name="shopping_list_empty_text">Shopping list is empty</string>
 </resources>

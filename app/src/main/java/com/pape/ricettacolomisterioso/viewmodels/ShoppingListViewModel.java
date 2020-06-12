@@ -60,6 +60,6 @@ public class ShoppingListViewModel extends ViewModel {
     }
 
     public void delete(Item item){
-        ShoppingListRepository.getInstance().delete(item, getDeleteId());
+        ShoppingListRepository.getInstance().delete(item.getItemName(), getDeleteId());
     }
 }
