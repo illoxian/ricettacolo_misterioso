@@ -84,6 +84,7 @@
     <string name="product_removed_from_shopping_list">Prodotto rimosso dalla lista della spesa</string>
     <string name="added_to_shopping_list">aggiunto alla lista della spesa</string>
     <string name="removed_from_shopping_list">rimosso dalla lista della spesa</string>
+    <string name="removed_from_recipes">rimossa dalle ricette</string>
     <string name="Undo">Annulla</string>
     <string name="Delete">Elimina</string>
     <string name="Add_to_shopping_list_swipe">Aggiungi</string>
@@ -104,4 +105,5 @@
     <string name="notification_scheduled_recipes_1">Per oggi hai pianificato %1$s. Buon appetito!</string>
     <string name="notification_scheduled_recipes_2">Per oggi hai pianificato %1$s e %2$s. Buon appetito!</string>
     <string name="shopping_list_empty_text">La lista della spesa è vuota</string>
+    <string name="removed_from_products">rimosso dai prodotti</string>
 </resources>

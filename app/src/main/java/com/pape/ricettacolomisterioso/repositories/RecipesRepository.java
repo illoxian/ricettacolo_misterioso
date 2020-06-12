@@ -92,4 +92,18 @@ public class RecipesRepository {
     }
 
 
+    public void getRecipesSearched(MutableLiveData<List<Recipe>> recipes, String recipe_name){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d(TAG, "run: getRecipesSearched() ");
+                    recipes.postValue(appDatabase.recipeDao().getSearchedRecipes(recipe_name));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
 }

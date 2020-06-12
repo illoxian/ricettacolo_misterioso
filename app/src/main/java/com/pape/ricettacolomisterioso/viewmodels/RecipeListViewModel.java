@@ -17,6 +17,14 @@ public class RecipeListViewModel extends ViewModel {
     private MutableLiveData<Integer> deleteId;
     private MutableLiveData<Long> insertId;
 
+
+    public MutableLiveData<List<Recipe>> getRecipes() {
+        if (recipes == null) {
+            recipes = new MutableLiveData<>();
+        }
+        return recipes;
+    }
+
     public MutableLiveData<Integer> getDeleteId() {
         if (deleteId == null) {
             deleteId = new MutableLiveData<>();
