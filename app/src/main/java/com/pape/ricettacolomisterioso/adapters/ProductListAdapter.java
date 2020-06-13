@@ -17,6 +17,7 @@ import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.utils.Functions;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
@@ -87,7 +88,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             SharedPreferences sharedPreferences =PreferenceManager.getDefaultSharedPreferences(product_icon.getContext());
             if(sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null)
             {
-                Picasso.get().load(product.getImageUrl()).into(product_icon);
+                File f = new File(product.getImageUrl());
+                Picasso.get().load(f).into(product_icon);
             }
             else {
                 product_icon.setImageDrawable(itemView.getResources().getDrawable(

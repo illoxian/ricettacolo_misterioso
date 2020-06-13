@@ -2,7 +2,6 @@ package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Recipe;
-import com.pape.ricettacolomisterioso.ui.recipes.RecipeListFragment;
-import com.pape.ricettacolomisterioso.ui.recipes.RecipeListFragmentDirections;
-import com.pape.ricettacolomisterioso.ui.recipes.RecipesFragment;
-import com.pape.ricettacolomisterioso.ui.recipes.RecipesFragmentDirections;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
@@ -93,7 +87,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(item_icon.getContext());
             if(sharedPreferences.getBoolean("image_instead_of_icon", false) && recipe.getImageUrl() != null)
             {
-                Picasso.get().load(recipe.getImageUrl()).into(item_icon);
+                File f = new File(recipe.getImageUrl());
+                Picasso.get().load(f).into(item_icon);
             }
             else {
                 item_icon.setImageDrawable(itemView.getResources().getDrawable(
