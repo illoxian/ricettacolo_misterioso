@@ -91,6 +91,7 @@
     <string name="Undo">Undo</string>
     <string name="Delete">Delete</string>
     <string name="item_new_recipe_delete">item_new_recipe_delete</string>
+    <string name="removed_from_products">removed from products</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_recipe_profile">Category</string>
@@ -102,4 +103,12 @@
     <string name="preferences_notifications">Notifications</string>
     <string name="preferences_notifications_launch_dinner">Notications launch/dinner</string>
     <string name="preferences_notifications_launch_dinner_summary">Remind me today\'s menu</string>
+    <string name="launch_dinner_notifications_channel">Launch/dinner reminders</string>
+    <string name="notification_lunch_time">Lunch time!</string>
+    <string name="notification_dinner_time">Dinner time!</string>
+    <string name="notification_scheduled_recipes_0">There are no planned recipes. Explore your recipes!</string>
+    <string name="notification_scheduled_recipes_1">You planned %1$s for today. Enjoy your meal!</string>
+    <string name="notification_scheduled_recipes_2" >You planned %1$s and %2$s for today. Enjoy your meal!</string>
+    <string name="shopping_list_empty_text">Shopping list is empty</string>
+    <string name="removed_from_recipes">removed from recipes</string>
 </resources>

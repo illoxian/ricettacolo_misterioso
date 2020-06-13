@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,7 +20,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -245,7 +243,9 @@ public class NewProductActivity extends AppCompatActivity {
         if(product==null) product = new Product();
 
         product.setProduct_name(binding.textInputName.getText().toString());
-        product.setCategory(binding.textInputCategory.getText().toString());
+        String categoryString = binding.textInputCategory.getText().toString();
+        int categoryId = CATEGORIES.indexOf(categoryString);
+        product.setCategory(categoryId);
         product.setExpirationDate(expirationDate);
         product.setPurchaseDate(purchaseDate);
         product.setBrand(binding.textInputBrand.getText().toString());
@@ -259,12 +259,12 @@ public class NewProductActivity extends AppCompatActivity {
             isValid = false;
         }
         //Category
-        if(product.getCategory().equals("")){
+        if(categoryString.equals("")){
             binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_empty_field)));
             if(isValid) binding.textInputLayoutCategory.requestFocus();
             isValid = false;
         }
-        else if(!CATEGORIES.contains(product.getCategory())){
+        else if(categoryId<0){
             binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_not_a_category)));
             if(isValid) binding.textInputLayoutCategory.requestFocus();
             isValid = false;

@@ -3,11 +3,11 @@ package com.pape.ricettacolomisterioso.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.navigation.NavController;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.utils.Functions;
 
 public class PreferencesFragment extends PreferenceFragmentCompat {
 
@@ -42,9 +42,9 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 boolean selectedValue = (boolean) newValue;
                 if(selectedValue)
-                    MainActivity.SetAlarmManager(getContext());
+                    Functions.SetAlarmManager(getContext());
                 else
-                    MainActivity.ClearAlarmManager();
+                    Functions.ClearAlarmManager(getContext());
                 return true;
             }
         });

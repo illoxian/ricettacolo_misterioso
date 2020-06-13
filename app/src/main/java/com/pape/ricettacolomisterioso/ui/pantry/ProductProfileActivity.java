@@ -23,7 +23,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 
 public class ProductProfileActivity extends AppCompatActivity {
@@ -40,16 +39,16 @@ public class ProductProfileActivity extends AppCompatActivity {
 
         Product product = getIntent().getBundleExtra("product").getParcelable("product");
 
-        updateProductInformation(product);
+        updateProductInformation(product, view);
         updateExpiringView(product.getExpirationDate(), product.getPurchaseDate());
 
         Log.d(TAG, product.toString());
 
     }
 
-    public void updateProductInformation(Product product){
+    public void updateProductInformation(Product product, View view){
         productProfileBinding.productNameTextView.setText(product.getProduct_name());
-        productProfileBinding.categoryValueTextView.setText(product.getCategory());
+        productProfileBinding.categoryValueTextView.setText(Functions.getProductCategoryString(view.getContext(), product.getCategory()));
         productProfileBinding.quantityValueTextView.setText("500g");
         productProfileBinding.brandValueTextView.setText(product.getBrand());
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());

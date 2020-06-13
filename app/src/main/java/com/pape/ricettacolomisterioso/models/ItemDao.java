@@ -22,9 +22,6 @@ public interface ItemDao {
     @Query("UPDATE items SET isSelected=:isSelected WHERE id = :id")
     int updateIsSelected(long id, Boolean isSelected);
 
-    @Delete
-    int delete(Item item);
-
     @Query("DELETE FROM items WHERE itemName = :itemName")
     int delete(String itemName);
 

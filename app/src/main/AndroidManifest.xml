@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="false"
@@ -13,23 +14,6 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.MyApp">
 
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" />
-
-        <receiver android:name=".NotificationsReceiver" />
-
-        <activity android:name=".ui.pantry.ScannerActivity" />
-        <activity
-            android:name=".ui.pantry.ProductProfileActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/Theme.MyTheme.DayNight.NoActionBar">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
-        </activity>
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
@@ -40,6 +24,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".NotificationReceiver" />
+        <receiver android:name=".DeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.pantry.ProductProfileActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.MyTheme.DayNight.NoActionBar">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+
         <activity
             android:name=".ui.pantry.NewProductActivity"
             android:label="@string/title_new_product"
@@ -50,6 +54,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
+
+        <activity android:name=".ui.pantry.ScannerActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
     </application>
 
 </manifest>

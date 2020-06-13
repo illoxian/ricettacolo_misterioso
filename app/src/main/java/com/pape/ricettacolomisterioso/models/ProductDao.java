@@ -20,7 +20,7 @@ public interface ProductDao {
     Product findByName(String first);
 
     @Query("SELECT * FROM products WHERE category LIKE :category")
-    List<Product> findByCategory(String category);
+    List<Product> findByCategory(int category);
 
     @Query("SELECT * FROM products ORDER BY expirationDate LIMIT 3")
     List<Product> getMostExpiringProduct();

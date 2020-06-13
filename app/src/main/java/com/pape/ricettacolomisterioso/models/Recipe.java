@@ -24,13 +24,15 @@ public class Recipe implements Parcelable {
     private String recipe_category;
     private List<String> ingredients;
     private List<String> steps;
+    private String imageUrl;
 
     public Recipe () {}
-    public Recipe(int id, String recipe_name, String recipe_category, List<String> ingredients, List<String> steps) {
+    public Recipe(int id, String recipe_name, String imageUrl, String recipe_category, List<String> ingredients, List<String> steps) {
         this.id = id;
         this.recipe_name = recipe_name;
         this.recipe_category = recipe_category;
 
+        this.imageUrl = imageUrl;
         this.ingredients = ingredients;
         this.steps = steps;
     }
@@ -60,6 +62,14 @@ public class Recipe implements Parcelable {
     }
 
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public List<String> getIngredients() {
         return ingredients;
     }
@@ -82,6 +92,7 @@ public class Recipe implements Parcelable {
                 "id=" + id +
                 ", recipe_name='" + recipe_name + '\'' +
                 ", recipe_category='" + recipe_category + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", ingredients=" + ingredients +
                 ", steps=" + steps +
                 '}';
@@ -93,6 +104,7 @@ public class Recipe implements Parcelable {
         id = in.readInt();
         recipe_name = in.readString();
         recipe_category = in.readString();
+        this.imageUrl = in.readString();
         if (in.readByte() == 0x01) {
             ingredients = new ArrayList<String>();
             in.readList(ingredients, String.class.getClassLoader());
@@ -117,6 +129,7 @@ public class Recipe implements Parcelable {
         dest.writeInt(id);
         dest.writeString(recipe_name);
         dest.writeString(recipe_category);
+        dest.writeString(this.imageUrl);
         if (ingredients == null) {
             dest.writeByte((byte) (0x00));
         } else {

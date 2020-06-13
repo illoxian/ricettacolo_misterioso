@@ -15,14 +15,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipesBinding;
+import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.ui.pantry.PantryFragmentDirections;
 import com.pape.ricettacolomisterioso.viewmodels.RecipesViewModel;
 
@@ -34,11 +40,13 @@ public class RecipesFragment extends Fragment {
     private static final String TAG = "RecipesFragment";
     private FragmentRecipesBinding binding;
     private RecipesViewModel recipesViewModel;
-
+    private RecipeListAdapter searchAdapter;
+    private RecipesViewModel model;
+    private View view;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRecipesBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
+        view = binding.getRoot();
         setHasOptionsMenu(true);
         return view;
     }
@@ -46,6 +54,7 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        model =  new ViewModelProvider(this).get(RecipesViewModel.class);
 
         List<CardView> cardViews = new ArrayList<>();
         cardViews.add(binding.recipesAppetizersCardView);
@@ -76,7 +85,73 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.recipes_app_bar_menu, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.recipes_app_bar_search).getActionView();
+        searchView.setIconified(true);
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                binding.recipesCategoriesTablelayout.setVisibility(View.VISIBLE);
+                binding.recipesCategoriesTitle.setVisibility(View.VISIBLE);
+                binding.recipesMenuTitle.setVisibility(View.VISIBLE);
+                binding.recipesMenuCard1.setVisibility(View.VISIBLE);
+                binding.recipesFragmentRecyclerView.setVisibility(View.GONE);
+                return false;
+            }
+        });
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        onSearched(query);
+                        return false;
+                    }
 
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        binding.recipesCategoriesTablelayout.setVisibility(View.GONE);
+                        binding.recipesCategoriesTitle.setVisibility(View.GONE);
+                        binding.recipesMenuTitle.setVisibility(View.GONE);
+                        binding.recipesMenuCard1.setVisibility(View.GONE);
+                        binding.recipesFragmentRecyclerView.setVisibility(View.VISIBLE);
+
+                        onSearched(newText);
+                        return false;
+                    }
+                });
+            }
+        });
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                binding.recipesCategoriesTablelayout.setVisibility(View.VISIBLE);
+                binding.recipesCategoriesTitle.setVisibility(View.VISIBLE);
+                binding.recipesMenuTitle.setVisibility(View.VISIBLE);
+                binding.recipesMenuCard1.setVisibility(View.VISIBLE);
+                binding.recipesFragmentRecyclerView.setVisibility(View.GONE);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        onSearched(query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        binding.recipesCategoriesTablelayout.setVisibility(View.GONE);
+                        binding.recipesCategoriesTitle.setVisibility(View.GONE);
+                        binding.recipesMenuTitle.setVisibility(View.GONE);
+                        binding.recipesMenuCard1.setVisibility(View.GONE);
+                        binding.recipesFragmentRecyclerView.setVisibility(View.VISIBLE);
+
+                        onSearched(newText);
+                        return false;
+                    }
+                });
+
+            }
+        });
     }
 
 
@@ -93,6 +168,34 @@ public class RecipesFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onSearched(String newString){
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.recipesFragmentRecyclerView.setLayoutManager(layoutManager);
+
+        searchAdapter = new RecipeListAdapter(getActivity(), model.getRecipes().getValue(), new RecipeListAdapter.OnItemInteractions() {
+            @Override
+            public void onItemClick(Recipe recipe, View view) {
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("recipe", recipe);
+                RecipesFragmentDirections.ShowRecipeProfileFromNavigationPantry action = RecipesFragmentDirections.showRecipeProfileFromNavigationPantry(recipe);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+        binding.recipesFragmentRecyclerView.setAdapter(searchAdapter);
+
+        model.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                searchAdapter.setData(model.getRecipes().getValue());
+            }
+        });
+
+        model.getRecipesSeached(newString);
+    }
+
+
 
     private void startNewRecipeFragment() {
         Navigation.findNavController(getView()).navigate(R.id.action_add_new_recipe);

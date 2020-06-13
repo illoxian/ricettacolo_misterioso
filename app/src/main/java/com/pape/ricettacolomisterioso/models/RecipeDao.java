@@ -13,7 +13,8 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes")
     List<Recipe> getAll();
 
-
+    @Query("SELECT * FROM recipes WHERE recipe_name LIKE :recipe_name ||'%'")
+    List<Recipe> getSearchedRecipes(String recipe_name);
 
     @Query("SELECT * FROM recipes WHERE recipe_name LIKE :first LIMIT 1")
     Recipe findByName(String first);

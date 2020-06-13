@@ -26,7 +26,7 @@ public class Product implements Parcelable {
     private String barcode;
     private String dataSource;
 
-    private String category;
+    private int category;
     private Date expirationDate;
     private Date purchaseDate;
 
@@ -35,7 +35,7 @@ public class Product implements Parcelable {
 
     }
 
-    public Product(String product_name, String imageUrl, String brand, String barcode, String dataSource, String category, Date expirationDate, Date purchaseDate) {
+    public Product(String product_name, String imageUrl, String brand, String barcode, String dataSource, int category, Date expirationDate, Date purchaseDate) {
         this.product_name = product_name;
         this.imageUrl = imageUrl;
         this.brand = brand;
@@ -94,11 +94,11 @@ public class Product implements Parcelable {
         this.dataSource = dataSource;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -159,7 +159,7 @@ public class Product implements Parcelable {
         out.writeString(this.brand);
         out.writeString(this.barcode);
         out.writeString(this.dataSource);
-        out.writeString(this.category);
+        out.writeInt(this.category);
 
         if(this.expirationDate==null) out.writeString(null);
         else out.writeLong(this.expirationDate.getTime());
@@ -188,7 +188,7 @@ public class Product implements Parcelable {
         this.brand = in.readString();
         this.barcode = in.readString();
         this.dataSource = in.readString();
-        this.category = in.readString();
+        this.category = in.readInt();
         this.expirationDate = new Date(in.readLong());
         this.purchaseDate = new Date(in.readLong());
     }
@@ -198,7 +198,7 @@ public class Product implements Parcelable {
         TypedArray icons = res.obtainTypedArray(R.array.categoriesIcon);
         List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
 
-        int index = categories.indexOf(getCategory());
+        int index = getCategory();
         int resourceId = icons.getResourceId(index, -1);
         icons.recycle();
         return resourceId;
@@ -209,9 +209,10 @@ public class Product implements Parcelable {
         TypedArray previews = res.obtainTypedArray(R.array.categoriesPreviews);
         List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
 
-        int index = categories.indexOf(getCategory());
+        int index = getCategory();
         int resourceId = previews.getResourceId(index, -1);
         previews.recycle();
         return resourceId;
     }
+
 }

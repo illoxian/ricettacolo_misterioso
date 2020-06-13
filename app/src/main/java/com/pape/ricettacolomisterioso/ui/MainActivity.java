@@ -8,36 +8,26 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.pape.ricettacolomisterioso.NotificationsReceiver;
-import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.models.AppDatabase;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.room.Room;
 
-import java.util.Calendar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.models.AppDatabase;
+import com.pape.ricettacolomisterioso.utils.Functions;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static AppDatabase db;
-    private static AlarmManager alarmManager;
-    private static PendingIntent alarmIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +39,13 @@ public class MainActivity extends AppCompatActivity {
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        createNotificationChannel();
+        //check notifications enabled
+        if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
+            Functions.SetAlarmManager(this);
+        else
+            Functions.ClearAlarmManager(this);
+
+        //createNotificationChannel();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -62,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         SetDatabase();
-
-        /*Intent intent = new Intent(this, Product_profile.class);
-        startActivity(intent);*/
-
     }
 
     private void SetDatabase(){
@@ -75,46 +67,6 @@ public class MainActivity extends AppCompatActivity {
                     AppDatabase.class, "database-name").build();
         }
 
-    }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Canale notifiche standard";
-            String description = "Un normale canale di notifiche";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("StandardChannel", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    public static void SetAlarmManager(Context context)
-    {
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(context, NotificationsReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-
-        //long interval = AlarmManager.INTERVAL_DAY;
-        long interval = 60*1000;
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                interval, alarmIntent);
-    }
-
-    public static void ClearAlarmManager()
-    {
-        if (alarmManager != null) {
-            alarmManager.cancel(alarmIntent);
-        }
     }
 
 }

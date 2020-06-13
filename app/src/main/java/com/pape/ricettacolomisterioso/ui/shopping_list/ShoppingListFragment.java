@@ -88,6 +88,7 @@ public class ShoppingListFragment extends Fragment {
             public void onChanged(@Nullable List<Item> items) {
                 Log.d(TAG, "onChanged: Items:" + items);
                 mAdapter.setData(model.getItems().getValue());
+                CheckEmptyList();
             }
         });
 
@@ -95,6 +96,7 @@ public class ShoppingListFragment extends Fragment {
             @Override
             public void onChanged(Long insertId) {
                 Log.d(TAG, "onChanged: InsertId:" + insertId);
+                CheckEmptyList();
             }
         });
 
@@ -102,6 +104,7 @@ public class ShoppingListFragment extends Fragment {
             @Override
             public void onChanged(Integer deleteId) {
                 Log.d(TAG, "onChanged: deleteId:" + deleteId);
+                CheckEmptyList();
             }
         });
 
@@ -116,6 +119,17 @@ public class ShoppingListFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(binding.shoppingListRecyclerView);
 
         model.getAllItems();
+    }
+
+    private void CheckEmptyList() {
+        if(model.getItems().getValue() == null || model.getItems().getValue().size()==0){
+            binding.shoppingListEmptyImageView.setVisibility(View.VISIBLE);
+            binding.shoppingListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.shoppingListEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.shoppingListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT /*| ItemTouchHelper.RIGHT*/) {

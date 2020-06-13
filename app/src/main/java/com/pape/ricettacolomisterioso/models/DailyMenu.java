@@ -6,12 +6,12 @@ import java.util.List;
 public class DailyMenu {
 
     private Date day;
-    private List<String> recipes;
+    private List<DailyRecipe> recipes;
 
     public DailyMenu() {
     }
 
-    public DailyMenu(Date day, List<String> recipes) {
+    public DailyMenu(Date day, List<DailyRecipe> recipes) {
         this.day = day;
         this.recipes = recipes;
     }
@@ -24,11 +24,11 @@ public class DailyMenu {
         this.day = day;
     }
 
-    public List<String> getRecipes() {
+    public List<DailyRecipe> getRecipes() {
         return recipes;
     }
 
-    public void setRecipes(List<String> recipes) {
+    public void setRecipes(List<DailyRecipe> recipes) {
         this.recipes = recipes;
     }
 
