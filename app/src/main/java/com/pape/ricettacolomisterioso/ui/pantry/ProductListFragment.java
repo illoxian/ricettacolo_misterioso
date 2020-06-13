@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -63,6 +64,7 @@ public class ProductListFragment extends Fragment {
         binding.productListRecyclerView.setLayoutManager(layoutManager);
         model = new ViewModelProvider(this).get(ProductListViewModel.class);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(res));
 
         mAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
             @Override
