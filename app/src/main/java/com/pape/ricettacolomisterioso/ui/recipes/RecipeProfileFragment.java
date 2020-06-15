@@ -77,7 +77,6 @@ public class RecipeProfileFragment extends Fragment {
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
         bottomNavigationView.setVisibility(View.GONE);
 
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 

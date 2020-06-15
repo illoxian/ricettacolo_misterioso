@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_navigation_pantry_to_fragmentProductList"
             app:destination="@id/fragmentProductList" />
+        <action
+            android:id="@+id/action_navigation_pantry_to_newProductFragment"
+            app:destination="@id/newProductFragment" />
 
     </fragment>
 
@@ -100,5 +103,10 @@
             android:name="Recipe"
             app:argType="com.pape.ricettacolomisterioso.models.Recipe" />
     </fragment>
+    <fragment
+        android:id="@+id/newProductFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.pantry.NewProductFragment"
+        android:label="fragment_new_product"
+        tools:layout="@layout/fragment_new_product" />
 
 </navigation>
