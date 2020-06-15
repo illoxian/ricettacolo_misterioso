@@ -1,12 +1,12 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,8 +31,10 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.ScannerViewModel;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
 
@@ -44,12 +45,12 @@ public class ScannerActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private ToneGenerator toneGen1;
-    public static final int REQUEST_CAMERA_PERMISSION = 201;
 
     private Boolean barcodeFound;
     private ScannerViewModel model;
     private MutableLiveData<Product> liveData;
     private AlertDialog.Builder builder;
+    private Bitmap bitmapLoaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,12 +175,7 @@ public class ScannerActivity extends AppCompatActivity {
 
     private void StartCamera(){
         try {
-            if (ActivityCompat.checkSelfPermission(ScannerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                cameraSource.start(surfaceView.getHolder());
-            } else {
-                ActivityCompat.requestPermissions(ScannerActivity.this, new
-                        String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-            }
+            cameraSource.start(surfaceView.getHolder());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -222,7 +218,17 @@ public class ScannerActivity extends AppCompatActivity {
             code_view.setText(product.getBarcode());
             String dataSourceText = getResources().getString(R.string.scanner_alert_dialog_data_source_label) + " " + product.getDataSource();
             data_source_view.setText(dataSourceText);
-            Picasso.get().load(product.getImageUrl()).into(image_view);
+            Picasso.get().load(product.getImageUrl()).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    image_view.setImageBitmap(bitmap);
+                    bitmapLoaded = bitmap;
+                }
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {   }
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {   }
+            });
 
             String positiveText = getString(android.R.string.ok);
             builder.setPositiveButton(positiveText,
@@ -251,8 +257,11 @@ public class ScannerActivity extends AppCompatActivity {
 
     private void returnProduct(Product p){
 
-        Intent returnIntent = new Intent();
+        String image_path = Functions.SaveImage(bitmapLoaded);
+        if(image_path != null)
+            p.setImageUrl(image_path);
 
+        Intent returnIntent = new Intent();
         returnIntent.putExtra("product",p);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();

@@ -21,6 +21,7 @@ import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.ProductProfileViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -58,7 +59,8 @@ public class ProductProfileActivity extends AppCompatActivity {
         if(sharedPreferences.getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
         {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            Picasso.get().load(product.getImageUrl()).into(productProfileBinding.categoryImage);
+            File f = new File(product.getImageUrl());
+            Picasso.get().load(f).into(productProfileBinding.categoryImage);
         }
         else{
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
