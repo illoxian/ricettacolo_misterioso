@@ -207,8 +207,10 @@ public class PantryFragment extends Fragment {
     }
 
     private void startNewProductActivity(){
-        Intent intent = new Intent(this.getActivity(), NewProductActivity.class);
-        startActivityForResult(intent,NEW_PRODUCT_ADDED);
+        Navigation.findNavController(getView()).navigate(R.id.action_navigation_pantry_to_newProductFragment);
+
+//        Intent intent = new Intent(this.getActivity(), NewProductActivity.class);
+//        startActivityForResult(intent,NEW_PRODUCT_ADDED);
     }
 
     public int getCardViewStringRes(CardView cardView){
