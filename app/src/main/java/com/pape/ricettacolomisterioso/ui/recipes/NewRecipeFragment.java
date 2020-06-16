@@ -105,6 +105,7 @@ public class NewRecipeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTextInputs();
+        initFab();
         //inits ingredients: item list card view
         initItemListCardView(binding.newRecipeIngredientsAddButton,
                 view.findViewById(R.id.new_recipe_ingredientList_linearLayout),
@@ -142,6 +143,14 @@ public class NewRecipeFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, CATEGORIES);
         binding.textInputRecipeCategory.setAdapter(adapter);
 
+    }
+    private void initFab(){
+        binding.newRecipeSaveFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRecipe();
+            }
+        });
     }
 
     private void initItemListCardView(Button button, LinearLayout layoutToInflate, int itemToInflate ) {

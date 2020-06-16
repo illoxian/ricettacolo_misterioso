@@ -69,11 +69,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_recipe_category">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/new_recipe_ingredients_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/new_recipe_ingredients_textView"
@@ -88,22 +89,10 @@
                     android:text="Ingredienti"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                <Button
-                    android:id="@+id/new_recipe_ingredients_addButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/new_recipe_ingredientList_linearLayout"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Add" />
-
                 <LinearLayout
                     android:id="@+id/new_recipe_ingredientList_linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/new_recipe_ingredients_addButton"
-                    android:layout_marginTop="48dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
@@ -115,7 +104,8 @@
                         android:paddingStart="16dp"
                         android:paddingLeft="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingRight="16dp">
+                        android:paddingRight="16dp"
+                        android:visibility="gone">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
@@ -123,7 +113,16 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/new_recipe_ingredients_addButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Add"
+                    android:layout_gravity="end"/>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -135,15 +134,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_recipe_ingredients_cardView">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/new_recipe_steps_linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/new_recipe_steps_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -151,25 +150,14 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
                     android:text="Passaggi"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                <Button
-                    android:id="@+id/new_recipe_steps_addButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/new_recipe_stepList_linearLayout"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Add" />
 
                 <LinearLayout
                     android:id="@+id/new_recipe_stepList_linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/new_recipe_steps_addButton"
-                    android:layout_marginTop="48dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
@@ -181,25 +169,46 @@
                         android:paddingStart="16dp"
                         android:paddingLeft="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingRight="16dp">
+                        android:paddingRight="16dp"
+                        android:visibility="gone">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
-
                 </LinearLayout>
 
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/new_recipe_steps_addButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Add"
+                    android:layout_gravity="end"/>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toBottomOf="@id/new_recipe_steps_cardView"
-            tools:layout_editor_absoluteX="16dp" />
+            android:layout_height="90dp"
+            app:layout_constraintTop_toBottomOf="@id/new_recipe_steps_cardView"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/new_recipe_save_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/baseline_save_24"
+            app:fabCustomSize="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:iconTint="@android:color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
