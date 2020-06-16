@@ -25,7 +25,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
-
+@Deprecated
 public class ProductProfileActivity extends AppCompatActivity {
     private ActivityProductProfileBinding productProfileBinding;
     private ProductProfileViewModel model;

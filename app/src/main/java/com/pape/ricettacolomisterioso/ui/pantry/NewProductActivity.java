@@ -41,6 +41,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+@Deprecated
 public class NewProductActivity extends AppCompatActivity {
 
     private static final String TAG = "NewProductActivity";
