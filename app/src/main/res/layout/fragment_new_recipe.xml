@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView
     xmlns:tools="http://schemas.android.com/tools"
     style="@android:style/Widget.Material.Light.ScrollView"
     android:layout_width="match_parent"
@@ -13,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -195,20 +198,23 @@
             android:layout_width="match_parent"
             android:layout_height="90dp"
             app:layout_constraintTop_toBottomOf="@id/new_recipe_steps_cardView"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/new_recipe_save_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/baseline_save_24"
-            app:fabCustomSize="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:iconTint="@android:color/white"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/new_recipe_save_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/baseline_save_24"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:iconTint="@android:color/white"/>
+</RelativeLayout>

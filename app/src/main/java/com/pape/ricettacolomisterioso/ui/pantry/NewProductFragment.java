@@ -1,7 +1,6 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -17,6 +16,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -359,10 +360,17 @@ public class NewProductFragment extends Fragment {
         }
     }
 
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.new_recipe_app_bar_menu, menu);
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-
+        if (id==R.id.new_recipe_app_bar_add) {
+            addProduct();
+            return true;
+        }
         if(id==android.R.id.home) {
             Navigation.findNavController(getView()).popBackStack();
             return true;

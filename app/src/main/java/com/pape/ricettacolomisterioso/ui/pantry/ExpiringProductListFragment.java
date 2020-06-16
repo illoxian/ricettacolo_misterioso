@@ -11,11 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ExpiringProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentExpiringProductListBinding;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.ui.recipes.RecipeListFragmentDirections;
 import com.pape.ricettacolomisterioso.viewmodels.ExpiringProductListViewModel;
 
 import java.util.List;
@@ -52,11 +55,13 @@ public class ExpiringProductListFragment extends Fragment {
         mAdapter = new ExpiringProductListAdapter(getActivity(), model.getExpiringProductsOrdered().getValue(), new ExpiringProductListAdapter.OnItemInteractions() {
             @Override
             public void onItemClick(Product product) {
-                Intent intent = new Intent(getContext(), ProductProfileActivity.class);
-                Bundle productBundle = new Bundle();
-                productBundle.putParcelable("product", product);
-                intent.putExtra("product", productBundle);
-                startActivity(intent);
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("product", product);
+
+                ExpiringProductListFragmentDirections.ActionExpiringProductListToProductProfileFragment action =
+                        ExpiringProductListFragmentDirections.actionExpiringProductListToProductProfileFragment(product);
+
+                Navigation.findNavController(view).navigate(action);
             }
         });
         binding.expiringProductListRecyclerView.setAdapter(mAdapter);

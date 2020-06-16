@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_navigation_pantry_to_newProductFragment"
             app:destination="@id/newProductFragment" />
+        <action
+            android:id="@+id/action_navigation_pantry_to_productProfileFragment"
+            app:destination="@id/productProfileFragment" />
 
     </fragment>
 
@@ -117,7 +120,7 @@
         tools:layout="@layout/fragment_new_product" />
     <fragment
         android:id="@+id/productProfileFragment"
-        android:name="com.pape.ricettacolomisterioso.ProductProfileFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.pantry.ProductProfileFragment"
         android:label="fragment_product_profile"
         tools:layout="@layout/fragment_product_profile" >
         <argument
