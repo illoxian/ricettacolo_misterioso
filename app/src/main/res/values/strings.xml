@@ -4,6 +4,8 @@
     <string name="title_pantry">Pantry</string>
     <string name="title_shoppinglist">Shopping List</string>
     <string name="title_menu">Menu</string>
+    <string name="title_product_profile">Product Profile</string>
+    <string name="title_new_product">New Product</string>
     <string name="expiring_button">See all</string>
     <string name="expiring_products">Expiring Products</string>
     <string name="category_product">Categories</string>
@@ -35,7 +37,6 @@
     <string name="pantry_categories_oil_and_condiments">Oil and condiments</string>
     <string name="pantry_categories_water_and_drinks">Water and drinks</string>
     <string name="pantry_categories_see_all">See all</string>
-    <string name="title_new_product">New product</string>
     <string name="error_empty_field">This field can not be blank</string>
     <string name="error_not_a_category">Select one of the categories</string>
     <string name="scanner_alert_dialog_title">Barcode scanned</string>

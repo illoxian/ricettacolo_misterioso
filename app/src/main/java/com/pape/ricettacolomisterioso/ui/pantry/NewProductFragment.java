@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -91,6 +92,7 @@ public class NewProductFragment extends Fragment {
         View view = binding.getRoot();
         setHasOptionsMenu(true);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.title_new_product));
         //livedata observer for the id returned from the insert to db
         model = new ViewModelProvider(this).get(NewProductViewModel.class);
         final Observer<Long> observer = new Observer<Long>() {

@@ -165,7 +165,7 @@ public class PantryFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.app_bar_add){
             Log.d(TAG, "onOptionsItemSelected: Add");
-            startNewProductActivity();
+            openProductProfileFragment();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -179,11 +179,13 @@ public class PantryFragment extends Fragment {
         searchAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
             @Override
             public void onItemClick(Product product) {
-                Intent intent = new Intent(getContext(), ProductProfileActivity.class);
-                Bundle productBundle = new Bundle();
-                productBundle.putParcelable("product", product);
-                intent.putExtra("product", productBundle);
-                startActivity(intent);
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("product", product);
+
+                PantryFragmentDirections.ActionNavigationPantryToProductProfileFragment action =
+                        PantryFragmentDirections.actionNavigationPantryToProductProfileFragment(product);
+
+                Navigation.findNavController(getView()).navigate(action);
             }
 
             @Override
@@ -206,7 +208,7 @@ public class PantryFragment extends Fragment {
         model.getProductsSearched(newString);
     }
 
-    private void startNewProductActivity(){
+    private void openProductProfileFragment(){
         Navigation.findNavController(getView()).navigate(R.id.action_navigation_pantry_to_newProductFragment);
 
 //        Intent intent = new Intent(this.getActivity(), NewProductActivity.class);

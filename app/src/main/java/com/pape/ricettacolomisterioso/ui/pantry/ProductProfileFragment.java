@@ -3,17 +3,23 @@ package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -51,6 +57,8 @@ public class ProductProfileFragment extends Fragment {
         productProfileBinding = FragmentProductProfileBinding.inflate(getLayoutInflater());
         model = new ViewModelProvider(this).get(ProductProfileViewModel.class);
         View view = productProfileBinding.getRoot();
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.title_product_profile));
 
         return view;
     }
@@ -143,4 +151,17 @@ public class ProductProfileFragment extends Fragment {
         else
             productProfileBinding.addShoppingListImage.setColorFilter(null);
     }
+
+    /*public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.new_recipe_app_bar_menu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id==android.R.id.home) {
+            Navigation.findNavController(getView()).popBackStack();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
 }

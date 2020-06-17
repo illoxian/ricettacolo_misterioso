@@ -106,4 +106,5 @@
     <string name="notification_scheduled_recipes_2">Per oggi hai pianificato %1$s e %2$s. Buon appetito!</string>
     <string name="shopping_list_empty_text">La lista della spesa è vuota</string>
     <string name="removed_from_products">rimosso dai prodotti</string>
+    <string name="title_product_profile">Profilo del prodotto</string>
 </resources>
