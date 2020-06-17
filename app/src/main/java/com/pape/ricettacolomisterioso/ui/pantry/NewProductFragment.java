@@ -3,6 +3,7 @@ package com.pape.ricettacolomisterioso.ui.pantry;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -14,21 +15,30 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.databinding.ActivityNewProductBinding;
+import com.pape.ricettacolomisterioso.databinding.FragmentNewProductBinding;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.NewProductViewModel;
@@ -41,11 +51,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@Deprecated
-public class NewProductActivity extends AppCompatActivity {
+import static android.app.Activity.RESULT_OK;
 
-    private static final String TAG = "NewProductActivity";
-    private ActivityNewProductBinding binding;
+public class NewProductFragment extends Fragment {
+
+    //singleton impl
+    public NewProductFragment() {
+
+    }
+
+    public static NewProductFragment newInstance() {
+        NewProductFragment fragment = new NewProductFragment();
+        return fragment;
+    }
+
+
+    private static final String TAG = "NewProductFragment";
+    private FragmentNewProductBinding binding;
     private NewProductViewModel model;
     private Calendar c;
     private DatePickerDialog datePickerDialog;
@@ -61,12 +83,13 @@ public class NewProductActivity extends AppCompatActivity {
     private Bitmap bitmapProduct;
     private MutableLiveData<Long> insertId; //livedata for the id returned from the insert to db
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityNewProductBinding.inflate(getLayoutInflater());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentNewProductBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        setContentView(view);
+        setHasOptionsMenu(true);
 
         //livedata observer for the id returned from the insert to db
         model = new ViewModelProvider(this).get(NewProductViewModel.class);
@@ -74,28 +97,28 @@ public class NewProductActivity extends AppCompatActivity {
             @Override
             public void onChanged(Long insertId) {
                 if(insertId>=0){
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("insertId",insertId);
-                    setResult(Activity.RESULT_OK,returnIntent);
-                    finish();
+                    Toast.makeText(getContext(), R.string.new_product_toast_success, Toast.LENGTH_LONG).show();
+                    Navigation.findNavController(getView()).popBackStack();
                 }
             }
         };
         insertId = model.getInsertId();
-        insertId.observe(this, observer);
+        insertId.observe(this.getActivity(), observer);
 
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initTextInputs();
         initScannerButton();
         initFAB();
         initDatePicker();
         initButtonImage();
+
     }
-
-
-
-
-
-
 
     private void initButtonImage() {
         binding.buttonAddImage.setOnClickListener(new View.OnClickListener() {
@@ -111,11 +134,11 @@ public class NewProductActivity extends AppCompatActivity {
                 dialog_take_photo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                            && ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                             startTakePhotoActivity();
                         } else {
-                            ActivityCompat.requestPermissions(NewProductActivity.this, new
+                            ActivityCompat.requestPermissions(getActivity(), new
                                     String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, LAUNCH_TAKE_PHOTO_ACTIVITY);
                         }
                         mBottomSheetDialog.dismiss();
@@ -125,10 +148,10 @@ public class NewProductActivity extends AppCompatActivity {
                 dialog_pick_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                             startPickImageActivity();
                         } else {
-                            ActivityCompat.requestPermissions(NewProductActivity.this, new
+                            ActivityCompat.requestPermissions(getActivity(), new
                                     String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, LAUNCH_LOAD_IMAGE_ACTIVITY);
                         }
                         mBottomSheetDialog.dismiss();
@@ -144,11 +167,11 @@ public class NewProductActivity extends AppCompatActivity {
         binding.buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     startScannerActivity();
                 } else {
-                    ActivityCompat.requestPermissions(NewProductActivity.this, new
+                    ActivityCompat.requestPermissions(getActivity(), new
                             String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, LAUNCH_SCANNER_ACTIVITY);
                 }
             }
@@ -178,7 +201,7 @@ public class NewProductActivity extends AppCompatActivity {
             }
         });
         CATEGORIES = Arrays.asList(getResources().getStringArray(R.array.categoriesString));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, CATEGORIES);
         binding.textInputCategory.setAdapter(adapter);
     }
@@ -205,7 +228,7 @@ public class NewProductActivity extends AppCompatActivity {
                 final int month = c.get(Calendar.MONTH);
                 final int year = c.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(NewProductActivity.this, R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         Calendar cPicked = Calendar.getInstance();
@@ -234,7 +257,7 @@ public class NewProductActivity extends AppCompatActivity {
                 final int month = c.get(Calendar.MONTH);
                 final int year = c.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(NewProductActivity.this, R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         Calendar cPicked = Calendar.getInstance();
@@ -287,11 +310,11 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_SCANNER_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
+            if(resultCode == RESULT_OK){
                 product = data.getParcelableExtra("product");
 
                 if(product != null){
@@ -314,7 +337,8 @@ public class NewProductActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK && data != null) {
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                Cursor cursor = getContentResolver().query(selectedImage,
+
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -336,23 +360,51 @@ public class NewProductActivity extends AppCompatActivity {
         }
     }
 
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.new_recipe_app_bar_menu, menu);
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
-        switch(item.getItemId()){
-            case android.R.id.home:
-                finish();
-                return true;
+        int id = item.getItemId();
+        if (id==R.id.new_recipe_app_bar_add) {
+            addProduct();
+            return true;
+        }
+        if(id==android.R.id.home) {
+            Navigation.findNavController(getView()).popBackStack();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.GONE);
+
+
+    }
+
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+
     }
 
 
 
 
-
     private void startScannerActivity(){
-        Intent i = new Intent(this, ScannerActivity.class);
+        // insert navigate?
+        Intent i = new Intent(getActivity(), ScannerActivity.class);
         startActivityForResult(i, LAUNCH_SCANNER_ACTIVITY);
     }
 

@@ -1,22 +1,27 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.databinding.ActivityProductProfileBinding;
+import com.pape.ricettacolomisterioso.databinding.FragmentProductProfileBinding;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
+
 import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.ProductProfileViewModel;
 import com.squareup.picasso.Picasso;
@@ -25,25 +30,39 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
-@Deprecated
-public class ProductProfileActivity extends AppCompatActivity {
-    private ActivityProductProfileBinding productProfileBinding;
+public class ProductProfileFragment extends Fragment {
+    private FragmentProductProfileBinding productProfileBinding;
     private ProductProfileViewModel model;
-    final static String TAG = "Product_profile";
+    final static String TAG="ProductProfileFragment";
+
+    public ProductProfileFragment() {
+
+    }
+
+    public static ProductProfileFragment newInstance() {
+        ProductProfileFragment fragment = new ProductProfileFragment();
+        return fragment;
+    }
+
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        productProfileBinding = ActivityProductProfileBinding.inflate(getLayoutInflater());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        productProfileBinding = FragmentProductProfileBinding.inflate(getLayoutInflater());
         model = new ViewModelProvider(this).get(ProductProfileViewModel.class);
         View view = productProfileBinding.getRoot();
-        setContentView(view);
 
-        Product product = getIntent().getBundleExtra("product").getParcelable("product");
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Product product = ProductProfileFragmentArgs.fromBundle(getArguments()).getProduct();
 
         updateProductInformation(product, view);
         updateExpiringView(product.getExpirationDate(), product.getPurchaseDate());
 
-        Log.d(TAG, product.toString());
 
     }
 
@@ -55,8 +74,8 @@ public class ProductProfileActivity extends AppCompatActivity {
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
 
         // image or category thumbnail
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(sharedPreferences.getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if(((SharedPreferences) sharedPreferences).getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
         {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             File f = new File(product.getImageUrl());
@@ -64,11 +83,11 @@ public class ProductProfileActivity extends AppCompatActivity {
         }
         else{
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(this));
+            productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(getContext()));
         }
 
         // shopping list button
-        model.getFindItem().observe(this, new Observer<Item>() {
+        model.getFindItem().observe(getActivity(), new Observer<Item>() {
             @Override
             public void onChanged(Item item) {
                 if(item == null) setColorAddToShoppingListIcon(false);
@@ -120,7 +139,7 @@ public class ProductProfileActivity extends AppCompatActivity {
 
     private void setColorAddToShoppingListIcon(boolean lightUp){
         if(lightUp)
-            productProfileBinding.addShoppingListImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.pink_a200), android.graphics.PorterDuff.Mode.SRC_IN);
+            productProfileBinding.addShoppingListImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.pink_a200), android.graphics.PorterDuff.Mode.SRC_IN);
         else
             productProfileBinding.addShoppingListImage.setColorFilter(null);
     }

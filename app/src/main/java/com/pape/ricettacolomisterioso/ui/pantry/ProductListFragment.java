@@ -69,11 +69,11 @@ public class ProductListFragment extends Fragment {
         mAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
             @Override
             public void onItemClick(Product product) {
-                Intent intent = new Intent(getContext(), ProductProfileActivity.class);
-                Bundle productBundle = new Bundle();
-                productBundle.putParcelable("product", product);
-                intent.putExtra("product", productBundle);
-                startActivity(intent);
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("product", product);
+                ProductListFragmentDirections.ActionFragmentProductListToProductProfileFragment action =
+                       ProductListFragmentDirections.actionFragmentProductListToProductProfileFragment(product);
+                Navigation.findNavController(view).navigate(action);
             }
 
             @Override

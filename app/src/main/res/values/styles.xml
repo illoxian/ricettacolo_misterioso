@@ -21,6 +21,13 @@
         <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 
+    <!-- Outlined Button -->
+    <style name="Widget.MyTheme.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="iconTint">?attr/colorSecondary</item>
+        <item name="strokeColor">?attr/colorSecondary</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
+
     <!-- Text Input Layout Outlined -->
     <style name="Widget.MyTheme.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">?attr/colorOnBackground</item>

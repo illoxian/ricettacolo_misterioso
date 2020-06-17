@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_navigation_pantry_to_fragmentProductList"
             app:destination="@id/fragmentProductList" />
+        <action
+            android:id="@+id/action_navigation_pantry_to_newProductFragment"
+            app:destination="@id/newProductFragment" />
+        <action
+            android:id="@+id/action_navigation_pantry_to_productProfileFragment"
+            app:destination="@id/productProfileFragment" />
 
     </fragment>
 
@@ -64,6 +70,9 @@
         <argument
             android:name="Category"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_fragmentProductList_to_productProfileFragment"
+            app:destination="@id/productProfileFragment" />
     </fragment>
 
     <fragment
@@ -90,7 +99,11 @@
         android:id="@+id/expiringProductList"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.ExpiringProductListFragment"
         android:label="fragment_expiring_product_list"
-        tools:layout="@layout/fragment_expiring_product_list" />
+        tools:layout="@layout/fragment_expiring_product_list" >
+        <action
+            android:id="@+id/action_expiringProductList_to_productProfileFragment"
+            app:destination="@id/productProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeProfileFragment"
         android:name="com.pape.ricettacolomisterioso.ui.recipes.RecipeProfileFragment"
@@ -99,6 +112,20 @@
         <argument
             android:name="Recipe"
             app:argType="com.pape.ricettacolomisterioso.models.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProductFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.pantry.NewProductFragment"
+        android:label="fragment_new_product"
+        tools:layout="@layout/fragment_new_product" />
+    <fragment
+        android:id="@+id/productProfileFragment"
+        android:name="com.pape.ricettacolomisterioso.ui.pantry.ProductProfileFragment"
+        android:label="fragment_product_profile"
+        tools:layout="@layout/fragment_product_profile" >
+        <argument
+            android:name="Product"
+            app:argType="com.pape.ricettacolomisterioso.models.Product" />
     </fragment>
 
 </navigation>

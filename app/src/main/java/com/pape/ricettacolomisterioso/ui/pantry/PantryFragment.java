@@ -207,8 +207,10 @@ public class PantryFragment extends Fragment {
     }
 
     private void startNewProductActivity(){
-        Intent intent = new Intent(this.getActivity(), NewProductActivity.class);
-        startActivityForResult(intent,NEW_PRODUCT_ADDED);
+        Navigation.findNavController(getView()).navigate(R.id.action_navigation_pantry_to_newProductFragment);
+
+//        Intent intent = new Intent(this.getActivity(), NewProductActivity.class);
+//        startActivityForResult(intent,NEW_PRODUCT_ADDED);
     }
 
     public int getCardViewStringRes(CardView cardView){
@@ -260,11 +262,13 @@ public class PantryFragment extends Fragment {
         expiringAdapter = new ExpiringProductListAdapter(getActivity(), model.getMostExpiringProducts().getValue(), new ExpiringProductListAdapter.OnItemInteractions() {
             @Override
             public void onItemClick(Product product) {
-                Intent intent = new Intent(getActivity(), ProductProfileActivity.class);
-                Bundle productBundle = new Bundle();
-                productBundle.putParcelable("product", product);
-                intent.putExtra("product", productBundle);
-                startActivity(intent);
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("product", product);
+
+                PantryFragmentDirections.ActionNavigationPantryToProductProfileFragment action =
+                        PantryFragmentDirections.actionNavigationPantryToProductProfileFragment(product);
+
+                Navigation.findNavController(getView()).navigate(action);
             }
         });
         binding.expiringProductPreviewRecyclerView.setAdapter(expiringAdapter);

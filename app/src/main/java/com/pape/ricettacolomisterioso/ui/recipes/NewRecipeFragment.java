@@ -2,13 +2,10 @@ package com.pape.ricettacolomisterioso.ui.recipes;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 
 import android.util.Log;
@@ -21,29 +18,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.viewbinding.ViewBinding;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.pape.ricettacolomisterioso.R;
-import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentNewRecipeBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.viewmodels.NewRecipeViewModel;
@@ -52,9 +42,6 @@ import com.pape.ricettacolomisterioso.viewmodels.NewRecipeViewModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static androidx.core.content.ContextCompat.getCodeCacheDir;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class NewRecipeFragment extends Fragment {
     private static final String TAG = "NewRecipeFragment";
@@ -65,36 +52,16 @@ public class NewRecipeFragment extends Fragment {
     private MutableLiveData<Long> insertId;
     private NewRecipeViewModel model;
 
-/*
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BottomNavigationView navBar = getActivity().findViewById(R.id.nav_view);
-
-        navBar.setVisibility(View.VISIBLE);
-    }
-*/
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-/*
-
-        BottomNavigationView navBar = getActivity().findViewById(R.id.nav_view);
-        navBar.setVisibility(View.GONE);
-*/
 
         binding = FragmentNewRecipeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
 
         setHasOptionsMenu(true);
-        initTextInputs();
-
-       // initStepsCardView();
-
-
 
 
         model = new ViewModelProvider(this).get(NewRecipeViewModel.class);
@@ -111,19 +78,41 @@ public class NewRecipeFragment extends Fragment {
         insertId.observe(this.getActivity(), observer);
         int count = container.getChildCount();
         Log.d(TAG, "count"+count);
+
         return view;
     }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.GONE);
+
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //initIngredientsCardView(view);
-
-        initCardView(binding.newRecipeIngredientsAddButton,
+        initTextInputs();
+        initFab();
+        //inits ingredients: item list card view
+        initItemListCardView(binding.newRecipeIngredientsAddButton,
                 view.findViewById(R.id.new_recipe_ingredientList_linearLayout),
                 R.layout.new_recipe_item);
 
-        initCardView(binding.newRecipeStepsAddButton,
+        //inits steps: item list card view
+        initItemListCardView(binding.newRecipeStepsAddButton,
                 view.findViewById(R.id.new_recipe_stepList_linearLayout),
                 R.layout.new_recipe_item);
     }
@@ -155,8 +144,16 @@ public class NewRecipeFragment extends Fragment {
         binding.textInputRecipeCategory.setAdapter(adapter);
 
     }
+    private void initFab(){
+        binding.newRecipeSaveFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRecipe();
+            }
+        });
+    }
 
-    private void initCardView(Button button, LinearLayout layoutToInflate, int itemToInflate ) {
+    private void initItemListCardView(Button button, LinearLayout layoutToInflate, int itemToInflate ) {
         button.setOnClickListener(v-> {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View addView = layoutInflater.inflate(itemToInflate, null);
@@ -168,18 +165,6 @@ public class NewRecipeFragment extends Fragment {
             textInputLayout.setEndIconOnClickListener(v1 -> {
                 layoutToInflate.removeView(textInputLayout);
             });
-
-     /*       addView.findViewById()
-            final View.OnClickListener removeListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    layoutToInflate.removeView((View)button1.getParent());
-                }
-            };
-            button1.setOnClickListener(removeListener);
-*/
-
-
         });
     }
 
@@ -195,8 +180,8 @@ public class NewRecipeFragment extends Fragment {
             addRecipe();
             return true;
         }
-        if (id==android.R.id.home) {
-            Navigation.findNavController(getView()).navigateUp();
+        if(id==android.R.id.home) {
+            Navigation.findNavController(getView()).popBackStack();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -257,18 +242,15 @@ public class NewRecipeFragment extends Fragment {
             }
 
 
-
-
-
-
-
-
             recipe.setIngredients(ingredients);
             recipe.setSteps(steps);
 
             insertId = model.addRecipe(recipe);
          }
     }
+
+
+
 
 
 
