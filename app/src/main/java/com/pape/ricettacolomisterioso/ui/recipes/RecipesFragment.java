@@ -1,6 +1,7 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,15 +26,18 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.internal.bind.ArrayTypeAdapter;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipesBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.ui.pantry.PantryFragmentDirections;
+import com.pape.ricettacolomisterioso.viewmodels.RecipeListViewModel;
 import com.pape.ricettacolomisterioso.viewmodels.RecipesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RecipesFragment extends Fragment {
 
@@ -48,6 +52,12 @@ public class RecipesFragment extends Fragment {
         binding = FragmentRecipesBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
         setHasOptionsMenu(true);
+
+        RecipesViewModel mModel = new ViewModelProvider(getActivity()).get(RecipesViewModel.class);
+        List<Recipe> recList;
+        recList = mModel.getAllRecipes().getValue();
+        initRandomRecipe(recList);
+
         return view;
     }
 
@@ -55,7 +65,31 @@ public class RecipesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         model =  new ViewModelProvider(this).get(RecipesViewModel.class);
+        initCardViews();
 
+
+
+
+    }
+
+    private void initRandomRecipe(List<Recipe> recList) {
+
+        if(recList!= null) {
+            Recipe recipe;
+            int n=0;
+            n = recList.size();
+            n = new Random().nextInt(n);
+            recipe = recList.get(n);
+            Drawable d = getResources().getDrawable(recipe.getCategoryIconId(getContext()));
+            binding.randomRecipeCategory.setText(recipe.getRecipe_category());
+            binding.randomRecipeImg.setImageDrawable(d);
+            binding.randomRecipeImg.setId(recipe.getCategoryIconId(getContext()));
+            binding.randomRecipeName.setText(recipe.getRecipe_name());
+        }
+
+    }
+
+    private void initCardViews() {
         List<CardView> cardViews = new ArrayList<>();
         cardViews.add(binding.recipesAppetizersCardView);
         cardViews.add(binding.recipesFirstCoursesCardView);
@@ -80,6 +114,7 @@ public class RecipesFragment extends Fragment {
                     }
                 }
             });
+
     }
 
     @Override

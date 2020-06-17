@@ -1,5 +1,7 @@
 package com.pape.ricettacolomisterioso.viewmodels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -31,6 +33,13 @@ public class RecipesViewModel extends ViewModel {
     }
     public MutableLiveData<List<Recipe>> getRecipesSeached(String product_name){
         RecipesRepository.getInstance().getRecipesSearched(recipes, product_name);
+        return recipes;
+    }
+    public MutableLiveData<List<Recipe>> getAllRecipes(){
+        if (recipes == null) {
+            recipes = new MutableLiveData<>();
+        }
+        RecipesRepository.getInstance().getRecipes(recipes);
         return recipes;
     }
 }
