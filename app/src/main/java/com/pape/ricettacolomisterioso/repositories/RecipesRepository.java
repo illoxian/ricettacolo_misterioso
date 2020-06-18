@@ -9,6 +9,7 @@ import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.ui.MainActivity;
 
 import java.util.List;
+import java.util.Random;
 
 public class RecipesRepository {
     private static final String TAG = "RecipesRepository";
@@ -41,6 +42,17 @@ public class RecipesRepository {
         };
         new Thread(runnable).start();
     }
+    public void getRandRecipe(MutableLiveData<Recipe> recipe) {
+        Runnable runnable = () -> {
+            try {
+                recipe.postValue(appDatabase.recipeDao().getRand());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        };
+        new Thread(runnable).start();
+    }
 
     public void getRecipes(MutableLiveData<List<Recipe>> recipes) {
         Runnable runnable = new Runnable() {
@@ -59,7 +71,7 @@ public class RecipesRepository {
 
     }
 
-   public void getRecipesByCategory(MutableLiveData<List<Recipe>> recipes, String category) {
+   public void getRecipesByCategory(MutableLiveData<List<Recipe>> recipes, int category) {
         new Thread(new Runnable() {
             @Override
             public void run() {

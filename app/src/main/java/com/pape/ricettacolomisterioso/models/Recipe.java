@@ -22,15 +22,17 @@ public class Recipe implements Parcelable {
 
     private String recipe_name;
     private String recipe_category;
+    private int category;
     private List<String> ingredients;
     private List<String> steps;
     private String imageUrl;
 
     public Recipe () {}
-    public Recipe(int id, String recipe_name, String imageUrl, String recipe_category, List<String> ingredients, List<String> steps) {
+    public Recipe(int id, String recipe_name, String imageUrl, String recipe_category, int category, List<String> ingredients, List<String> steps) {
         this.id = id;
         this.recipe_name = recipe_name;
         this.recipe_category = recipe_category;
+        this.category = category;
 
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
@@ -61,6 +63,8 @@ public class Recipe implements Parcelable {
         this.recipe_category = recipe_category;
     }
 
+    public int getCategory() { return category;}
+    public void setCategory(int category) { this.category = category;}
 
     public String getImageUrl() {
         return imageUrl;
@@ -91,7 +95,7 @@ public class Recipe implements Parcelable {
         return "Recipe{" +
                 "id=" + id +
                 ", recipe_name='" + recipe_name + '\'' +
-                ", recipe_category='" + recipe_category + '\'' +
+                ", ategory='" + category + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", ingredients=" + ingredients +
                 ", steps=" + steps +
@@ -103,7 +107,7 @@ public class Recipe implements Parcelable {
     protected Recipe(Parcel in) {
         id = in.readInt();
         recipe_name = in.readString();
-        recipe_category = in.readString();
+        category = in.readInt();
         this.imageUrl = in.readString();
         if (in.readByte() == 0x01) {
             ingredients = new ArrayList<String>();
@@ -128,7 +132,7 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(recipe_name);
-        dest.writeString(recipe_category);
+        dest.writeInt(category);
         dest.writeString(this.imageUrl);
         if (ingredients == null) {
             dest.writeByte((byte) (0x00));
@@ -162,7 +166,7 @@ public class Recipe implements Parcelable {
         TypedArray icons = res.obtainTypedArray(R.array.recipeCategoriesIcon);
         List categories = Arrays.asList(res.getStringArray(R.array.recipeCategoriesString));
 
-        int index = categories.indexOf(getRecipe_category());
+        int index = category;
         int resourceId = icons.getResourceId(index, -1);
         icons.recycle();
         return resourceId;
@@ -173,8 +177,8 @@ public class Recipe implements Parcelable {
         TypedArray previews = res.obtainTypedArray(R.array.recipeCategoriesPreviews);
         List categories = Arrays.asList(res.getStringArray(R.array.recipeCategoriesString));
 
-        int index = categories.indexOf(getRecipe_category());
-        int resourceId = previews.getResourceId(index, -1);
+        int index = category;
+        int resourceId = previews.getResourceId(index,-1);
         previews.recycle();
         return resourceId;
     }

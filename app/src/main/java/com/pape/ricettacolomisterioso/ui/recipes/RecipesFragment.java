@@ -1,6 +1,5 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,75 +16,85 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.internal.bind.ArrayTypeAdapter;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipesBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
-import com.pape.ricettacolomisterioso.ui.pantry.PantryFragmentDirections;
-import com.pape.ricettacolomisterioso.viewmodels.RecipeListViewModel;
+import com.pape.ricettacolomisterioso.ui.MainActivity;
+import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
 import com.pape.ricettacolomisterioso.viewmodels.RecipesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class RecipesFragment extends Fragment {
 
     private static final String TAG = "RecipesFragment";
     private FragmentRecipesBinding binding;
-    private RecipesViewModel recipesViewModel;
     private RecipeListAdapter searchAdapter;
     private RecipesViewModel model;
     private View view;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRecipesBinding.inflate(getLayoutInflater());
+        model = new ViewModelProvider(this).get(RecipesViewModel.class);
         view = binding.getRoot();
         setHasOptionsMenu(true);
-
-        RecipesViewModel mModel = new ViewModelProvider(getActivity()).get(RecipesViewModel.class);
-        List<Recipe> recList;
-        recList = mModel.getAllRecipes().getValue();
-        initRandomRecipe(recList);
-
+        initCardViews();
+        initRandomRecipe();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        model =  new ViewModelProvider(this).get(RecipesViewModel.class);
-        initCardViews();
-
-
-
 
     }
 
-    private void initRandomRecipe(List<Recipe> recList) {
+    private void initRandomRecipe() {
+        model.getRandomRecipe().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
+            @Override
+            public void onChanged(Recipe mRecipe) {
+                Recipe recipe = mRecipe;
 
-        if(recList!= null) {
-            Recipe recipe;
-            int n=0;
-            n = recList.size();
-            n = new Random().nextInt(n);
-            recipe = recList.get(n);
-            Drawable d = getResources().getDrawable(recipe.getCategoryIconId(getContext()));
-            binding.randomRecipeCategory.setText(recipe.getRecipe_category());
-            binding.randomRecipeImg.setImageDrawable(d);
-            binding.randomRecipeImg.setId(recipe.getCategoryIconId(getContext()));
-            binding.randomRecipeName.setText(recipe.getRecipe_name());
-        }
+                if(recipe==null) {
+                    binding.randomCardView.setVisibility(GONE);
+                    binding.recipesMenuTitle.setVisibility(GONE);
+
+                }
+
+                if(recipe!= null) {
+                    Drawable d = getResources().getDrawable(recipe.getCategoryPreviewId(getActivity().getApplicationContext()));
+
+                    binding.randomRecipeCategory.setText(recipe.getRecipe_category());
+                    binding.randomRecipeImg.setImageDrawable(d);
+                    binding.randomRecipeName.setText(recipe.getRecipe_name());
+
+                    binding.randomCardView.setVisibility(VISIBLE);
+                    binding.recipesMenuTitle.setVisibility(VISIBLE);
+
+                    binding.randomCardView.setOnClickListener(v-> {
+                        Bundle recipeBundle = new Bundle();
+                        recipeBundle.putParcelable("recipe", recipe);
+                        RecipesFragmentDirections.ShowRecipeProfileFromNavigationPantry action = RecipesFragmentDirections.showRecipeProfileFromNavigationPantry(recipe);
+                        Navigation.findNavController(view).navigate(action);
+                    });
+                }
+
+            }
+        });
+
+
 
     }
 
@@ -125,11 +134,11 @@ public class RecipesFragment extends Fragment {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                binding.recipesCategoriesTablelayout.setVisibility(View.VISIBLE);
-                binding.recipesCategoriesTitle.setVisibility(View.VISIBLE);
-                binding.recipesMenuTitle.setVisibility(View.VISIBLE);
-                binding.recipesMenuCard1.setVisibility(View.VISIBLE);
-                binding.recipesFragmentRecyclerView.setVisibility(View.GONE);
+                binding.recipesCategoriesTablelayout.setVisibility(VISIBLE);
+                binding.recipesCategoriesTitle.setVisibility(VISIBLE);
+                binding.recipesMenuTitle.setVisibility(VISIBLE);
+                binding.randomCardView.setVisibility(VISIBLE);
+                binding.recipesFragmentRecyclerView.setVisibility(GONE);
                 return false;
             }
         });
@@ -145,11 +154,11 @@ public class RecipesFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        binding.recipesCategoriesTablelayout.setVisibility(View.GONE);
-                        binding.recipesCategoriesTitle.setVisibility(View.GONE);
-                        binding.recipesMenuTitle.setVisibility(View.GONE);
-                        binding.recipesMenuCard1.setVisibility(View.GONE);
-                        binding.recipesFragmentRecyclerView.setVisibility(View.VISIBLE);
+                        binding.recipesCategoriesTablelayout.setVisibility(GONE);
+                        binding.recipesCategoriesTitle.setVisibility(GONE);
+                        binding.recipesMenuTitle.setVisibility(GONE);
+                        binding.randomCardView.setVisibility(GONE);
+                        binding.recipesFragmentRecyclerView.setVisibility(VISIBLE);
 
                         onSearched(newText);
                         return false;
@@ -160,11 +169,11 @@ public class RecipesFragment extends Fragment {
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                binding.recipesCategoriesTablelayout.setVisibility(View.VISIBLE);
-                binding.recipesCategoriesTitle.setVisibility(View.VISIBLE);
-                binding.recipesMenuTitle.setVisibility(View.VISIBLE);
-                binding.recipesMenuCard1.setVisibility(View.VISIBLE);
-                binding.recipesFragmentRecyclerView.setVisibility(View.GONE);
+                binding.recipesCategoriesTablelayout.setVisibility(VISIBLE);
+                binding.recipesCategoriesTitle.setVisibility(VISIBLE);
+                binding.recipesMenuTitle.setVisibility(VISIBLE);
+                binding.randomCardView.setVisibility(VISIBLE);
+                binding.recipesFragmentRecyclerView.setVisibility(GONE);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -174,11 +183,11 @@ public class RecipesFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        binding.recipesCategoriesTablelayout.setVisibility(View.GONE);
-                        binding.recipesCategoriesTitle.setVisibility(View.GONE);
-                        binding.recipesMenuTitle.setVisibility(View.GONE);
-                        binding.recipesMenuCard1.setVisibility(View.GONE);
-                        binding.recipesFragmentRecyclerView.setVisibility(View.VISIBLE);
+                        binding.recipesCategoriesTablelayout.setVisibility(GONE);
+                        binding.recipesCategoriesTitle.setVisibility(GONE);
+                        binding.recipesMenuTitle.setVisibility(GONE);
+                        binding.randomCardView.setVisibility(GONE);
+                        binding.recipesFragmentRecyclerView.setVisibility(VISIBLE);
 
                         onSearched(newText);
                         return false;
@@ -195,7 +204,7 @@ public class RecipesFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id==R.id.recipes_app_bar_add) {
-            startNewRecipeFragment();
+            Navigation.findNavController(getView()).navigate(R.id.action_add_new_recipe);
             return true;
         }
         if(id==R.id.recipes_app_bar_search) {
@@ -227,13 +236,7 @@ public class RecipesFragment extends Fragment {
             }
         });
 
-        model.getRecipesSeached(newString);
-    }
-
-
-
-    private void startNewRecipeFragment() {
-        Navigation.findNavController(getView()).navigate(R.id.action_add_new_recipe);
+        model.getRecipesSearched(newString);
     }
 
     public int getCardViewStringRes(CardView cardView){

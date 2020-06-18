@@ -271,8 +271,15 @@ public class PantryFragment extends Fragment {
         model.getMostExpiringProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(@Nullable List<Product> products) {
-                Log.d(TAG, "onChanged: Items:" + products);
-                expiringAdapter.setData(model.getMostExpiringProducts().getValue());
+                if (products.isEmpty()) {
+                    binding.expiringCard.setVisibility(View.GONE);
+                }
+
+                else {
+                    Log.d(TAG, "onChanged: Items:" + products);
+                    expiringAdapter.setData(model.getMostExpiringProducts().getValue());
+                    binding.expiringCard.setVisibility(View.VISIBLE);
+                }
             }
         });
 

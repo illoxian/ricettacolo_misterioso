@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ricettacolo Misterioso</string>
+    <string name="app_name">QKing</string>
     <string name="title_recipes">Recipes</string>
     <string name="title_pantry">Pantry</string>
     <string name="title_shoppinglist">Shopping List</string>
@@ -10,7 +10,7 @@
     <string name="pantry_categories_fruits_and_vegetables">Fruits and Vegetables</string>
     <string name="pantry_categories_meat">Meat</string>
     <string name="recipes_categories_title">Categories</string>
-    <string name="recipes_menu_title">Menu of the day</string>
+    <string name="recipes_menu_title">What about making ...</string>
     <string name="recipes_categories_appetizers">Appetizers</string>
     <string name="recipes_categories_first_courses">First Courses</string>
     <string name="recipes_categories_main_courses">Main Courses</string>

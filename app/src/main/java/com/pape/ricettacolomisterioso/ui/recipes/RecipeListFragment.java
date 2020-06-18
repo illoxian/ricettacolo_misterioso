@@ -29,6 +29,7 @@ import com.pape.ricettacolomisterioso.databinding.FragmentRecipeListBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.viewmodels.RecipeListViewModel;
 
+import java.util.Arrays;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -88,7 +89,8 @@ public class RecipeListFragment extends Fragment {
         });
 
         if (res == R.string.recipes_categories_see_all) liveData = model.getAllRecipes();
-        else liveData = model.getRecipesByCategory(getString(res));
+        else model.getRecipesByCategory(Arrays.asList(getResources().getStringArray(R.array.recipeCategoriesString)).indexOf(getString(res)));
+
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.recipeListRecyclerView);

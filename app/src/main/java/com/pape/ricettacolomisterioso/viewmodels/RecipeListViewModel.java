@@ -39,7 +39,7 @@ public class RecipeListViewModel extends ViewModel {
         return insertId;
     }
 
-    public MutableLiveData<List<Recipe>> getRecipesByCategory(String category) {
+    public MutableLiveData<List<Recipe>> getRecipesByCategory(int category) {
         if (recipes == null) {
             recipes = new MutableLiveData<>();
         }

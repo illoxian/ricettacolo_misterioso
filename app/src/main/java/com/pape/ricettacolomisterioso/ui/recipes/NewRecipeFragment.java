@@ -191,7 +191,10 @@ public class NewRecipeFragment extends Fragment {
         if(recipe==null) recipe = new Recipe();
 
         recipe.setRecipe_name(binding.textInputRecipeName.getText().toString());
-        recipe.setRecipe_category(binding.textInputRecipeCategory.getText().toString());
+        String categoryString = binding.textInputRecipeCategory.getText().toString();
+
+        recipe.setCategory(CATEGORIES.indexOf(categoryString));
+
 
 
         boolean isValid = true;
@@ -203,12 +206,12 @@ public class NewRecipeFragment extends Fragment {
             isValid = false;
         }
         //Category
-        if(recipe.getRecipe_category().equals("")){
+        if(categoryString.equals("")){
             binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_empty_field)));
             if(isValid) binding.textInputLayoutRecipeCategory.requestFocus();
             isValid = false;
         }
-        else if(!CATEGORIES.contains(recipe.getRecipe_category())) {
+        else if(recipe.getCategory() < 0) {
             binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_not_a_category)));
             if (isValid) binding.textInputLayoutRecipeCategory.requestFocus();
             isValid = false;

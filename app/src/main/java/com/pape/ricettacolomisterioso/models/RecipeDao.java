@@ -19,8 +19,13 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE recipe_name LIKE :first LIMIT 1")
     Recipe findByName(String first);
 
-    @Query("SELECT * FROM recipes WHERE recipe_category LIKE :recipe_category")
-    List<Recipe> findByCategory(String recipe_category);
+    @Query("SELECT * FROM recipes WHERE recipe_category LIKE :category")
+    List<Recipe> findByCategory(int category);
+
+    @Query("SELECT * FROM recipes ORDER BY RANDOM() LIMIT 1")
+    Recipe getRand();
+
+
 
     @Insert
     void insertAll(Recipe... recipes);

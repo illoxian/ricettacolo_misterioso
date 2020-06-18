@@ -82,7 +82,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         void bind(Recipe recipe, OnItemInteractions onItemInteractions) {
             Log.d(TAG, recipe.toString());
             textViewRecipeTitle.setText(recipe.getRecipe_name());
-            textViewRecipeCategory.setText(recipe.getRecipe_category());
+            textViewRecipeCategory.setText(recipe.getCategory());
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(item_icon.getContext());
             if(sharedPreferences.getBoolean("image_instead_of_icon", false) && recipe.getImageUrl() != null)

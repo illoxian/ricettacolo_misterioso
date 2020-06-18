@@ -1,5 +1,6 @@
 package com.pape.ricettacolomisterioso.viewmodels;
 
+import android.nfc.tech.MifareUltralight;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -11,11 +12,13 @@ import com.pape.ricettacolomisterioso.repositories.RecipesRepository;
 import com.pape.ricettacolomisterioso.ui.recipes.RecipesFragment;
 
 import java.util.List;
+import java.util.Random;
 
 public class RecipesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
     private MutableLiveData<List<Recipe>> recipes;
+    private MutableLiveData<Recipe> recipe;
     public RecipesViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
@@ -31,8 +34,8 @@ public class RecipesViewModel extends ViewModel {
         }
         return recipes;
     }
-    public MutableLiveData<List<Recipe>> getRecipesSeached(String product_name){
-        RecipesRepository.getInstance().getRecipesSearched(recipes, product_name);
+    public MutableLiveData<List<Recipe>> getRecipesSearched(String recipe_name){
+        RecipesRepository.getInstance().getRecipesSearched(recipes, recipe_name);
         return recipes;
     }
     public MutableLiveData<List<Recipe>> getAllRecipes(){
@@ -42,4 +45,12 @@ public class RecipesViewModel extends ViewModel {
         RecipesRepository.getInstance().getRecipes(recipes);
         return recipes;
     }
+    public MutableLiveData<Recipe> getRandomRecipe(){
+        if (recipe == null) {
+            recipe = new MutableLiveData<>();
+        }
+        RecipesRepository.getInstance().getRandRecipe(recipe);
+        return recipe;
+    }
+
 }
