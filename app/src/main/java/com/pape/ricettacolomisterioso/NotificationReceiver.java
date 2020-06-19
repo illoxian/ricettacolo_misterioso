@@ -3,9 +3,14 @@ package com.pape.ricettacolomisterioso;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.preference.PreferenceManager;
+
+import com.pape.ricettacolomisterioso.models.AppDatabase;
 import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.models.DailyRecipe;
 import com.pape.ricettacolomisterioso.repositories.DailyMenuRepository;
 import com.pape.ricettacolomisterioso.utils.Functions;
 
@@ -16,14 +21,29 @@ public class NotificationReceiver extends BroadcastReceiver {
     public static String TAG = "NotificationReceiver";
     private NotificationHelper notificationHelper;
     private Context mContext;
+    private SharedPreferences sharedPreferences;
+    private long now;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         int time = intent.getExtras().getInt("TIME");
-        notificationHelper = new NotificationHelper(context);
-        mContext = context;
-        RetrieveDailyMenu(time);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        now = Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime();
+
+        long last_fire;
+        if(time==0)
+            last_fire = sharedPreferences.getLong("notifications_launch_last_fire", now);
+        else
+            last_fire = sharedPreferences.getLong("notifications_dinner_last_fire", now);
+
+        if(now>last_fire){
+            notificationHelper = new NotificationHelper(context);
+            mContext = context;
+            DailyMenuRepository.getInstance().setDatabase(AppDatabase.getInstance(context));
+            RetrieveDailyMenu(time);
+        }
     }
 
     private void RetrieveDailyMenu(int time) {
@@ -47,20 +67,31 @@ public class NotificationReceiver extends BroadcastReceiver {
         if(time == 0) //launch
         {
             title = mContext.getString(R.string.notification_lunch_time);
-            content = BuildContentString(dailyMenu.getRecipes().get(0).getRecipeName(), dailyMenu.getRecipes().get(1).getRecipeName());
+            content = BuildContentString(dailyMenu.getRecipes().get(0), dailyMenu.getRecipes().get(1));
         }
         else{ //dinner
             title = mContext.getString(R.string.notification_dinner_time);
-            content = BuildContentString(dailyMenu.getRecipes().get(2).getRecipeName(), dailyMenu.getRecipes().get(3).getRecipeName());
+            content = BuildContentString(dailyMenu.getRecipes().get(2), dailyMenu.getRecipes().get(3));
         }
 
 
-        notificationHelper.createNotification(time, title, content, R.drawable.icon_categories_fish);
+        notificationHelper.createNotification(time, title, content, R.drawable.logo_launcher_foreground);
+
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        if(time==0)
+            edit.putLong("notifications_launch_last_fire", now);
+        else
+            edit.putLong("notifications_dinner_last_fire", now);
+        edit.commit();
 
         Log.d(TAG, "onReceive: NotificationSended");
     }
 
-    private String BuildContentString(String dish1, String dish2) {
+    private String BuildContentString(DailyRecipe recipe1, DailyRecipe recipe2) {
+
+        String dish1 = null, dish2 = null;
+        if(recipe1!=null) dish1 = recipe1.getRecipeName();
+        if(recipe2!=null) dish2 = recipe2.getRecipeName();
 
         if(dish1 == null && dish2 == null)
             return mContext.getString(R.string.notification_scheduled_recipes_0);

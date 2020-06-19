@@ -39,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        //check notifications enabled
-        if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
-            Functions.SetAlarmManager(this);
-        else
-            Functions.ClearAlarmManager(this);
-
         //createNotificationChannel();
 
         setContentView(R.layout.activity_main);
@@ -61,12 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SetDatabase(){
-
-        if(db == null){
-            db = Room.databaseBuilder(getApplicationContext(),
-                    AppDatabase.class, "database-name").build();
-        }
-
+        db = AppDatabase.getInstance(this);
     }
 
 }

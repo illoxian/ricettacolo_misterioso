@@ -21,7 +21,11 @@ public class DailyMenuRepository {
 
 
     private DailyMenuRepository() {
-        appDatabase = MainActivity.db;
+        setDatabase(MainActivity.db);
+    }
+
+    public void setDatabase(AppDatabase db){
+        appDatabase = db;
     }
 
     //this defines a singleton for ShoppingListRepository Class
