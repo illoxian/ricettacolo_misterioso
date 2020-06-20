@@ -19,8 +19,10 @@ import com.pape.ricettacolomisterioso.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -60,6 +62,13 @@ public class Functions {
 
     public static String getProductCategoryString(Context context, int categoryId){
         return context.getResources().getStringArray(R.array.categoriesString)[categoryId];
+    }
+    public static String getRecipeCategoryString(Context context, int categoryId){
+        return context.getResources().getStringArray(R.array.recipeCategoriesString)[categoryId];
+    }
+    public static int getRecipeCategoryIndex(Context context, String category) {
+        List<String> CATEGORIES = Arrays.asList(context.getResources().getStringArray(R.array.recipeCategoriesString));
+        return CATEGORIES.indexOf(category);
     }
 
     public static void SetAlarmManager(Context context)

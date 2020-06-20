@@ -2,7 +2,6 @@ package com.pape.ricettacolomisterioso.ui.recipes;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,13 +23,11 @@ import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipesBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
-import com.pape.ricettacolomisterioso.ui.MainActivity;
-import com.pape.ricettacolomisterioso.viewmodels.PantryViewModel;
+import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.RecipesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -76,9 +72,9 @@ public class RecipesFragment extends Fragment {
                 if(recipe!= null) {
                     Drawable d = getResources().getDrawable(recipe.getCategoryPreviewId(getActivity().getApplicationContext()));
 
-                    binding.randomRecipeCategory.setText(recipe.getRecipe_category());
+                    binding.randomRecipeCategory.setText(Functions.getRecipeCategoryString(getContext(), recipe.getCategoryId()));
                     binding.randomRecipeImg.setImageDrawable(d);
-                    binding.randomRecipeName.setText(recipe.getRecipe_name());
+                    binding.randomRecipeName.setText(recipe.getTitle());
 
                     binding.randomCardView.setVisibility(VISIBLE);
                     binding.recipesMenuTitle.setVisibility(VISIBLE);

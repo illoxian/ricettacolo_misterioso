@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipeProfileBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
+import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.RecipeProfileViewModel;
 
 import java.util.ArrayList;
@@ -99,8 +100,10 @@ public class RecipeProfileFragment extends Fragment {
         binding.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         binding.imageView.setImageResource(recipe.getCategoryPreviewId(getContext()));
 
-        binding.textViewRecipeProfileTitle.setText(recipe.getRecipe_name());
-        binding.textViewRecipeProfileCategory.setText(recipe.getRecipe_category());
+        binding.textViewRecipeProfileTitle.setText(recipe.getTitle());
+        binding.textViewRecipeProfileCategory.setText(Functions.getRecipeCategoryString(getContext(), recipe.getCategoryId()));
+        binding.textViewRecipeProfileDate.setText(recipe.getDateString());
+
         ArrayList<String> ingredients = (ArrayList)recipe.getIngredients();
         ArrayList<String> steps = (ArrayList)recipe.getSteps();
         for (String ing:ingredients ) {
@@ -113,28 +116,15 @@ public class RecipeProfileFragment extends Fragment {
             binding.linearLayoutRecipeProfileIngredients.addView(toadd);
         }
 
-/*        int i = 1;
+        int i = 1;
         for (String step:steps) {
             TextView toadd = new TextView(getContext());
-            toadd.setText(" "+i+"● "+ step);
+            toadd.setText(" ● "+ step);
             toadd.setTextAppearance(getContext(), R.style.TextAppearance_AppCompat_Medium);
-            toadd.setPadding(0, 0 , 0 , 12);
+            toadd.setPadding(0, 0 , 0 , 8);
             binding.linearLayoutRecipeProfileSteps.addView(toadd);
             i++;
         }
-        */
-        TextView toadd = new TextView(getContext());
-        toadd.setTextAppearance(getContext(), R.style.TextAppearance_AppCompat_Medium);
-        toadd.setPadding(0, 0 , 0 , 12);
-        toadd.setText(Html.fromHtml("<ol>"));
-        int i=1;
-
-        for (String step:steps) {
-            toadd.append(Html.fromHtml(" <li>" + i + " " + step + "\n</li>"));
-            i++;
-        }
-        toadd.append(Html.fromHtml("</ol>"));
-        binding.linearLayoutRecipeProfileSteps.addView(toadd);
 
 
 

@@ -11,33 +11,53 @@ import androidx.room.PrimaryKey;
 
 import com.pape.ricettacolomisterioso.R;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "recipes")
 public class Recipe implements Parcelable {
+
+
     @PrimaryKey(autoGenerate = true)
     private int id;
-
-    private String recipe_name;
-    private String recipe_category;
-    private int category;
+    private String title;
+    private int categoryId;
     private List<String> ingredients;
     private List<String> steps;
-    private String imageUrl;
+    private Date saveDate;
 
-    public Recipe () {}
-    public Recipe(int id, String recipe_name, String imageUrl, String recipe_category, int category, List<String> ingredients, List<String> steps) {
+    public Recipe() {}
+    public Recipe(int id, String title, int categoryId, List<String> ingredients, List<String> steps, Date saveDate) {
         this.id = id;
-        this.recipe_name = recipe_name;
-        this.recipe_category = recipe_category;
-        this.category = category;
-
-        this.imageUrl = imageUrl;
+        this.title = title;
+        this.categoryId = categoryId;
         this.ingredients = ingredients;
         this.steps = steps;
+        this.saveDate = saveDate;
     }
+
+    protected Recipe(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        categoryId = in.readInt();
+        ingredients = in.createStringArrayList();
+        steps = in.createStringArrayList();
+        saveDate = new Date(in.readLong());
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -47,31 +67,20 @@ public class Recipe implements Parcelable {
         this.id = id;
     }
 
-    public String getRecipe_name() {
-        return recipe_name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setRecipe_name(String recipe_name) {
-        this.recipe_name = recipe_name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getRecipe_category() {
-        return recipe_category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setRecipe_category(String recipe_category) {
-        this.recipe_category = recipe_category;
-    }
-
-    public int getCategory() { return category;}
-    public void setCategory(int category) { this.category = category;}
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public List<String> getIngredients() {
@@ -90,38 +99,31 @@ public class Recipe implements Parcelable {
         this.steps = steps;
     }
 
+    public Date getSaveDate() {
+        return saveDate;
+    }
+
+    public void setSaveDate(Date saveDate) {
+        this.saveDate = saveDate;
+    }
+    public String getDateString(){
+        if(saveDate != null)
+            return DateFormat.getDateInstance(DateFormat.SHORT).format(saveDate);
+        else return "";
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +
                 "id=" + id +
-                ", recipe_name='" + recipe_name + '\'' +
-                ", ategory='" + category + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", title='" + title + '\'' +
+                ", categoryId=" + categoryId +
                 ", ingredients=" + ingredients +
                 ", steps=" + steps +
+                ", saveDate=" + getDateString() +
                 '}';
     }
 
-
-    // parcelaber.com
-    protected Recipe(Parcel in) {
-        id = in.readInt();
-        recipe_name = in.readString();
-        category = in.readInt();
-        this.imageUrl = in.readString();
-        if (in.readByte() == 0x01) {
-            ingredients = new ArrayList<String>();
-            in.readList(ingredients, String.class.getClassLoader());
-        } else {
-            ingredients = null;
-        }
-        if (in.readByte() == 0x01) {
-            steps = new ArrayList<String>();
-            in.readList(steps, String.class.getClassLoader());
-        } else {
-            steps = null;
-        }
-    }
 
     @Override
     public int describeContents() {
@@ -131,42 +133,17 @@ public class Recipe implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(recipe_name);
-        dest.writeInt(category);
-        dest.writeString(this.imageUrl);
-        if (ingredients == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(ingredients);
-        }
-        if (steps == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(steps);
-        }
+        dest.writeString(title);
+        dest.writeInt(categoryId);
+        dest.writeStringList(ingredients);
+        dest.writeStringList(steps);
+        dest.writeLong(saveDate==null ? 0 : saveDate.getTime());
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
 
     public int getCategoryIconId(Context context){
         Resources res = context.getResources();
         TypedArray icons = res.obtainTypedArray(R.array.recipeCategoriesIcon);
-        List categories = Arrays.asList(res.getStringArray(R.array.recipeCategoriesString));
-
-        int index = category;
+        int index = getCategoryId();
         int resourceId = icons.getResourceId(index, -1);
         icons.recycle();
         return resourceId;
@@ -175,10 +152,9 @@ public class Recipe implements Parcelable {
     public int getCategoryPreviewId(Context context){
         Resources res = context.getResources();
         TypedArray previews = res.obtainTypedArray(R.array.recipeCategoriesPreviews);
-        List categories = Arrays.asList(res.getStringArray(R.array.recipeCategoriesString));
 
-        int index = category;
-        int resourceId = previews.getResourceId(index,-1);
+        int index = getCategoryId();
+        int resourceId = previews.getResourceId(index, -1);
         previews.recycle();
         return resourceId;
     }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -114,7 +113,7 @@ public class MenuFragment extends Fragment {
             public void onChanged(List<Recipe> recipes) {
                 recipesString = new ArrayList<>();
                 for (Recipe r:model.getRecipes().getValue()) {
-                    recipesString.add(r.getRecipe_name());
+                    recipesString.add(r.getTitle());
                 }
             }
         });

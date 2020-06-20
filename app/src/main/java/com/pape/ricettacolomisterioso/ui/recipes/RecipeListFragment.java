@@ -1,10 +1,9 @@
 
 package com.pape.ricettacolomisterioso.ui.recipes;
 
-import android.app.ActionBar;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.RecipeListAdapter;
@@ -48,11 +48,16 @@ public class RecipeListFragment extends Fragment {
 
     }
 
-    public static RecipeListFragment newInstance(String param1, String param2) {
-        RecipeListFragment fragment = new RecipeListFragment();
-        return fragment;
-    }
 
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,7 +119,7 @@ public class RecipeListFragment extends Fragment {
                     model.delete(deletedItem);
                     mAdapter.removeProductAt(position);
                     Snackbar snackbar = Snackbar.make(binding.recipeListRecyclerView,
-                            deletedItem.getRecipe_name() + " " + getString(R.string.removed_from_recipes),
+                            deletedItem.getTitle() + " " + getString(R.string.removed_from_recipes),
                             Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -1,13 +1,11 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
 
-
-import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,20 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,9 +34,11 @@ import com.pape.ricettacolomisterioso.databinding.FragmentNewRecipeBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.viewmodels.NewRecipeViewModel;
 
-
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class NewRecipeFragment extends Fragment {
@@ -51,6 +49,11 @@ public class NewRecipeFragment extends Fragment {
     private Recipe recipe;
     private MutableLiveData<Long> insertId;
     private NewRecipeViewModel model;
+
+    private Date saveDate;
+    private DatePickerDialog datePickerDialog;
+    private Calendar c;
+
 
 
     @Nullable
@@ -74,15 +77,13 @@ public class NewRecipeFragment extends Fragment {
                 }
             }
         };
+
         insertId = model.getInsertId();
         insertId.observe(this.getActivity(), observer);
-        int count = container.getChildCount();
-        Log.d(TAG, "count"+count);
 
         return view;
     }
 
-    @SuppressLint("RestrictedApi")
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -91,7 +92,6 @@ public class NewRecipeFragment extends Fragment {
 
     }
 
-    @SuppressLint("RestrictedApi")
     @Override
     public void onDetach() {
         super.onDetach();
@@ -105,6 +105,7 @@ public class NewRecipeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTextInputs();
+        initDatePicker();
         initFab();
         //inits ingredients: item list card view
         initItemListCardView(binding.newRecipeIngredientsAddButton,
@@ -143,6 +144,8 @@ public class NewRecipeFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, CATEGORIES);
         binding.textInputRecipeCategory.setAdapter(adapter);
 
+
+
     }
     private void initFab(){
         binding.newRecipeSaveFab.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +171,34 @@ public class NewRecipeFragment extends Fragment {
         });
     }
 
+    private void initDatePicker(){
+        saveDate = Calendar.getInstance().getTime();
+        binding.textInputRecipeSaveDate.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(saveDate));
+
+        binding.textInputRecipeSaveDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.textInputLayoutRecipeSaveDate.setError(null);
+                c = Calendar.getInstance();
+
+                final int day = c.get(Calendar.DAY_OF_MONTH);
+                final int month = c.get(Calendar.MONTH);
+                final int year = c.get(Calendar.YEAR);
+
+                datePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_MyTheme_Dialog, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
+                        Calendar cPicked = Calendar.getInstance();
+                        cPicked.set(mYear, mMonth, mDayOfMonth);
+                        saveDate = cPicked.getTime();
+                        String dateString = DateFormat.getDateInstance(DateFormat.SHORT).format(saveDate);
+                        binding.textInputRecipeSaveDate.setText(dateString);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+    }
 
 
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -190,17 +221,18 @@ public class NewRecipeFragment extends Fragment {
     private void addRecipe(){
         if(recipe==null) recipe = new Recipe();
 
-        recipe.setRecipe_name(binding.textInputRecipeName.getText().toString());
+        recipe.setTitle(binding.textInputRecipeName.getText().toString());
         String categoryString = binding.textInputRecipeCategory.getText().toString();
 
-        recipe.setCategory(CATEGORIES.indexOf(categoryString));
+        recipe.setSaveDate(saveDate);
+        recipe.setCategoryId(CATEGORIES.indexOf(categoryString));
 
 
 
         boolean isValid = true;
 
         //ProductName
-        if(recipe.getRecipe_name().equals("")){
+        if(recipe.getTitle().equals("")){
             binding.textInputLayoutRecipeName.setError(getResources().getString((R.string.error_empty_field)));
             binding.textInputLayoutRecipeName.requestFocus();
             isValid = false;
@@ -211,7 +243,7 @@ public class NewRecipeFragment extends Fragment {
             if(isValid) binding.textInputLayoutRecipeCategory.requestFocus();
             isValid = false;
         }
-        else if(recipe.getCategory() < 0) {
+        else if(recipe.getCategoryId() < 0) {
             binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_not_a_category)));
             if (isValid) binding.textInputLayoutRecipeCategory.requestFocus();
             isValid = false;

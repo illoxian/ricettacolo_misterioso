@@ -1,18 +1,13 @@
 package com.pape.ricettacolomisterioso.viewmodels;
 
-import android.nfc.tech.MifareUltralight;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.repositories.RecipesRepository;
-import com.pape.ricettacolomisterioso.ui.recipes.RecipesFragment;
 
 import java.util.List;
-import java.util.Random;
 
 public class RecipesViewModel extends ViewModel {
 

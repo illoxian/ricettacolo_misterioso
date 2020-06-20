@@ -1,7 +1,6 @@
 package com.pape.ricettacolomisterioso.adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.Recipe;
-import com.squareup.picasso.Picasso;
+import com.pape.ricettacolomisterioso.utils.Functions;
 
-import java.io.File;
 import java.util.List;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
@@ -68,32 +65,25 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     public static class RecipeListViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "RecipeListViewHolder";
 
-        TextView textViewRecipeTitle;
-        TextView textViewRecipeCategory;
-        ImageView item_icon;
+        TextView recipeTitle;
+        TextView recipeCategory;
+        ImageView recipeIcon;
         public RecipeListViewHolder(View view) {
             super(view);
-            textViewRecipeTitle = view.findViewById(R.id.textView_recipe_list_item_name);
-            textViewRecipeCategory = view.findViewById(R.id.textView_recipe_list_item_category);
-            item_icon = view.findViewById(R.id.image_view_recipe_list_item_category);
+            recipeTitle = view.findViewById(R.id.textView_recipe_list_item_name);
+            recipeCategory = view.findViewById(R.id.textView_recipe_list_item_category);
+            recipeIcon = view.findViewById(R.id.image_view_recipe_list_item_category);
 
         }
 
         void bind(Recipe recipe, OnItemInteractions onItemInteractions) {
             Log.d(TAG, recipe.toString());
-            textViewRecipeTitle.setText(recipe.getRecipe_name());
-            textViewRecipeCategory.setText(recipe.getCategory());
+            recipeTitle.setText(recipe.getTitle());
+            recipeCategory.setText(Functions.getRecipeCategoryString(itemView.getContext(),
+                    recipe.getCategoryId()));
 
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(item_icon.getContext());
-            if(sharedPreferences.getBoolean("image_instead_of_icon", false) && recipe.getImageUrl() != null)
-            {
-                File f = new File(recipe.getImageUrl());
-                Picasso.get().load(f).into(item_icon);
-            }
-            else {
-                item_icon.setImageDrawable(itemView.getResources().getDrawable(
-                        recipe.getCategoryIconId(itemView.getContext())));
-            }
+            recipeIcon.setImageDrawable(itemView.getResources().getDrawable(
+                    recipe.getCategoryIconId(itemView.getContext())));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

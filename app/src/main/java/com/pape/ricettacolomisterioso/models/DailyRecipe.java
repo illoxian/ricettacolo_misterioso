@@ -76,7 +76,7 @@ public class DailyRecipe {
     }
 
     public String getRecipeName() {
-        if(recipeComplex != null) return recipeComplex.getRecipe_name();
+        if(recipeComplex != null) return recipeComplex.getTitle();
         else return recipe;
     }
 }

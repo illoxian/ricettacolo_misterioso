@@ -9,7 +9,6 @@ import com.pape.ricettacolomisterioso.models.Recipe;
 import com.pape.ricettacolomisterioso.ui.MainActivity;
 
 import java.util.List;
-import java.util.Random;
 
 public class RecipesRepository {
     private static final String TAG = "RecipesRepository";

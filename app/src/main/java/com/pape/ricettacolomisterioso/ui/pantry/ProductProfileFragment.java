@@ -1,6 +1,8 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +12,19 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductProfileBinding;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
-
 import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.ProductProfileViewModel;
 import com.squareup.picasso.Picasso;
@@ -44,6 +47,30 @@ public class ProductProfileFragment extends Fragment {
         return fragment;
     }
 
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.GONE);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onDetach() {
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+
+        super.onDetach();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+    }
 
     @Nullable
     @Override
