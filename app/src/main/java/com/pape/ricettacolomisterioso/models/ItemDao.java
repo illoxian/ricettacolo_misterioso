@@ -18,6 +18,9 @@ public interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertItem(Item item);
 
+    @Query("UPDATE items SET quantity=:quantity WHERE itemName LIKE :itemName")
+    int updateExistItemQuantity(String itemName, int quantity);
+
     @Query("UPDATE items SET isSelected=:isSelected WHERE id = :id")
     int updateIsSelected(long id, Boolean isSelected);
 

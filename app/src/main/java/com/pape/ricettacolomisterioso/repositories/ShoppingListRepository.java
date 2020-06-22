@@ -52,8 +52,15 @@ public class ShoppingListRepository {
             @Override
             public void run() {
                 try {
-                    long id = appDatabase.itemDao().insertItem(item);
-                    insertId.postValue(id);
+                    Item dbItem = appDatabase.itemDao().findItemInShoppingList(item.getItemName());
+                    if(dbItem == null) {
+                        long id = appDatabase.itemDao().insertItem(item);
+                        insertId.postValue(id);
+                    }
+                    else {
+                        long id = appDatabase.itemDao().updateExistItemQuantity(item.getItemName(), (item.getQuantity()+dbItem.getQuantity()));
+                        insertId.postValue(id);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

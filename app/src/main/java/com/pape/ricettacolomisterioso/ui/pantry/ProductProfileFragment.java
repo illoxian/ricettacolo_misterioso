@@ -178,16 +178,4 @@ public class ProductProfileFragment extends Fragment {
             productProfileBinding.addShoppingListImage.setColorFilter(null);
     }
 
-    /*public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.new_recipe_app_bar_menu, menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-        if(id==android.R.id.home) {
-            Navigation.findNavController(getView()).popBackStack();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }
