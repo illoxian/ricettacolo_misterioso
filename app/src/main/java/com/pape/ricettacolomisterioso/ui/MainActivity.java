@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //check theme
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(sharedPreferences.getBoolean("dark_mode", false))
@@ -39,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        //createNotificationChannel();
+        if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
+            Functions.SetAlarmManager(getApplicationContext());
+        else
+            Functions.ClearAlarmManager(getApplicationContext());
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
