@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -75,6 +76,10 @@ public class RecipeListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recipeListRecyclerView.setLayoutManager(layoutManager);
         model = new ViewModelProvider(this).get(RecipeListViewModel.class);
+
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(res));
+
         mAdapter = new RecipeListAdapter(getActivity(), model.getRecipes().getValue(), new RecipeListAdapter.OnItemInteractions() {
             @Override
             public void onItemClick(Recipe recipe, View view) {
