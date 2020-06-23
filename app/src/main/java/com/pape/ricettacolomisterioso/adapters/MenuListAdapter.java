@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.UnaryOperator;
 
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuListViewHolder> {
 
@@ -94,14 +95,21 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
             SimpleDateFormat format = new SimpleDateFormat("EEEE\nd MMM", Locale.getDefault());
             item_name.setText(format.format(dailyMenu.getDay()));
 
-            if(dailyMenu.getDay().getTime() == Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime()){
+            long dailyMenuTime = dailyMenu.getDay().getTime();
+            long today = Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime();
+            Log.d(TAG, "bind: DailyMenuTime: " + dailyMenuTime +
+                             "Today: " + today);
+
+            if(dailyMenuTime == today){
                 item_name.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSecondary));
                 item_name.setTypeface(null, Typeface.BOLD);
+                Log.d(TAG, "bind: è oggi");
             }
-            /*else{
-                item_name.setTextColor(item_name.getTextColors().getDefaultColor());
+            else{
+                Log.d(TAG, "bind: NON è oggi");
+                item_name.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnSurface));
                 item_name.setTypeface(null, Typeface.NORMAL);
-            }*/
+            }
 
             for(int i=0; i<recipe_cards.size(); i++){
                 CardView card = recipe_cards.get(i);

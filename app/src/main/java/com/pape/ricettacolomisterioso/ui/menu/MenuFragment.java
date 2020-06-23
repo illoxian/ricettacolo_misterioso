@@ -103,14 +103,14 @@ public class MenuFragment extends Fragment {
         binding.imageViewWeekPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.ChangeWeek(-1);
+                ChangeWeek(-1);
             }
         });
 
         binding.imageViewWeekNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.ChangeWeek(1);
+                ChangeWeek(1);
             }
         });
 
@@ -124,7 +124,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        model.ChangeWeek(0);
+        ChangeWeek(0);
         model.getAllRecipes();
     }
 
@@ -172,7 +172,7 @@ public class MenuFragment extends Fragment {
                     else
                         recipe_to_insert = new DailyRecipe(day, model.getRecipes().getValue().get(recipeId), slot);
                     model.insert(recipe_to_insert);
-                    model.ChangeWeek(0);
+                    ChangeWeek(0);
                     dialog.dismiss();
                 }
             }
@@ -202,5 +202,10 @@ public class MenuFragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void ChangeWeek(int offset){
+        model.ChangeWeek(offset);
+        binding.toolbarTitle.setText(model.getWeekRangeString());
     }
 }

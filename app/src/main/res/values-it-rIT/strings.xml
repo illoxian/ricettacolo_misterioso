@@ -111,4 +111,6 @@
     <string name="expiring_product_list_empty_text">Non ci sono prodotti in scadenza</string>
     <string name="recipe_list_empty_text">La lista delle ricette è vuota</string>
     <string name="menu_dialog_delete_title">Vuoi eliminare questa ricetta?</string>
+    <string name="dinner">Cena</string>
+    <string name="lunch">Pranzo</string>
 </resources>
