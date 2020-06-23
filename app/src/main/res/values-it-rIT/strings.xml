@@ -107,4 +107,8 @@
     <string name="shopping_list_empty_text">La lista della spesa è vuota</string>
     <string name="removed_from_products">rimosso dai prodotti</string>
     <string name="title_product_profile">Profilo del prodotto</string>
+    <string name="product_list_empty_text">La lista dei prodotti è vuota</string>
+    <string name="expiring_product_list_empty_text">Non ci sono prodotti in scadenza</string>
+    <string name="recipe_list_empty_text">La lista delle ricette è vuota</string>
+    <string name="menu_dialog_delete_title">Vuoi eliminare questa ricetta?</string>
 </resources>

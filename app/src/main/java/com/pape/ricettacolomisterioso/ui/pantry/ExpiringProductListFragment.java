@@ -70,9 +70,21 @@ public class ExpiringProductListFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 mAdapter.setData(model.getExpiringProductsOrdered().getValue());
+                CheckEmptyList();
             }
         });
 
         model.getAllProductsOrderByExpirationDate();
+    }
+
+    private void CheckEmptyList() {
+        if(model.getExpiringProductsOrdered().getValue() == null || model.getExpiringProductsOrdered().getValue().size()==0){
+            binding.expiringProductEmptyImageView.setVisibility(View.VISIBLE);
+            binding.expiringProductListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.expiringProductEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.expiringProductListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }

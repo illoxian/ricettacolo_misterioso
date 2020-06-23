@@ -3,6 +3,7 @@ package com.pape.ricettacolomisterioso.adapters;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
 
     public interface OnItemInteractions {
         void onRecipeClick(DailyMenu dailyMenu, int slot);
+        void onRecipeLongClick(DailyMenu dailyMenu, int slot, int adapterPosition);
     }
 
     private List<DailyMenu> dailyMenus;
@@ -96,6 +98,10 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
                 item_name.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSecondary));
                 item_name.setTypeface(null, Typeface.BOLD);
             }
+            /*else{
+                item_name.setTextColor(item_name.getTextColors().getDefaultColor());
+                item_name.setTypeface(null, Typeface.NORMAL);
+            }*/
 
             for(int i=0; i<recipe_cards.size(); i++){
                 CardView card = recipe_cards.get(i);
@@ -139,8 +145,20 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
                         onItemInteractions.onRecipeClick(dailyMenu, slot);
                     }
                 });
+                card.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        onItemInteractions.onRecipeLongClick(dailyMenu, slot, getAdapterPosition());
+                        return true;
+                    }
+                });
             }
         }
 
+    }
+
+    public void update(int adapterPosition, DailyMenu dailyMenu){
+        dailyMenus.set(adapterPosition, dailyMenu);
+        notifyItemChanged(adapterPosition);
     }
 }

@@ -25,6 +25,7 @@ public class MenuViewModel extends ViewModel {
 
     private MutableLiveData<List<DailyMenu>> dailyMenus;
     private MutableLiveData<Long> insertId;
+    private MutableLiveData<Integer> deleteId;
     private MutableLiveData<List<Recipe>> recipes;
 
     public MenuViewModel() {
@@ -43,6 +44,13 @@ public class MenuViewModel extends ViewModel {
             insertId = new MutableLiveData<>();
         }
         return insertId;
+    }
+
+    public MutableLiveData<Integer> getDeleteId() {
+        if (deleteId == null) {
+            deleteId = new MutableLiveData<>();
+        }
+        return deleteId;
     }
 
     public MutableLiveData<List<Recipe>> getRecipes() {
@@ -96,6 +104,10 @@ public class MenuViewModel extends ViewModel {
 
     public void insert(DailyRecipe dailyRecipe){
         DailyMenuRepository.getInstance().insert(dailyRecipe, getInsertId());
+    }
+
+    public void delete(DailyRecipe dailyRecipe){
+        DailyMenuRepository.getInstance().delete(dailyRecipe, getDeleteId());
     }
 
     public void getAllRecipes(){

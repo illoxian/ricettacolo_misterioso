@@ -32,6 +32,10 @@ public class DailyMenu {
         this.recipes = recipes;
     }
 
+    public void updateRecipe(int index, DailyRecipe dailyRecipe) {
+        recipes.set(index, dailyRecipe);
+    }
+
     @Override
     public String toString() {
         return "MenuOfTheDay{" +

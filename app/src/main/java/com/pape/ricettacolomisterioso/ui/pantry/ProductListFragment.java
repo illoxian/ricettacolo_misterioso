@@ -90,6 +90,7 @@ public class ProductListFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 mAdapter.setData(model.getProducts().getValue());
+                CheckEmptyList();
                 Log.d(TAG, products.toString());
             }
         });
@@ -161,5 +162,16 @@ public class ProductListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void CheckEmptyList() {
+        if(model.getProducts().getValue() == null || model.getProducts().getValue().size()==0){
+            binding.productListEmptyImageView.setVisibility(View.VISIBLE);
+            binding.productListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.productListEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.productListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }

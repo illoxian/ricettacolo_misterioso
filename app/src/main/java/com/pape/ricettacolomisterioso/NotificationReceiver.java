@@ -32,17 +32,13 @@ public class NotificationReceiver extends BroadcastReceiver {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         now = Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime();
 
-
         long last_fire;
         if(time==0)
             last_fire = sharedPreferences.getLong("notifications_launch_last_fire", now);
         else
             last_fire = sharedPreferences.getLong("notifications_dinner_last_fire", now);
 
-        Log.d(TAG, "onReceive: now: " + now +
-                         "\nlast_lunch:" + sharedPreferences.getLong("notifications_launch_last_fire", now) +
-                         "\nlast_dinner:" + sharedPreferences.getLong("notifications_dinner_last_fire", now) +
-                         "\nlast_fire:" + last_fire);
+        Log.d(TAG, "onReceive: alarm manager fired");
 
         if(now>last_fire){
             notificationHelper = new NotificationHelper(context);
@@ -52,7 +48,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
         else
         {
-            Log.d(TAG, "onReceive: Saaas");
+            Log.d(TAG, "onReceive: Notification not sended");
         }
     }
 

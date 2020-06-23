@@ -89,6 +89,7 @@ public class RecipeListFragment extends Fragment {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 mAdapter.setData(model.getRecipes().getValue());
+                CheckEmptyList();
             }
         });
 
@@ -158,6 +159,17 @@ public class RecipeListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void CheckEmptyList() {
+        if(model.getRecipes().getValue() == null || model.getRecipes().getValue().size()==0){
+            binding.recipeListEmptyImageView.setVisibility(View.VISIBLE);
+            binding.recipeListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.recipeListEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.recipeListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }
 

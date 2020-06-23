@@ -83,6 +83,11 @@ public class MenuFragment extends Fragment {
                     Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
                 }
             }
+
+            @Override
+            public void onRecipeLongClick(DailyMenu dailyMenu, int slot, int adapterPosition) {
+                ShowDialogDelete(dailyMenu, slot, adapterPosition);
+            }
         });
         binding.menuRecyclerview.setAdapter(mAdapter);
 
@@ -172,5 +177,30 @@ public class MenuFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void ShowDialogDelete(DailyMenu dailyMenu, int slot, int adapterPosition){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
+        builder.setTitle(R.string.menu_dialog_delete_title);
+
+        // Set up the buttons
+        builder.setPositiveButton(getString(R.string.Delete), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DailyRecipe dailyRecipe = dailyMenu.getRecipes().get(slot);
+                model.delete(dailyRecipe);
+                dailyMenu.updateRecipe(slot, null);
+                mAdapter.update(adapterPosition, dailyMenu);
+            }
+        });
+        builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

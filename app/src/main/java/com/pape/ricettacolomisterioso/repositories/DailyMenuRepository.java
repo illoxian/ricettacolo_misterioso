@@ -91,4 +91,20 @@ public class DailyMenuRepository {
         new Thread(runnable).start();
     }
 
+    public void delete(DailyRecipe dailyRecipe, MutableLiveData<Integer> deleteId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    int id = appDatabase.menuDao().delete(dailyRecipe);
+                    deleteId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
 }
