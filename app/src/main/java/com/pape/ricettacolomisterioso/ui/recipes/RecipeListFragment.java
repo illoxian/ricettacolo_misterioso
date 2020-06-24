@@ -95,12 +95,12 @@ public class RecipeListFragment extends Fragment {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 mAdapter.setData(model.getRecipes().getValue());
+                checkEmptyList();
             }
         });
 
         if (res == R.string.recipes_categories_see_all) liveData = model.getAllRecipes();
         else model.getRecipesByCategory(Arrays.asList(getResources().getStringArray(R.array.recipeCategoriesString)).indexOf(getString(res)));
-
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.recipeListRecyclerView);
@@ -123,6 +123,7 @@ public class RecipeListFragment extends Fragment {
                     deletedItem = model.getRecipes().getValue().get(position);
                     model.delete(deletedItem);
                     mAdapter.removeProductAt(position);
+                    checkEmptyList();
                     Snackbar snackbar = Snackbar.make(binding.recipeListRecyclerView,
                             deletedItem.getTitle() + " " + getString(R.string.removed_from_recipes),
                             Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
@@ -130,6 +131,8 @@ public class RecipeListFragment extends Fragment {
                         public void onClick(View v) {
                             mAdapter.insertProductAt(deletedItem, position);
                             model.addRecipe(deletedItem);
+                            checkEmptyList();
+
                         }
                     });
                     snackbar.show();
@@ -154,6 +157,7 @@ public class RecipeListFragment extends Fragment {
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
+
     };
 
 
@@ -165,6 +169,17 @@ public class RecipeListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkEmptyList() {
+        if(model.getRecipes().getValue() == null || model.getRecipes().getValue().size()==0){
+            binding.recipeListEmptyImageView.setVisibility(View.VISIBLE);
+            binding.recipeListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.recipeListEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.recipeListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }
 

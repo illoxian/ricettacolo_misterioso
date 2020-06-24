@@ -92,7 +92,6 @@ public class NewProductFragment extends Fragment {
         View view = binding.getRoot();
         setHasOptionsMenu(true);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.title_new_product));
         //livedata observer for the id returned from the insert to db
         model = new ViewModelProvider(this).get(NewProductViewModel.class);
         final Observer<Long> observer = new Observer<Long>() {
@@ -436,6 +435,8 @@ public class NewProductFragment extends Fragment {
         product.setExpirationDate(expirationDate);
         product.setPurchaseDate(purchaseDate);
         product.setBrand(binding.textInputBrand.getText().toString());
+        if(binding.textInputQuantity.getText().toString()!="") product.setQuantity(Integer.parseInt(binding.textInputQuantity.getText().toString()));
+        else product.setQuantity(1);
 
         boolean isValid = true;
 

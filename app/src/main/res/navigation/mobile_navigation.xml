@@ -65,8 +65,8 @@
     <fragment
         android:id="@+id/fragmentProductList"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.ProductListFragment"
-        android:label="fragment_product_list"
-        tools:layout="@layout/fragment_product_list" >
+        android:label="@string/title_product_list"
+        tools:layout="@layout/fragment_product_list">
         <argument
             android:name="Category"
             app:argType="integer" />
@@ -98,8 +98,8 @@
     <fragment
         android:id="@+id/expiringProductList"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.ExpiringProductListFragment"
-        android:label="fragment_expiring_product_list"
-        tools:layout="@layout/fragment_expiring_product_list" >
+        android:label="@string/expiring_products"
+        tools:layout="@layout/fragment_expiring_product_list">
         <action
             android:id="@+id/action_expiringProductList_to_productProfileFragment"
             app:destination="@id/productProfileFragment" />
@@ -116,7 +116,7 @@
     <fragment
         android:id="@+id/newProductFragment"
         android:name="com.pape.ricettacolomisterioso.ui.pantry.NewProductFragment"
-        android:label="fragment_new_product"
+        android:label="@string/title_new_product"
         tools:layout="@layout/fragment_new_product" />
     <fragment
         android:id="@+id/productProfileFragment"

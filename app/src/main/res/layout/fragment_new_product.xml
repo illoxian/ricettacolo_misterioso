@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +8,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/qtGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.675" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_scan"
@@ -90,12 +96,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_category"
             style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_name">
 
@@ -109,6 +114,32 @@
                 android:textCursorDrawable="@null" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout_quantity"
+            style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout_name"
+            app:layout_constraintStart_toStartOf="@+id/qtGuideline"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout_brand">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInput_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dropDownHeight="wrap_content"
+                android:inputType="number"
+                android:textCursorDrawable="@null"
+                android:hint="@string/new_recipe_quantity"
+                android:text="1"
+                tools:text="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_expiration_date"
@@ -159,13 +190,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_brand"
             style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:hint="@string/new_product_input_brand"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/qtGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textInputLayout_expiration_date">
 
@@ -216,9 +247,9 @@
             android:focusable="true"
             android:src="@drawable/baseline_save_24"
             app:fabCustomSize="60dp"
+            app:iconTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:iconTint="@android:color/white"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -107,4 +107,6 @@
     <string name="shopping_list_empty_text">La lista della spesa è vuota</string>
     <string name="removed_from_products">rimosso dai prodotti</string>
     <string name="title_product_profile">Profilo del prodotto</string>
+    <string name="title_product_list">Lista Prodotti</string>
+    <string name="new_recipe_quantity">Quantitá</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -31,6 +32,15 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE product_name LIKE :product_name ||'%'")
     List<Product> getSearchedProducts(String product_name);
 
+    @Query("SELECT * FROM products WHERE id LIKE :id LIMIT 1")
+    Product findById(int id);
+
+    @Query("UPDATE products SET quantity = quantity + 1 WHERE id LIKE :id")
+    void plus(int id);
+    @Query("UPDATE products SET quantity = quantity - 1 WHERE id LIKE :id")
+    void minus(int id);
+
+
     @Insert
     void insertAll(Product... products);
 
@@ -39,6 +49,7 @@ public interface ProductDao {
 
     @Delete
     int delete(Product product);
+
 }
 
 

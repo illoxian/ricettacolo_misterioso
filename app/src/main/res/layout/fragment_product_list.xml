@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.pantry.ProductListFragment">
 
+    <TextView
+        android:id="@+id/product_list__empty_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shopping_list_empty_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/product_list_empty_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/product_list__empty_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/baseline_kitchen_24" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/product_list_recycler_view"
         android:layout_width="match_parent"

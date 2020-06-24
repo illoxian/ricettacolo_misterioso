@@ -90,6 +90,19 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
+    public void getProductById(MutableLiveData<Product> product) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
     public void getProductsByCategory(MutableLiveData<List<Product>> products, int category){
         Runnable runnable = new Runnable() {
             @Override
@@ -165,6 +178,44 @@ public class ProductsRepository {
             }
         };
         new Thread(runnable).start();
+    }
+
+    public void plus(MutableLiveData<Product> product) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    appDatabase.productDao().plus(product.getValue().getId());
+                    product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
+                    Log.d(TAG, "plus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+
+    }
+
+
+    public void minus(MutableLiveData<Product> product) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (appDatabase.productDao().findById(product.getValue().getId()).getQuantity() > 1) {
+                        appDatabase.productDao().minus(product.getValue().getId());
+                        Log.d(TAG, "minus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
+                    }
+                    else Log.d(TAG, "quantity 1, cannot go deeper");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+
     }
 
     public void addItem(Product product, MutableLiveData<Long> insertId) {

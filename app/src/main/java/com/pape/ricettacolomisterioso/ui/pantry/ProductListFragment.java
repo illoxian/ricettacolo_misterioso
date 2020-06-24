@@ -93,6 +93,7 @@ public class ProductListFragment extends Fragment {
             public void onChanged(List<Product> products) {
                 mAdapter.setData(model.getProducts().getValue());
                 Log.d(TAG, products.toString());
+                checkEmptyList();
             }
         });
 
@@ -100,7 +101,7 @@ public class ProductListFragment extends Fragment {
         else{
             model.getProductsByCategory(Arrays.asList(getResources().getStringArray(R.array.categoriesString)).indexOf(getString(res)));
         }
-
+        checkEmptyList();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);
     }
@@ -123,6 +124,7 @@ public class ProductListFragment extends Fragment {
                     deletedItem = model.getProducts().getValue().get(position);
                     model.delete(deletedItem);
                     mAdapter.removeProductAt(position);
+                    checkEmptyList();
                     Snackbar snackbar = Snackbar.make(binding.productListRecyclerView,
                             deletedItem.getProduct_name() + " " + getString(R.string.removed_from_products),
                             Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
@@ -130,6 +132,7 @@ public class ProductListFragment extends Fragment {
                         public void onClick(View v) {
                             mAdapter.insertProductAt(deletedItem, position);
                             model.addProduct(deletedItem);
+                            checkEmptyList();
                         }
                     });
                     snackbar.show();
@@ -163,5 +166,16 @@ public class ProductListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkEmptyList() {
+        if(model.getProducts().getValue() == null || model.getProducts().getValue().size()==0){
+            binding.productListEmptyImageView.setVisibility(View.VISIBLE);
+            binding.productListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.productListEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.productListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }

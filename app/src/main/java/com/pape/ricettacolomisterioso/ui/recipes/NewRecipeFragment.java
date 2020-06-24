@@ -145,7 +145,6 @@ public class NewRecipeFragment extends Fragment {
         binding.textInputRecipeCategory.setAdapter(adapter);
 
 
-
     }
     private void initFab(){
         binding.newRecipeSaveFab.setOnClickListener(new View.OnClickListener() {

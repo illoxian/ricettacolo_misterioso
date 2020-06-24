@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,6 +51,7 @@ public class ExpiringProductListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
 
         model =  new ViewModelProvider(this).get(ExpiringProductListViewModel.class);
 
@@ -76,5 +80,14 @@ public class ExpiringProductListFragment extends Fragment {
         });
 
         model.getAllProductsOrderByExpirationDate();
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id==android.R.id.home) {
+            Navigation.findNavController(getView()).popBackStack();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

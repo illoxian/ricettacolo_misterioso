@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -27,6 +25,7 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
+import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductProfileBinding;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -37,10 +36,12 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ProductProfileFragment extends Fragment {
     private FragmentProductProfileBinding productProfileBinding;
     private ProductProfileViewModel model;
+    private ProductListAdapter adapter;
     final static String TAG="ProductProfileFragment";
 
     public ProductProfileFragment() {
@@ -84,8 +85,6 @@ public class ProductProfileFragment extends Fragment {
         model = new ViewModelProvider(this).get(ProductProfileViewModel.class);
         View view = productProfileBinding.getRoot();
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.title_product_profile));
-
         return view;
     }
 
@@ -102,11 +101,11 @@ public class ProductProfileFragment extends Fragment {
 
     public void updateProductInformation(Product product, View view){
         productProfileBinding.productNameTextView.setText(product.getProduct_name());
-        productProfileBinding.categoryValueTextView.setText(Functions.getProductCategoryString(view.getContext(), product.getCategory()));
-        productProfileBinding.quantityValueTextView.setText("500g");
-        productProfileBinding.brandValueTextView.setText(product.getBrand());
+        productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
+        if(product.getBrand().isEmpty()) productProfileBinding.brandValueTextView.setVisibility(View.INVISIBLE);
+        else productProfileBinding.brandValueTextView.setText(product.getBrand());
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
-
+        productProfileBinding.expiringDateValueTextView.setText(product.getExpirationDateString());
         // image or category thumbnail
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if(((SharedPreferences) sharedPreferences).getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
@@ -145,8 +144,46 @@ public class ProductProfileFragment extends Fragment {
             }
         });
 
-        model.findItemInShoppingList(product.getProduct_name());
-    }
+        productProfileBinding.deleteProductButton.setOnClickListener(v-> {
+            model.delete(product);
+            Snackbar snackbar = Snackbar.make(v,
+                    product.getProduct_name() + " " + getString(R.string.removed_from_products),
+                    Snackbar.LENGTH_LONG);/*.setAction(R.string.Undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    model.addProduct(product);
+
+                }
+            });*/
+            snackbar.show();
+            Navigation.findNavController(getView()).navigateUp();
+
+        });
+
+        productProfileBinding.quantityMinus.setOnClickListener(v-> {
+                    model.minusQuantity(product);
+                    model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
+                        @Override
+                        public void onChanged(@Nullable Product product) {
+                            productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
+
+                        }
+
+                    });
+                });
+
+
+            productProfileBinding.quantityPlus.setOnClickListener(v -> {
+                model.plusQuantity(product);
+                model.getQuantity().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        productProfileBinding.quantityValueTextView.setText(""+ model.getQuantity().getValue());
+                    }
+                });
+
+            });
+            model.findItemInShoppingList(product.getProduct_name()); }
 
     public void updateExpiringView(Date expiring, Date purchase_date){
         expiring = Functions.ExcludeTime(expiring);
@@ -176,6 +213,19 @@ public class ProductProfileFragment extends Fragment {
             productProfileBinding.addShoppingListImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.pink_a200), android.graphics.PorterDuff.Mode.SRC_IN);
         else
             productProfileBinding.addShoppingListImage.setColorFilter(null);
+    }
+
+/*    private void initFAB(){
+        productProfileBinding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteProduct();
+            }
+        });
+    }*/
+
+    private void refreshQuantity(Product product) {
+        productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
     }
 
 }

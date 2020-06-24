@@ -100,10 +100,8 @@ public class PantryFragment extends Fragment {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                binding.categoryLayout.setVisibility(View.VISIBLE);
-                binding.expiringCard.setVisibility(View.VISIBLE);
-                binding.categoryProductTextview.setVisibility(View.VISIBLE);
-                binding.pantryFragmentRecyclerView.setVisibility(View.GONE);
+                searchViewClose();
+
                 return false;
             }
         });
@@ -119,10 +117,7 @@ public class PantryFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        binding.categoryLayout.setVisibility(View.GONE);
-                        binding.expiringCard.setVisibility(View.GONE);
-                        binding.categoryProductTextview.setVisibility(View.GONE);
-                        binding.pantryFragmentRecyclerView.setVisibility(View.VISIBLE);
+searchViewOpen();
 
                         onSearched(newText);
                         return false;
@@ -133,10 +128,7 @@ public class PantryFragment extends Fragment {
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                binding.categoryLayout.setVisibility(View.VISIBLE);
-                binding.expiringCard.setVisibility(View.VISIBLE);
-                binding.categoryProductTextview.setVisibility(View.VISIBLE);
-                binding.pantryFragmentRecyclerView.setVisibility(View.GONE);
+searchViewClose();
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -146,11 +138,7 @@ public class PantryFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        binding.categoryLayout.setVisibility(View.GONE);
-                        binding.expiringCard.setVisibility(View.GONE);
-                        binding.categoryProductTextview.setVisibility(View.GONE);
-                        binding.pantryFragmentRecyclerView.setVisibility(View.VISIBLE);
-
+                        searchViewOpen();
                         onSearched(newText);
                         return false;
                     }
@@ -159,6 +147,26 @@ public class PantryFragment extends Fragment {
             }
         });
     }
+
+    private void searchViewOpen() {
+        binding.categoryLayout.setVisibility(View.GONE);
+        binding.expiringCard.setVisibility(View.GONE);
+        binding.categoryProductTextview.setVisibility(View.GONE);
+        binding.pantryFragmentRecyclerView.setVisibility(View.VISIBLE);
+
+
+    }
+
+    private void searchViewClose() {
+        binding.categoryLayout.setVisibility(View.VISIBLE);
+        getMostExpiringProducts();
+        binding.categoryProductTextview.setVisibility(View.VISIBLE);
+        binding.pantryFragmentRecyclerView.setVisibility(View.GONE);
+
+    }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

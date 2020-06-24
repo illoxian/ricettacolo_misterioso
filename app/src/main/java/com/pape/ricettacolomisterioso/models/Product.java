@@ -25,17 +25,19 @@ public class Product implements Parcelable {
     private String brand;
     private String barcode;
     private String dataSource;
+    private int quantity;
 
     private int category;
     private Date expirationDate;
     private Date purchaseDate;
 
 
+
     public Product(){
 
     }
 
-    public Product(String product_name, String imageUrl, String brand, String barcode, String dataSource, int category, Date expirationDate, Date purchaseDate) {
+    public Product(String product_name, String imageUrl, String brand, String barcode, String dataSource, int quantity, int category, Date expirationDate, Date purchaseDate) {
         this.product_name = product_name;
         this.imageUrl = imageUrl;
         this.brand = brand;
@@ -44,6 +46,7 @@ public class Product implements Parcelable {
         this.category = category;
         this.expirationDate = expirationDate;
         this.purchaseDate = purchaseDate;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -130,6 +133,14 @@ public class Product implements Parcelable {
         else return "";
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -142,6 +153,7 @@ public class Product implements Parcelable {
                 ", category='" + category + '\'' +
                 ", expirationDate=" + getExpirationDateString() +
                 ", purchaseDate=" + getPurchaseDateString() +
+                ", itemCount=" + getQuantity() +
                 '}';
     }
 
@@ -159,6 +171,7 @@ public class Product implements Parcelable {
         out.writeString(this.brand);
         out.writeString(this.barcode);
         out.writeString(this.dataSource);
+        out.writeInt(this.quantity);
         out.writeInt(this.category);
 
         if(this.expirationDate==null) out.writeString(null);
@@ -166,6 +179,7 @@ public class Product implements Parcelable {
 
         if(this.purchaseDate==null) out.writeString(null);
         else out.writeLong(this.purchaseDate.getTime());
+
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -188,6 +202,7 @@ public class Product implements Parcelable {
         this.brand = in.readString();
         this.barcode = in.readString();
         this.dataSource = in.readString();
+        this.quantity = in.readInt();
         this.category = in.readInt();
         this.expirationDate = new Date(in.readLong());
         this.purchaseDate = new Date(in.readLong());
