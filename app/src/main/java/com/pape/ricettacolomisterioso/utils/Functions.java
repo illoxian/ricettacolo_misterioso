@@ -148,7 +148,7 @@ public class Functions {
     public static String SaveImage(Bitmap finalBitmap) {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/saved_images");
+        File myDir = new File(root + "/QKing/saved_images");
         myDir.mkdirs();
         Random generator = new Random();
         int n = 10000;

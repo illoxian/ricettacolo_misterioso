@@ -45,7 +45,10 @@
                         android:id="@+id/product_name_text_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
+                        android:singleLine="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/add_shopping_list_image"
@@ -54,7 +57,7 @@
                         tools:text="Titolo Prodotto" />
 
                     <ImageView
-                        android:id="@+id/delete_iamge"
+                        android:id="@+id/delete_image"
                         style="@style/Widget.AppCompat.ActionButton"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
@@ -80,10 +83,14 @@
                         android:id="@+id/brand_value_text_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
+                        android:singleLine="true"
                         android:text="De cecco"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:layout_constraintEnd_toStartOf="@+id/add_shopping_list_image"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/product_name_text_view" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -145,6 +152,35 @@
                         android:layout_height="50dp"
                         android:gravity="center_vertical"
                         android:text="2Kg"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/barcode_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/barcode"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="?attr/colorOnSurface"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/barcode_value_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:text="1234567891234"
                         android:textColor="?attr/colorOnSurface"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -234,7 +270,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/purchase_date_value_text_view" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <ImageView
+                    android:id="@+id/barcode_image"
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter" />
 
             </LinearLayout>
 

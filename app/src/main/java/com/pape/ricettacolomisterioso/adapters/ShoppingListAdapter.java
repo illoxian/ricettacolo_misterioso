@@ -124,7 +124,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     }
 
     public void insertItem(Item item) {
-        insertItemAt(item, items.size());
+        int position = searchItemByName(item.getItemName());
+        if(position>=0){
+            Item item_found = items.get(position);
+            item_found.setQuantity(item_found.getQuantity() + item.getQuantity());
+            notifyDataSetChanged();
+        }
+        else
+            insertItemAt(item, items.size());
     }
 
     public void updateItem(Item item, int position) {
@@ -155,5 +162,15 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         else{
             textViewName.setPaintFlags(textViewName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
+    }
+
+    public int searchItemByName(String item_name){
+        for(int i=0; i<items.size(); i++){
+            Item item = items.get(i);
+            if(item.getItemName().equals(item_name)){
+                return i;
+            }
+        }
+        return -1;
     }
 }

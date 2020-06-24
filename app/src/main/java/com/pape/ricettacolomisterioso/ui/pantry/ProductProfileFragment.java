@@ -6,8 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -26,11 +25,14 @@ import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductProfileBinding;
-import com.pape.ricettacolomisterioso.models.DailyMenu;
-import com.pape.ricettacolomisterioso.models.DailyRecipe;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.utils.Functions;
@@ -40,7 +42,6 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class ProductProfileFragment extends Fragment {
     private FragmentProductProfileBinding productProfileBinding;
@@ -105,7 +106,8 @@ public class ProductProfileFragment extends Fragment {
 
     public void updateProductInformation(Product product, View view){
         productProfileBinding.productNameTextView.setText(product.getProduct_name());
-        productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
+        productProfileBinding.categoryValueTextView.setText(Functions.getProductCategoryString(getContext(), product.getCategory()));
+        productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()) + " " + getString(R.string.measure_unit_piece_abbreviation));
         if(product.getBrand().isEmpty()) productProfileBinding.brandValueTextView.setVisibility(View.INVISIBLE);
         else productProfileBinding.brandValueTextView.setText(product.getBrand());
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
@@ -121,6 +123,24 @@ public class ProductProfileFragment extends Fragment {
         else{
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(getContext()));
+        }
+
+        if(product.getBarcode() == null){
+            productProfileBinding.barcodeTextView.setVisibility(View.GONE);
+            productProfileBinding.barcodeValueTextView.setVisibility(View.GONE);
+        }
+        else{
+            productProfileBinding.barcodeValueTextView.setText(product.getBarcode());
+            String text=product.getBarcode(); // Whatever you need to encode in the QR code
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+            try {
+                BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.EAN_13,300,150);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                productProfileBinding.barcodeImage.setImageBitmap(bitmap);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
         }
 
         // shopping list button
@@ -145,9 +165,8 @@ public class ProductProfileFragment extends Fragment {
             }
         });
 
-        productProfileBinding.deleteIamge.setOnClickListener(v-> {
+        productProfileBinding.deleteImage.setOnClickListener(v-> {
             ShowDialogDelete(product);
-
         });
 
        /* productProfileBinding.quantityMinus.setOnClickListener(v-> {
@@ -172,9 +191,9 @@ public class ProductProfileFragment extends Fragment {
                     }
                 });
 
-            });
+            });*/
             model.findItemInShoppingList(product.getProduct_name());
-*/
+
     }
     public void updateExpiringView(Date expiring, Date purchase_date){
         expiring = Functions.ExcludeTime(expiring);
@@ -227,7 +246,7 @@ public class ProductProfileFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 model.delete(product);
-                Snackbar.make(getView(), R.string.removed_from_products, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), product.getProduct_name() + " " + getString(R.string.removed_from_products), Snackbar.LENGTH_LONG).show();
 
                 Navigation.findNavController(getView()).navigateUp();
             }
