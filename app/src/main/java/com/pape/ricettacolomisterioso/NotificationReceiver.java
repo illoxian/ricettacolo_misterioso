@@ -91,7 +91,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
 
 
-        notificationHelper.createNotification(time, title, content, R.drawable.logo_launcher_foreground);
+        notificationHelper.createNotification(time, title, content, R.drawable.chef_notification);
 
         /*SharedPreferences.Editor edit = sharedPreferences.edit();
         if(time==0)
