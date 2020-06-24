@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.pantry.ProductProfileActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/category_image"
@@ -21,19 +22,98 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/pattern" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/expiringLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false">
+
+            <TextView
+                android:id="@+id/expiring_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="10 giorni rimanenti"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+            <TextView
+                android:id="@+id/expiring_date_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:text="dd/mm/yyyy"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/purchase_date_value_text_view" />
+
+            <TextView
+                android:id="@+id/purchase_date_value_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:text="dd/mm/yyyy"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/expiring_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/expiring_product_profile"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/expiring_date_value_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+            <TextView
+                android:id="@+id/purchase_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/purchase_date_product_profile"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="@+id/purchase_date_value_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:inputType="date"
+                android:max="100"
+                android:progress="10"
+                android:progressBackgroundTint="?attr/colorSecondary"
+                android:progressTint="?attr/colorSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/purchase_date_value_text_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.MyTheme.CardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="150dp"
             app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:id="@+id/product_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
 
 
@@ -45,7 +125,6 @@
                         android:id="@+id/product_name_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
                         android:gravity="center_vertical"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="?attr/colorOnSurface"
@@ -60,7 +139,6 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -75,7 +153,6 @@
                         android:id="@+id/category_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
                         android:gravity="center_vertical"
                         android:text="@string/category_product_profile"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -89,7 +166,6 @@
                         android:id="@+id/category_value_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginEnd="8dp"
                         android:gravity="center_vertical"
                         android:text="Pasta e riso"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -108,7 +184,6 @@
                         android:id="@+id/quantity_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
                         android:gravity="center_vertical"
                         android:text="@string/quantity_product_profile"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -121,7 +196,6 @@
                         android:id="@+id/quantity_value_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginEnd="8dp"
                         android:gravity="center_vertical"
                         android:text="2Kg"
                         android:textColor="?attr/colorOnSurface"
@@ -139,7 +213,6 @@
                         android:id="@+id/brand_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
                         android:gravity="center_vertical"
                         android:text="@string/brand_product_profile"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -152,89 +225,8 @@
                         android:id="@+id/brand_value_text_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginEnd="8dp"
                         android:gravity="center_vertical"
                         android:text="De cecco"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="?attr/colorOnSurface"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/expiring_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/expiring_product_profile"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="?attr/colorOnSurface"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:indeterminate="false"
-                        android:inputType="date"
-                        android:max="100"
-                        android:minWidth="200dp"
-                        android:minHeight="20dp"
-                        android:progress="10"
-                        android:progressBackgroundTint="?attr/colorSecondary"
-                        android:progressTint="?attr/colorSecondary"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/expiring_value_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="10 giorni rimanenti"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        app:layout_constraintBottom_toTopOf="@+id/progressBar"
-                        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/purchase_date_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/purchase_date_product_profile"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="?attr/colorOnSurface"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/purchase_date_value_text_view"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center_vertical"
-                        android:text="12/04/2020"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="?attr/colorOnSurface"
                         app:layout_constraintBottom_toBottomOf="parent"

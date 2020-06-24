@@ -41,7 +41,7 @@
     <string name="quantity_product_profile">Quantità</string>
     <string name="brand_product_profile">Marca</string>
     <string name="expiring_product_profile">Scadenza</string>
-    <string name="purchase_date_product_profile">Data di acquisto</string>
+    <string name="purchase_date_product_profile">Acquisto</string>
     <string name="remaining_day">giorni rimanenti</string>
     <string name="error_not_a_category">Seleziona una delle categorie</string>
     <string name="error_empty_field">Questo campo non può essere vuoto</string>
@@ -115,4 +115,5 @@
     <string name="menu_dialog_delete_title">Vuoi eliminare questa ricetta?</string>
     <string name="dinner">Cena</string>
     <string name="lunch">Pranzo</string>
+    <string name="product_dialog_delete_title">Vuoi eliminare questo prodotto?</string>
 </resources>

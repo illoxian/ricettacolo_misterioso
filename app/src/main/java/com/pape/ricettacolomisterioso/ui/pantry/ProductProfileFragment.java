@@ -2,7 +2,9 @@ package com.pape.ricettacolomisterioso.ui.pantry;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentProductProfileBinding;
+import com.pape.ricettacolomisterioso.models.DailyMenu;
+import com.pape.ricettacolomisterioso.models.DailyRecipe;
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
 import com.pape.ricettacolomisterioso.utils.Functions;
@@ -128,39 +132,25 @@ public class ProductProfileFragment extends Fragment {
             }
         });
 
-        productProfileBinding.addShoppingListImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(productProfileBinding.addShoppingListImage.getColorFilter()==null){
-                    model.addItemToShoppingList(product.getProduct_name());
-                    setColorAddToShoppingListIcon(true);
-                    Snackbar.make(v, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG).show();
-                }
-                else{
-                    model.deleteItemFromShoppingList(product.getProduct_name());
-                    setColorAddToShoppingListIcon(false);
-                    Snackbar.make(v, R.string.product_removed_from_shopping_list, Snackbar.LENGTH_LONG).show();
-                }
+        productProfileBinding.addShoppingListImage.setOnClickListener(v -> {
+            if(productProfileBinding.addShoppingListImage.getColorFilter()==null){
+                model.addItemToShoppingList(product.getProduct_name());
+                setColorAddToShoppingListIcon(true);
+                Snackbar.make(v, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG).show();
+            }
+            else{
+                model.deleteItemFromShoppingList(product.getProduct_name());
+                setColorAddToShoppingListIcon(false);
+                Snackbar.make(v, R.string.product_removed_from_shopping_list, Snackbar.LENGTH_LONG).show();
             }
         });
 
-        productProfileBinding.deleteProductButton.setOnClickListener(v-> {
-            model.delete(product);
-            Snackbar snackbar = Snackbar.make(v,
-                    product.getProduct_name() + " " + getString(R.string.removed_from_products),
-                    Snackbar.LENGTH_LONG);/*.setAction(R.string.Undo, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    model.addProduct(product);
-
-                }
-            });*/
-            snackbar.show();
-            Navigation.findNavController(getView()).navigateUp();
+        productProfileBinding.deleteIamge.setOnClickListener(v-> {
+            ShowDialogDelete(product);
 
         });
 
-        productProfileBinding.quantityMinus.setOnClickListener(v-> {
+       /* productProfileBinding.quantityMinus.setOnClickListener(v-> {
                     model.minusQuantity(product);
                     model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
                         @Override
@@ -183,8 +173,9 @@ public class ProductProfileFragment extends Fragment {
                 });
 
             });
-            model.findItemInShoppingList(product.getProduct_name()); }
-
+            model.findItemInShoppingList(product.getProduct_name());
+*/
+    }
     public void updateExpiringView(Date expiring, Date purchase_date){
         expiring = Functions.ExcludeTime(expiring);
         purchase_date = Functions.ExcludeTime(purchase_date);
@@ -226,6 +217,30 @@ public class ProductProfileFragment extends Fragment {
 
     private void refreshQuantity(Product product) {
         productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
+    }
+
+    private void ShowDialogDelete(Product product){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
+        builder.setTitle(R.string.product_dialog_delete_title);
+        // Set up the buttons
+        builder.setPositiveButton(getString(R.string.Delete), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                model.delete(product);
+                Snackbar.make(getView(), R.string.removed_from_products, Snackbar.LENGTH_LONG).show();
+
+                Navigation.findNavController(getView()).navigateUp();
+            }
+        });
+        builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

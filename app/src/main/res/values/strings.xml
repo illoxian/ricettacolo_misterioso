@@ -45,7 +45,7 @@
     <string name="quantity_product_profile">Quantity</string>
     <string name="brand_product_profile">Brand</string>
     <string name="expiring_product_profile">Expiring</string>
-    <string name="purchase_date_product_profile">Purchase date</string>
+    <string name="purchase_date_product_profile">Purchase</string>
     <string name="item_shopping_list">Shopping item</string>
     <string name="item_counter_shopping_list">1</string>
     <string name="remaining_day">days remaining</string>
@@ -120,4 +120,5 @@
     <string name="lunch">Lunch</string>
     <string name="title_product_list">Product List</string>
     <string name="new_recipe_quantity">Quantity</string>
+    <string name="product_dialog_delete_title">Do you want to delete this product?</string>
 </resources>
