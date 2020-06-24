@@ -15,7 +15,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
+            if(sharedPreferences.getBoolean("notifications_launch_dinner", false))
                 Functions.SetAlarmManager(context);
             else
                 Functions.ClearAlarmManager(context);

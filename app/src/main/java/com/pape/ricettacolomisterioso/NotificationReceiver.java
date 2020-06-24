@@ -31,7 +31,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         int time = intent.getExtras().getInt("TIME");
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        /*sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         now = Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime();
 
         // recupera l'ultima volta che è stata chiamata la notifica
@@ -50,16 +50,16 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
 
         // se oggi non è stata chiamata allora chiamala
-        if(now>last_fire){
+        if(now>last_fire){*/
             notificationHelper = new NotificationHelper(context);
             mContext = context;
             DailyMenuRepository.getInstance().setDatabase(AppDatabase.getInstance(context));
             RetrieveDailyMenu(time);
-        }
+        /*}
         else
         {
             Log.d(TAG, "onReceive: Notification not sended");
-        }
+        }*/
     }
 
     private void RetrieveDailyMenu(int time) {
@@ -93,12 +93,12 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         notificationHelper.createNotification(time, title, content, R.drawable.logo_launcher_foreground);
 
-        SharedPreferences.Editor edit = sharedPreferences.edit();
+        /*SharedPreferences.Editor edit = sharedPreferences.edit();
         if(time==0)
             edit.putLong("notifications_launch_last_fire", now);
         else
             edit.putLong("notifications_dinner_last_fire", now);
-        edit.apply();
+        edit.apply();*/
 
         Log.d(TAG, "onReceive: NotificationSended");
     }

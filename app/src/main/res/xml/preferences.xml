@@ -52,7 +52,7 @@
             app:title="@string/preferences_notifications_launch_dinner"
             app:summary="@string/preferences_notifications_launch_dinner_summary"
             app:iconSpaceReserved="false"
-            app:defaultValue="true"/>
+            app:defaultValue="false"/>
 
     </PreferenceCategory>
 
