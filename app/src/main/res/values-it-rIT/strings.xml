@@ -109,4 +109,10 @@
     <string name="title_product_profile">Profilo del prodotto</string>
     <string name="title_product_list">Lista Prodotti</string>
     <string name="new_recipe_quantity">Quantitá</string>
+    <string name="product_list_empty_text">La lista dei prodotti è vuota</string>
+    <string name="expiring_product_list_empty_text">Non ci sono prodotti in scadenza</string>
+    <string name="recipe_list_empty_text">La lista delle ricette è vuota</string>
+    <string name="menu_dialog_delete_title">Vuoi eliminare questa ricetta?</string>
+    <string name="dinner">Cena</string>
+    <string name="lunch">Pranzo</string>
 </resources>

@@ -21,7 +21,11 @@ public class DailyMenuRepository {
 
 
     private DailyMenuRepository() {
-        appDatabase = MainActivity.db;
+        setDatabase(MainActivity.db);
+    }
+
+    public void setDatabase(AppDatabase db){
+        appDatabase = db;
     }
 
     //this defines a singleton for ShoppingListRepository Class
@@ -79,6 +83,22 @@ public class DailyMenuRepository {
                 try {
                     long id = appDatabase.menuDao().insert(dailyRecipe);
                     insertId.postValue(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+
+    public void delete(DailyRecipe dailyRecipe, MutableLiveData<Integer> deleteId) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    int id = appDatabase.menuDao().delete(dailyRecipe);
+                    deleteId.postValue(id);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,6 +1,7 @@
 package com.pape.ricettacolomisterioso.models;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -16,4 +17,6 @@ public interface MenuDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         long insert(DailyRecipe dailyRecipe);
 
+        @Delete
+        int delete(DailyRecipe dailyRecipe);
 }

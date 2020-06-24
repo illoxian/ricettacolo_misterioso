@@ -71,15 +71,31 @@ public class Functions {
         return CATEGORIES.indexOf(category);
     }
 
-    public static void SetAlarmManager(Context context)
+    public static void enableBootReceiver(Context context)
     {
-        //enable boot receiver
         ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
         PackageManager pm = context.getPackageManager();
 
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
+    }
+
+    public static void disableBootReceiver(Context context)
+    {
+        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+
+    public static void SetAlarmManager(Context context)
+    {
+        //enable boot receiver
+        enableBootReceiver(context);
 
         //set alarm manager
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -113,12 +129,7 @@ public class Functions {
     public static void ClearAlarmManager(Context context)
     {
         //disable boot receiver
-        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
+        disableBootReceiver(context);
 
         //cancel alarm manager
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

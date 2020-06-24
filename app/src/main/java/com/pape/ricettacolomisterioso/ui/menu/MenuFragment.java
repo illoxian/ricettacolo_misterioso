@@ -82,6 +82,11 @@ public class MenuFragment extends Fragment {
                     Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
                 }
             }
+
+            @Override
+            public void onRecipeLongClick(DailyMenu dailyMenu, int slot, int adapterPosition) {
+                ShowDialogDelete(dailyMenu, slot, adapterPosition);
+            }
         });
         binding.menuRecyclerview.setAdapter(mAdapter);
 
@@ -97,14 +102,14 @@ public class MenuFragment extends Fragment {
         binding.imageViewWeekPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.ChangeWeek(-1);
+                ChangeWeek(-1);
             }
         });
 
         binding.imageViewWeekNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.ChangeWeek(1);
+                ChangeWeek(1);
             }
         });
 
@@ -118,7 +123,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        model.ChangeWeek(0);
+        ChangeWeek(0);
         model.getAllRecipes();
     }
 
@@ -166,10 +171,40 @@ public class MenuFragment extends Fragment {
                     else
                         recipe_to_insert = new DailyRecipe(day, model.getRecipes().getValue().get(recipeId), slot);
                     model.insert(recipe_to_insert);
-                    model.ChangeWeek(0);
+                    ChangeWeek(0);
                     dialog.dismiss();
                 }
             }
         });
+    }
+
+    private void ShowDialogDelete(DailyMenu dailyMenu, int slot, int adapterPosition){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
+        builder.setTitle(R.string.menu_dialog_delete_title);
+
+        // Set up the buttons
+        builder.setPositiveButton(getString(R.string.Delete), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DailyRecipe dailyRecipe = dailyMenu.getRecipes().get(slot);
+                model.delete(dailyRecipe);
+                dailyMenu.updateRecipe(slot, null);
+                mAdapter.update(adapterPosition, dailyMenu);
+            }
+        });
+        builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void ChangeWeek(int offset){
+        model.ChangeWeek(offset);
+        binding.toolbarTitle.setText(model.getWeekRangeString());
     }
 }

@@ -207,7 +207,7 @@ public class ScannerActivity extends AppCompatActivity {
             builder.setView(dialogView);
             builder.setTitle(getResources().getString(R.string.scanner_alert_dialog_title));
 
-            TextView generic_name_view = dialogView.findViewById(R.id.scanner_dialog_generic_name);
+            //TextView generic_name_view = dialogView.findViewById(R.id.scanner_dialog_generic_name);
             TextView product_name_view = dialogView.findViewById(R.id.scanner_dialog_product_name);
             TextView brand_view = dialogView.findViewById(R.id.scanner_dialog_brand);
             TextView code_view = dialogView.findViewById(R.id.scanner_dialog_code_name);

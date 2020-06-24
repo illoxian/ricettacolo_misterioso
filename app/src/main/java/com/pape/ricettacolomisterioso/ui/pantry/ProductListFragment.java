@@ -92,6 +92,7 @@ public class ProductListFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 mAdapter.setData(model.getProducts().getValue());
+                CheckEmptyList();
                 Log.d(TAG, products.toString());
                 checkEmptyList();
             }

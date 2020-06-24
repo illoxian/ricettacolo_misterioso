@@ -12,16 +12,19 @@
         android:layout_height="wrap_content"
         android:text="@string/recipe_list_empty_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/recipeList_empty_imageView"
+        android:id="@+id/recipe_list_empty_imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/baseline_restaurant_menu_24"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/baseline_no_meals_24"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/recipe_list_empty_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -76,6 +76,7 @@ public class ExpiringProductListFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 mAdapter.setData(model.getExpiringProductsOrdered().getValue());
+                CheckEmptyList();
             }
         });
 
@@ -89,5 +90,16 @@ public class ExpiringProductListFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkEmptyList() {
+        if(model.getExpiringProductsOrdered().getValue() == null || model.getExpiringProductsOrdered().getValue().size()==0){
+            binding.expiringProductEmptyImageView.setVisibility(View.VISIBLE);
+            binding.expiringProductListEmptyTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.expiringProductEmptyImageView.setVisibility(View.INVISIBLE);
+            binding.expiringProductListEmptyTextView.setVisibility(View.INVISIBLE);
+        }
     }
 }
