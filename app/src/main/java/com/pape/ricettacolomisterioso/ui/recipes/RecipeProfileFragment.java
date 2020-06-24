@@ -1,7 +1,9 @@
 package com.pape.ricettacolomisterioso.ui.recipes;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -16,8 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.databinding.FragmentRecipeProfileBinding;
 import com.pape.ricettacolomisterioso.models.Recipe;
@@ -49,6 +53,11 @@ public class RecipeProfileFragment extends Fragment {
 
         Recipe recipe = RecipeProfileFragmentArgs.fromBundle(getArguments()).getRecipe();
         inflateRecipeInfo(recipe);
+        binding.deleteRecipeImage.setOnClickListener(v-> {
+            showDialogDelete(recipe);
+
+        });
+
         Log.d(TAG, recipe.toString());
 
         return view;
@@ -128,6 +137,31 @@ public class RecipeProfileFragment extends Fragment {
 
 
 
+
+    }
+
+    private void showDialogDelete(Recipe recipe) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
+        builder.setTitle(R.string.recipe_dialog_delete_title);
+        // Set up the buttons
+        builder.setPositiveButton(getString(R.string.Delete), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                model.delete(recipe);
+                Snackbar.make(getView(), R.string.removed_from_recipes, Snackbar.LENGTH_LONG).show();
+
+                Navigation.findNavController(getView()).navigateUp();
+            }
+        });
+        builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 }

@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
+import com.pape.ricettacolomisterioso.models.Recipe;
+import com.pape.ricettacolomisterioso.repositories.ProductsRepository;
+import com.pape.ricettacolomisterioso.repositories.RecipesRepository;
 
 public class RecipeProfileViewModel extends ViewModel {
     private final String TAG= "RecipeProfileViewModel";
@@ -41,4 +44,8 @@ public class RecipeProfileViewModel extends ViewModel {
             }
             return deleteId;
         }
+
+    public void delete(Recipe recipe){
+        RecipesRepository.getInstance().delete(recipe, getDeleteId());
+    }
 }

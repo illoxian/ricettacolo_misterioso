@@ -1,5 +1,7 @@
 package com.pape.ricettacolomisterioso.viewmodels;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -61,14 +63,18 @@ public class ProductProfileViewModel extends ViewModel {
     }
 
     public void minusQuantity(Product product) {
-        ProductsRepository.getInstance().minus(new MutableLiveData<>(product));
+        this.product = new MutableLiveData<>(product);
+        ProductsRepository.getInstance().minus(this.product);
     }
 
     public void plusQuantity(Product product) {
-        ProductsRepository.getInstance().plus(new MutableLiveData<>(product));
+        this.product = new MutableLiveData<>(product);
+        ProductsRepository.getInstance().plus(this.product);
+        Log.d(TAG, ""+ this.product.getValue().getQuantity());
     }
     public void findItemById(Product product) {
-        ProductsRepository.getInstance().getProductById(new MutableLiveData<>(product));
+        this.product = new MutableLiveData<>(product);
+        ProductsRepository.getInstance().getProductById(this.product);
 
     }
     public void addItemToShoppingList(Item item){

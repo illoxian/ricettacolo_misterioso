@@ -150,31 +150,31 @@ public class ProductProfileFragment extends Fragment {
 
         });
 
-       /* productProfileBinding.quantityMinus.setOnClickListener(v-> {
-                    model.minusQuantity(product);
-                    model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
-                        @Override
-                        public void onChanged(@Nullable Product product) {
-                            productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
+        productProfileBinding.minusQuantity.setOnClickListener(v-> {
+            model.minusQuantity(product);
 
-                        }
+            model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
+                @Override
+                public void onChanged(Product product) {
+                    productProfileBinding.quantityValueTextView.setText("" + model.getProduct().getValue().getQuantity());
+                }
+            });
+        });
 
-                    });
-                });
 
-
-            productProfileBinding.quantityPlus.setOnClickListener(v -> {
+            productProfileBinding.plusQuantity.setOnClickListener(v -> {
                 model.plusQuantity(product);
-                model.getQuantity().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+
+                model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
                     @Override
-                    public void onChanged(Integer integer) {
-                        productProfileBinding.quantityValueTextView.setText(""+ model.getQuantity().getValue());
+                    public void onChanged(Product product) {
+                        productProfileBinding.quantityValueTextView.setText("" + model.getProduct().getValue().getQuantity());
                     }
                 });
 
             });
             model.findItemInShoppingList(product.getProduct_name());
-*/
+
     }
     public void updateExpiringView(Date expiring, Date purchase_date){
         expiring = Functions.ExcludeTime(expiring);

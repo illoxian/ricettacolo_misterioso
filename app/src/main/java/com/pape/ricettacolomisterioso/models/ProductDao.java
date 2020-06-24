@@ -40,6 +40,8 @@ public interface ProductDao {
     @Query("UPDATE products SET quantity = quantity - 1 WHERE id LIKE :id")
     void minus(int id);
 
+    @Update
+    void update(Product product);
 
     @Insert
     void insertAll(Product... products);
