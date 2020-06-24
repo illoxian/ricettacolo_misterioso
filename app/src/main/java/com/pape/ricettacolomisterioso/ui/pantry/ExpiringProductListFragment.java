@@ -76,7 +76,7 @@ public class ExpiringProductListFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 mAdapter.setData(model.getExpiringProductsOrdered().getValue());
-                CheckEmptyList();
+                checkEmptyList();
             }
         });
 
