@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
+        /*if(sharedPreferences.getBoolean("notifications_launch_dinner", true))
             Functions.SetAlarmManager(getApplicationContext());
         else
-            Functions.ClearAlarmManager(getApplicationContext());
+            Functions.ClearAlarmManager(getApplicationContext());*/
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
