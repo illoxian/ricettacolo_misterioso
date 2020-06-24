@@ -108,6 +108,7 @@ public class ProductProfileFragment extends Fragment {
         productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
         if(product.getBrand().isEmpty()) productProfileBinding.brandValueTextView.setVisibility(View.INVISIBLE);
         else productProfileBinding.brandValueTextView.setText(product.getBrand());
+        productProfileBinding.categoryValueTextView.setText(Functions.getProductCategoryString(getContext(), product.getCategory()));
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
         productProfileBinding.expiringDateValueTextView.setText(product.getExpirationDateString());
         // image or category thumbnail
