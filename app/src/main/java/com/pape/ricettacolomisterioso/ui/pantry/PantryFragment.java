@@ -1,7 +1,5 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +40,7 @@ public class PantryFragment extends Fragment {
 
     private FragmentPantryBinding binding;
 
-    private int NEW_PRODUCT_ADDED = 0;
+    //private int NEW_PRODUCT_ADDED = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPantryBinding.inflate(getLayoutInflater());
