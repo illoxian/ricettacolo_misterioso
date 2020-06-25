@@ -290,7 +290,7 @@ public class PantryFragment extends Fragment {
         model.getAllMostExpiringProducts();
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_PRODUCT_ADDED) {
@@ -305,6 +305,6 @@ public class PantryFragment extends Fragment {
                 //Write your code if there's no result
             }
         }
-    }
+    }*/
 
 }
