@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +30,9 @@ import com.pape.ricettacolomisterioso.viewmodels.RecipeProfileViewModel;
 import java.util.ArrayList;
 
 public class RecipeProfileFragment extends Fragment {
+    final static String TAG = "RecipeProfileFragment";
     private RecipeProfileViewModel model;
     private FragmentRecipeProfileBinding binding;
-
-    final static String TAG="RecipeProfileFragment";
 
     public RecipeProfileFragment() {
 
@@ -53,7 +51,7 @@ public class RecipeProfileFragment extends Fragment {
 
         Recipe recipe = RecipeProfileFragmentArgs.fromBundle(getArguments()).getRecipe();
         inflateRecipeInfo(recipe);
-        binding.deleteRecipeImage.setOnClickListener(v-> {
+        binding.deleteRecipeImage.setOnClickListener(v -> {
             showDialogDelete(recipe);
 
         });
@@ -82,7 +80,7 @@ public class RecipeProfileFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
         bottomNavigationView.setVisibility(View.GONE);
@@ -93,7 +91,7 @@ public class RecipeProfileFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     @Override
     public void onDetach() {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         super.onDetach();
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
@@ -104,8 +102,7 @@ public class RecipeProfileFragment extends Fragment {
     }
 
 
-
-    public void inflateRecipeInfo (Recipe recipe){
+    public void inflateRecipeInfo(Recipe recipe) {
         binding.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         binding.imageView.setImageResource(recipe.getCategoryPreviewId(getContext()));
 
@@ -113,29 +110,27 @@ public class RecipeProfileFragment extends Fragment {
         binding.textViewRecipeProfileCategory.setText(Functions.getRecipeCategoryString(getContext(), recipe.getCategoryId()));
         binding.textViewRecipeProfileDate.setText(recipe.getDateString());
 
-        ArrayList<String> ingredients = (ArrayList)recipe.getIngredients();
-        ArrayList<String> steps = (ArrayList)recipe.getSteps();
-        for (String ing:ingredients ) {
+        ArrayList<String> ingredients = (ArrayList) recipe.getIngredients();
+        ArrayList<String> steps = (ArrayList) recipe.getSteps();
+        for (String ing : ingredients) {
             //inflate a textview
             //assign that textview the text in ing
             TextView toadd = new TextView(getContext());
             toadd.setText(" ● " + ing);
-            toadd.setTextAppearance(getContext(),R.style.TextAppearance_AppCompat_Medium);
-            toadd.setPadding(0, 0 , 0 , 8);
+            toadd.setTextAppearance(getContext(), R.style.TextAppearance_AppCompat_Medium);
+            toadd.setPadding(0, 0, 0, 8);
             binding.linearLayoutRecipeProfileIngredients.addView(toadd);
         }
 
         int i = 1;
-        for (String step:steps) {
+        for (String step : steps) {
             TextView toadd = new TextView(getContext());
-            toadd.setText(" ● "+ step);
+            toadd.setText(" ● " + step);
             toadd.setTextAppearance(getContext(), R.style.TextAppearance_AppCompat_Medium);
-            toadd.setPadding(0, 0 , 0 , 8);
+            toadd.setPadding(0, 0, 0, 8);
             binding.linearLayoutRecipeProfileSteps.addView(toadd);
             i++;
         }
-
-
 
 
     }

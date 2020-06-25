@@ -26,7 +26,6 @@ public interface RecipeDao {
     Recipe getRand();
 
 
-
     @Insert
     void insertAll(Recipe... recipes);
 

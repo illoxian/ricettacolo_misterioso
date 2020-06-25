@@ -11,12 +11,12 @@ import java.util.Date;
 @Dao
 public interface MenuDao {
 
-        @Query("SELECT * FROM daily_recipes WHERE day=:day AND slot=:slot")
-        DailyRecipe getDailyRecipes(Date day, int slot);
+    @Query("SELECT * FROM daily_recipes WHERE day=:day AND slot=:slot")
+    DailyRecipe getDailyRecipes(Date day, int slot);
 
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
-        long insert(DailyRecipe dailyRecipe);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(DailyRecipe dailyRecipe);
 
-        @Delete
-        int delete(DailyRecipe dailyRecipe);
+    @Delete
+    int delete(DailyRecipe dailyRecipe);
 }

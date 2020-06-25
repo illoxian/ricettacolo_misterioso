@@ -1,26 +1,19 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ExpiringProductListAdapter;
 import com.pape.ricettacolomisterioso.databinding.FragmentExpiringProductListBinding;
 import com.pape.ricettacolomisterioso.models.Product;
@@ -53,7 +46,7 @@ public class ExpiringProductListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        model =  new ViewModelProvider(this).get(ExpiringProductListViewModel.class);
+        model = new ViewModelProvider(this).get(ExpiringProductListViewModel.class);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.expiringProductListRecyclerView.setLayoutManager(layoutManager);
@@ -85,7 +78,7 @@ public class ExpiringProductListFragment extends Fragment {
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==android.R.id.home) {
+        if (id == android.R.id.home) {
             Navigation.findNavController(getView()).popBackStack();
             return true;
         }
@@ -93,11 +86,10 @@ public class ExpiringProductListFragment extends Fragment {
     }
 
     private void checkEmptyList() {
-        if(model.getExpiringProductsOrdered().getValue() == null || model.getExpiringProductsOrdered().getValue().size()==0){
+        if (model.getExpiringProductsOrdered().getValue() == null || model.getExpiringProductsOrdered().getValue().size() == 0) {
             binding.expiringProductEmptyImageView.setVisibility(View.VISIBLE);
             binding.expiringProductListEmptyTextView.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             binding.expiringProductEmptyImageView.setVisibility(View.INVISIBLE);
             binding.expiringProductListEmptyTextView.setVisibility(View.INVISIBLE);
         }

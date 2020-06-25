@@ -55,26 +55,26 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        model =  new ViewModelProvider(this).get(MenuViewModel.class);
+        model = new ViewModelProvider(this).get(MenuViewModel.class);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.menuRecyclerview.setLayoutManager(layoutManager);
 
         mAdapter = new MenuListAdapter(getActivity(), model.getDailyMenus().getValue(), new MenuListAdapter.OnItemInteractions() {
             final View mView = view;
+
             @Override
             public void onRecipeClick(DailyMenu dailyMenu, int slot) {
                 DailyRecipe dailyRecipe = dailyMenu.getRecipes().get(slot);
-                if(dailyRecipe==null){
+                if (dailyRecipe == null) {
                     Log.d(TAG, "onRecipeClick: Aggiungi una ricetta");
                     showDialog(dailyMenu.getDay(), slot);
-                }
-                else{
-                    Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
-                    if(dailyRecipe.getRecipeComplex()!=null){
+                } else {
+                    Log.d(TAG, "onRecipeClick: " + dailyMenu.getRecipes().get(slot));
+                    if (dailyRecipe.getRecipeComplex() != null) {
                         Bundle recipeBundle = new Bundle();
                         recipeBundle.putParcelable("recipe", dailyRecipe.getRecipeComplex());
                         MenuFragmentDirections.ShowRecipeProfileFromMenu action = MenuFragmentDirections.ShowRecipeProfileFromMenu(dailyRecipe.getRecipeComplex());
@@ -117,7 +117,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 recipesString = new ArrayList<>();
-                for (Recipe r:recipes) {
+                for (Recipe r : recipes) {
                     recipesString.add(r.getTitle());
                 }
             }
@@ -127,7 +127,7 @@ public class MenuFragment extends Fragment {
         model.getAllRecipes();
     }
 
-    private void showDialog(Date day, int slot){
+    private void showDialog(Date day, int slot) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_menu_add_recipe, null);
         builder.setView(dialogView);
@@ -166,8 +166,8 @@ public class MenuFragment extends Fragment {
                 else {
                     int recipeId = recipesString.indexOf(recipeName);
                     DailyRecipe recipe_to_insert;
-                    if(recipeId<0)
-                        recipe_to_insert= new DailyRecipe(day, recipeName, slot);
+                    if (recipeId < 0)
+                        recipe_to_insert = new DailyRecipe(day, recipeName, slot);
                     else
                         recipe_to_insert = new DailyRecipe(day, model.getRecipes().getValue().get(recipeId), slot);
                     model.insert(recipe_to_insert);
@@ -178,7 +178,7 @@ public class MenuFragment extends Fragment {
         });
     }
 
-    private void ShowDialogDelete(DailyMenu dailyMenu, int slot, int adapterPosition){
+    private void ShowDialogDelete(DailyMenu dailyMenu, int slot, int adapterPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
         builder.setTitle(R.string.menu_dialog_delete_title);
 
@@ -203,7 +203,7 @@ public class MenuFragment extends Fragment {
         dialog.show();
     }
 
-    private void ChangeWeek(int offset){
+    private void ChangeWeek(int offset) {
         model.ChangeWeek(offset);
         binding.toolbarTitle.setText(model.getWeekRangeString());
     }

@@ -12,16 +12,15 @@ import com.pape.ricettacolomisterioso.ui.MainActivity;
 
 class NotificationHelper {
 
-    private Context mContext;
     private static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private Context mContext;
 
     NotificationHelper(Context context) {
         mContext = context;
     }
 
-    void createNotification(int code, String title, String content, int drawableId)
-    {
-        Intent intent = new Intent(mContext , MainActivity.class);
+    void createNotification(int code, String title, String content, int drawableId) {
+        Intent intent = new Intent(mContext, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext, code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -34,8 +33,7 @@ class NotificationHelper {
 
         NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-        {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             String NOTIFICATION_CHANNEL_NAME = mContext.getString(R.string.launch_dinner_notifications_channel);
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             notificationChannel.enableLights(true);

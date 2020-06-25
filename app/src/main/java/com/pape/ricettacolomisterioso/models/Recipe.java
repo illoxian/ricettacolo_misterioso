@@ -12,7 +12,6 @@ import androidx.room.PrimaryKey;
 import com.pape.ricettacolomisterioso.R;
 
 import java.text.DateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +19,17 @@ import java.util.List;
 public class Recipe implements Parcelable {
 
 
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
@@ -28,7 +38,9 @@ public class Recipe implements Parcelable {
     private List<String> steps;
     private Date saveDate;
 
-    public Recipe() {}
+    public Recipe() {
+    }
+
     public Recipe(int id, String title, int categoryId, List<String> ingredients, List<String> steps, Date saveDate) {
         this.id = id;
         this.title = title;
@@ -46,18 +58,6 @@ public class Recipe implements Parcelable {
         steps = in.createStringArrayList();
         saveDate = new Date(in.readLong());
     }
-
-    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
 
     public int getId() {
         return id;
@@ -106,8 +106,9 @@ public class Recipe implements Parcelable {
     public void setSaveDate(Date saveDate) {
         this.saveDate = saveDate;
     }
-    public String getDateString(){
-        if(saveDate != null)
+
+    public String getDateString() {
+        if (saveDate != null)
             return DateFormat.getDateInstance(DateFormat.SHORT).format(saveDate);
         else return "";
     }
@@ -137,10 +138,10 @@ public class Recipe implements Parcelable {
         dest.writeInt(categoryId);
         dest.writeStringList(ingredients);
         dest.writeStringList(steps);
-        dest.writeLong(saveDate==null ? 0 : saveDate.getTime());
+        dest.writeLong(saveDate == null ? 0 : saveDate.getTime());
     }
 
-    public int getCategoryIconId(Context context){
+    public int getCategoryIconId(Context context) {
         Resources res = context.getResources();
         TypedArray icons = res.obtainTypedArray(R.array.recipeCategoriesIcon);
         int index = getCategoryId();
@@ -149,7 +150,7 @@ public class Recipe implements Parcelable {
         return resourceId;
     }
 
-    public int getCategoryPreviewId(Context context){
+    public int getCategoryPreviewId(Context context) {
         Resources res = context.getResources();
         TypedArray previews = res.obtainTypedArray(R.array.recipeCategoriesPreviews);
 

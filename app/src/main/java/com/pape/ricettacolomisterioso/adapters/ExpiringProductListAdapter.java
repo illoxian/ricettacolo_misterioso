@@ -27,15 +27,9 @@ import java.util.List;
 public class ExpiringProductListAdapter extends RecyclerView.Adapter<ExpiringProductListAdapter.ExpiringProductListViewHolder> {
 
     private static String TAG = "ExpiringProductListAdapter";
-
-    public interface OnItemInteractions {
-        void onItemClick(Product product);
-    }
-
     private List<Product> products;
     private LayoutInflater layoutInflater;
     private OnItemInteractions onItemInteractions;
-
     public ExpiringProductListAdapter(Context context, List<Product> products, OnItemInteractions onItemInteractions) {
         this.layoutInflater = LayoutInflater.from(context);
         this.products = products;
@@ -56,7 +50,7 @@ public class ExpiringProductListAdapter extends RecyclerView.Adapter<ExpiringPro
 
     @Override
     public int getItemCount() {
-        if(products != null)
+        if (products != null)
             return products.size();
         else return 0;
     }
@@ -66,6 +60,10 @@ public class ExpiringProductListAdapter extends RecyclerView.Adapter<ExpiringPro
             this.products = data;
             notifyDataSetChanged();
         }
+    }
+
+    public interface OnItemInteractions {
+        void onItemClick(Product product);
     }
 
     public static class ExpiringProductListViewHolder extends RecyclerView.ViewHolder {
@@ -97,36 +95,33 @@ public class ExpiringProductListAdapter extends RecyclerView.Adapter<ExpiringPro
             purchase_date = Functions.ExcludeTime(purchase_date);
             Date today_not_time = Functions.ExcludeTime(today);
 
-            int daysRemaining = Functions.time_in_day_remain(expiring,today_not_time);
-            if(daysRemaining > 0) {
-                int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+            int daysRemaining = Functions.time_in_day_remain(expiring, today_not_time);
+            if (daysRemaining > 0) {
+                int progress = Functions.percentual_for_bar(purchase_date, expiring, today); //in progress bar Today is used with time to prevent progress bar fully empty
                 String daysRemainingString = daysRemaining + " " + itemView.getContext().getString(R.string.remaining_day);
                 product_days_remains.setText(daysRemainingString);
                 product_progress_bar.setProgress(progress);
-            } else if(daysRemaining == 0){
+            } else if (daysRemaining == 0) {
                 product_days_remains.setText(itemView.getContext().getString(R.string.product_expired_today));
                 product_progress_bar.setProgress(100);
-            }else {
+            } else {
                 String ExpiredFromXDays = itemView.getContext().getString(R.string.product_expired_from) + Math.abs(daysRemaining) + itemView.getContext().getString(R.string.days);
                 product_days_remains.setText(ExpiredFromXDays);
                 product_progress_bar.setProgress(100);
             }
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(product_icon.getContext());
-            if(sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null)
-            {
+            if (sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null) {
                 File f = new File(product.getImageUrl());
                 Picasso.get().load(f).into(product_icon);
-            }
-            else {
+            } else {
                 product_icon.setImageDrawable(itemView.getResources().getDrawable(
                         product.getCategoryIconId(itemView.getContext())));
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     Log.d(TAG, "onClick: saas");
                     onItemInteractions.onItemClick(product);
                 }

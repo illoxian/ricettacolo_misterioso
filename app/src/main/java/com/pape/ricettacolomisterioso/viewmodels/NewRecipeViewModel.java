@@ -19,7 +19,7 @@ public class NewRecipeViewModel extends ViewModel {
         return insertId;
     }
 
-    public MutableLiveData<Long> addRecipe(Recipe recipe){
+    public MutableLiveData<Long> addRecipe(Recipe recipe) {
         RecipesRepository.getInstance().addRecipe(recipe, getInsertId());
         return insertId;
     }

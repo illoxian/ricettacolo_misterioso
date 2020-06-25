@@ -63,13 +63,13 @@ public class RecipesFragment extends Fragment {
             public void onChanged(Recipe mRecipe) {
                 Recipe recipe = mRecipe;
 
-                if(recipe==null) {
+                if (recipe == null) {
                     binding.randomCardView.setVisibility(GONE);
                     binding.recipesMenuTitle.setVisibility(GONE);
 
                 }
 
-                if(recipe!= null) {
+                if (recipe != null) {
                     Drawable d = getResources().getDrawable(recipe.getCategoryPreviewId(getActivity().getApplicationContext()));
 
                     binding.randomRecipeCategory.setText(Functions.getRecipeCategoryString(getContext(), recipe.getCategoryId()));
@@ -79,7 +79,7 @@ public class RecipesFragment extends Fragment {
                     binding.randomCardView.setVisibility(VISIBLE);
                     binding.recipesMenuTitle.setVisibility(VISIBLE);
 
-                    binding.randomCardView.setOnClickListener(v-> {
+                    binding.randomCardView.setOnClickListener(v -> {
                         Bundle recipeBundle = new Bundle();
                         recipeBundle.putParcelable("recipe", recipe);
                         RecipesFragmentDirections.ShowRecipeProfileFromNavigationPantry action = RecipesFragmentDirections.showRecipeProfileFromNavigationPantry(recipe);
@@ -89,7 +89,6 @@ public class RecipesFragment extends Fragment {
 
             }
         });
-
 
 
     }
@@ -107,7 +106,7 @@ public class RecipesFragment extends Fragment {
         cardViews.add(binding.recipesDrinksCardView);
         cardViews.add(binding.recipesSeeAllCardView);
 
-        for(CardView cardView: cardViews)
+        for (CardView cardView : cardViews)
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -195,21 +194,20 @@ public class RecipesFragment extends Fragment {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.recipes_app_bar_add) {
+        if (id == R.id.recipes_app_bar_add) {
             Navigation.findNavController(getView()).navigate(R.id.action_add_new_recipe);
             return true;
         }
-        if(id==R.id.recipes_app_bar_search) {
+        if (id == R.id.recipes_app_bar_search) {
             //TODO search in RecipeFragment
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSearched(String newString){
+    public void onSearched(String newString) {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recipesFragmentRecyclerView.setLayoutManager(layoutManager);
@@ -235,11 +233,11 @@ public class RecipesFragment extends Fragment {
         model.getRecipesSearched(newString);
     }
 
-    public int getCardViewStringRes(CardView cardView){
+    public int getCardViewStringRes(CardView cardView) {
         int res = 0;
-        switch (cardView.getId()){
+        switch (cardView.getId()) {
             case R.id.recipes_appetizers_cardView:
-                res =  R.string.recipes_categories_appetizers;
+                res = R.string.recipes_categories_appetizers;
                 break;
             case R.id.recipes_first_courses_cardView:
                 res = R.string.recipes_categories_first_courses;

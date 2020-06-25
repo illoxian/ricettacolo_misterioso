@@ -11,7 +11,7 @@ import com.pape.ricettacolomisterioso.ui.MainActivity;
 import java.util.List;
 
 public class ShoppingListRepository {
-    public static final String TAG="ShoppingListRepository";
+    public static final String TAG = "ShoppingListRepository";
 
     private static ShoppingListRepository instance;
     private AppDatabase appDatabase;
@@ -22,6 +22,7 @@ public class ShoppingListRepository {
 
 
     }
+
     //this defines a singleton for ShoppingListRepository Class
     public static synchronized ShoppingListRepository getInstance() {
         if (instance == null) {
@@ -53,12 +54,11 @@ public class ShoppingListRepository {
             public void run() {
                 try {
                     Item dbItem = appDatabase.itemDao().findItemInShoppingList(item.getItemName());
-                    if(dbItem == null) {
+                    if (dbItem == null) {
                         long id = appDatabase.itemDao().insertItem(item);
                         insertId.postValue(id);
-                    }
-                    else {
-                        long id = appDatabase.itemDao().updateExistItemQuantity(item.getItemName(), (item.getQuantity()+dbItem.getQuantity()));
+                    } else {
+                        long id = appDatabase.itemDao().updateExistItemQuantity(item.getItemName(), (item.getQuantity() + dbItem.getQuantity()));
                         insertId.postValue(id);
                     }
                 } catch (Exception e) {
@@ -76,7 +76,7 @@ public class ShoppingListRepository {
             public void run() {
                 try {
                     int id = appDatabase.itemDao().updateIsSelected(itemId, isSelected);
-                    Log.d(TAG, "run: updateId:"+id);
+                    Log.d(TAG, "run: updateId:" + id);
                     updateId.postValue(id);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -93,7 +93,7 @@ public class ShoppingListRepository {
             public void run() {
                 try {
                     int id = appDatabase.itemDao().delete(itemName);
-                    Log.d(TAG, "run: deleteId:"+id);
+                    Log.d(TAG, "run: deleteId:" + id);
                     deleteId.postValue(id);
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -52,12 +52,12 @@ public class ProductsRepository {
         ebayService = retrofit2.create(EbayService.class);
     }
 
-        public static synchronized ProductsRepository getInstance() {
-            if (instance == null) {
-                instance = new ProductsRepository();
-            }
-            return instance;
+    public static synchronized ProductsRepository getInstance() {
+        if (instance == null) {
+            instance = new ProductsRepository();
         }
+        return instance;
+    }
 
     public void addProduct(Product product, MutableLiveData<Long> insertId) {
 
@@ -94,21 +94,21 @@ public class ProductsRepository {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         };
     }
 
-    public void getProductsByCategory(MutableLiveData<List<Product>> products, int category){
+    public void getProductsByCategory(MutableLiveData<List<Product>> products, int category) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    Log.d(TAG, "run: getProducts() "+category);
+                    Log.d(TAG, "run: getProducts() " + category);
                     products.postValue(appDatabase.productDao().findByCategory(category));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -118,7 +118,7 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
-    public void getMostExpiringProducts(MutableLiveData<List<Product>> products){
+    public void getMostExpiringProducts(MutableLiveData<List<Product>> products) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -133,7 +133,7 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
-    public void getAllProductsOrderByExpirationDate(MutableLiveData<List<Product>> products){
+    public void getAllProductsOrderByExpirationDate(MutableLiveData<List<Product>> products) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -148,7 +148,7 @@ public class ProductsRepository {
         new Thread(runnable).start();
     }
 
-    public void getProductSearched(MutableLiveData<List<Product>> products, String product_name){
+    public void getProductSearched(MutableLiveData<List<Product>> products, String product_name) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -170,7 +170,7 @@ public class ProductsRepository {
             public void run() {
                 try {
                     int id = appDatabase.productDao().delete(product);
-                    Log.d(TAG, "run: deleteId:"+id);
+                    Log.d(TAG, "run: deleteId:" + id);
                     deleteId.postValue(id);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -188,7 +188,7 @@ public class ProductsRepository {
                     appDatabase.productDao().plus(product.getValue().getId());
                     product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
                     Log.d(TAG, "plus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
-                    appDatabase.productDao().update(product.getValue());
+//                    appDatabase.productDao().update(product.getValue());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -205,18 +205,17 @@ public class ProductsRepository {
             @Override
             public void run() {
                 try {
-                    if (appDatabase.productDao().findById(product.getValue().getId()).getQuantity() > 1) {
+                    if (appDatabase.productDao().findById(product.getValue().getId()).getQuantity() > 0) {
                         appDatabase.productDao().minus(product.getValue().getId());
                         product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
                         Log.d(TAG, "minus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
-                        appDatabase.productDao().update(product.getValue());
+//                        appDatabase.productDao().update(product.getValue());
 
-                    }
-                    else {
-                        Log.d(TAG, "quantity 1, cannot go deeper");
+                    } else {
+                        Log.d(TAG, "quantity 0, cannot underflow");
                         product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
                         Log.d(TAG, "minus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
-                        appDatabase.productDao().update(product.getValue());
+//                        appDatabase.productDao().update(product.getValue());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -251,11 +250,10 @@ public class ProductsRepository {
             @Override
             public void onResponse(@NotNull Call<OFFProductApiResponse> call, @NotNull Response<OFFProductApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    if(response.body().getStatus()==1){ //API returns successful even if product was not found
+                    if (response.body().getStatus() == 1) { //API returns successful even if product was not found
                         Log.d(TAG, "onResponse: " + response.body().toString());
                         product.postValue(response.body().getProduct());
-                    }
-                    else {
+                    } else {
                         Log.d(TAG, "onResponse: Success. Product not found");
                         product.postValue(null);
                     }
@@ -278,11 +276,11 @@ public class ProductsRepository {
 
     public void getProductInfoEbay(MutableLiveData<Product> product, String code) {
         String requestBodyText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-            +"<FindProductsRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">"
-            +"<ProductID type=\"EAN\">"+code+"</ProductID>"
-            +"<MaxEntries>1</MaxEntries>"
-	        +"<AvailableItemsOnly>true</AvailableItemsOnly>"
-            +"</FindProductsRequest>";
+                + "<FindProductsRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">"
+                + "<ProductID type=\"EAN\">" + code + "</ProductID>"
+                + "<MaxEntries>1</MaxEntries>"
+                + "<AvailableItemsOnly>true</AvailableItemsOnly>"
+                + "</FindProductsRequest>";
         RequestBody requestBody = RequestBody.create(MediaType.parse("text/xml"), requestBodyText);
         Call<EbayProductApiResponse> call = ebayService.getProductInfo(requestBody, Constants.EBAY_API_APP_ID);
         Log.d(TAG, "prova:");
@@ -292,11 +290,10 @@ public class ProductsRepository {
             public void onResponse(@NotNull Call<EbayProductApiResponse> call, @NotNull Response<EbayProductApiResponse> response) {
                 Log.d(TAG, "onResponse:");
                 if (response.isSuccessful() && response.body() != null) {
-                    if(response.body().getStatus()==1){ //API returns successful even if product was not found
+                    if (response.body().getStatus() == 1) { //API returns successful even if product was not found
                         Log.d(TAG, "onResponse: " + response.body().toString());
                         product.postValue(response.body().getProduct());
-                    }
-                    else {
+                    } else {
                         Log.d(TAG, "onResponse: Success. Product not found");
                         product.postValue(null);
                     }

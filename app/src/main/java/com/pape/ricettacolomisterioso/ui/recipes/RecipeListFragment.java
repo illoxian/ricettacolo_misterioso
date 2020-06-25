@@ -1,7 +1,5 @@
-
 package com.pape.ricettacolomisterioso.ui.recipes;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,81 +42,20 @@ public class RecipeListFragment extends Fragment {
     private RecipeListViewModel model;
     private MutableLiveData<List<Recipe>> liveData;
     private RecipeListAdapter mAdapter;
-
-    public RecipeListFragment() {
-
-    }
-
-
-    @Override
-    public void onDetach() {
-
-        super.onDetach();
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
-        bottomNavigationView.setVisibility(View.VISIBLE);
-
-
-    }
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentRecipeListBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
-
-        Integer res = RecipeListFragmentArgs.fromBundle(getArguments()).getCategory();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        binding.recipeListRecyclerView.setLayoutManager(layoutManager);
-        model = new ViewModelProvider(this).get(RecipeListViewModel.class);
-
-
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(res));
-
-        mAdapter = new RecipeListAdapter(getActivity(), model.getRecipes().getValue(), new RecipeListAdapter.OnItemInteractions() {
-            @Override
-            public void onItemClick(Recipe recipe, View view) {
-                Bundle recipeBundle = new Bundle();
-                recipeBundle.putParcelable("recipe", recipe);
-                RecipeListFragmentDirections.ShowRecipeProfile action = RecipeListFragmentDirections.showRecipeProfile(recipe);
-                Navigation.findNavController(view).navigate(action);
-            }
-        });
-        binding.recipeListRecyclerView.setAdapter(mAdapter);
-
-        model.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(List<Recipe> recipes) {
-                mAdapter.setData(model.getRecipes().getValue());
-                checkEmptyList();
-            }
-        });
-
-        if (res == R.string.recipes_categories_see_all) liveData = model.getAllRecipes();
-        else model.getRecipesByCategory(Arrays.asList(getResources().getStringArray(R.array.recipeCategoriesString)).indexOf(getString(res)));
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(binding.recipeListRecyclerView);
-    }
-
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        Recipe deletedItem = null;
+
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
-        Recipe deletedItem = null;
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             int position = viewHolder.getAdapterPosition();
 
-            switch (direction){
+            switch (direction) {
                 case ItemTouchHelper.LEFT:
                     deletedItem = model.getRecipes().getValue().get(position);
                     model.delete(deletedItem);
@@ -161,6 +98,68 @@ public class RecipeListFragment extends Fragment {
     };
 
 
+    public RecipeListFragment() {
+
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentRecipeListBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+
+        Integer res = RecipeListFragmentArgs.fromBundle(getArguments()).getCategory();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.recipeListRecyclerView.setLayoutManager(layoutManager);
+        model = new ViewModelProvider(this).get(RecipeListViewModel.class);
+
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(res));
+
+        mAdapter = new RecipeListAdapter(getActivity(), model.getRecipes().getValue(), new RecipeListAdapter.OnItemInteractions() {
+            @Override
+            public void onItemClick(Recipe recipe, View view) {
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("recipe", recipe);
+                RecipeListFragmentDirections.ShowRecipeProfile action = RecipeListFragmentDirections.showRecipeProfile(recipe);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+        binding.recipeListRecyclerView.setAdapter(mAdapter);
+
+        model.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                mAdapter.setData(model.getRecipes().getValue());
+                checkEmptyList();
+            }
+        });
+
+        if (res == R.string.recipes_categories_see_all) liveData = model.getAllRecipes();
+        else
+            model.getRecipesByCategory(Arrays.asList(getResources().getStringArray(R.array.recipeCategoriesString)).indexOf(getString(res)));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.recipeListRecyclerView);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -172,11 +171,10 @@ public class RecipeListFragment extends Fragment {
     }
 
     private void checkEmptyList() {
-        if(model.getRecipes().getValue() == null || model.getRecipes().getValue().size()==0){
+        if (model.getRecipes().getValue() == null || model.getRecipes().getValue().size() == 0) {
             binding.recipeListEmptyImageView.setVisibility(View.VISIBLE);
             binding.recipeListEmptyTextView.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             binding.recipeListEmptyImageView.setVisibility(View.INVISIBLE);
             binding.recipeListEmptyTextView.setVisibility(View.INVISIBLE);
         }

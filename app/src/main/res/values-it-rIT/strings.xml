@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QKing</string>
     <string name="title_recipes">Ricette</string>
     <string name="title_pantry">Dispensa</string>
     <string name="title_shoppinglist">Spesa</string>
-    <string name="title_menu">Menu</string>
+    <string name="title_menu">Menù</string>
     <string name="expiring_button">Vedi Tutto</string>
-    <string name="expiring_products">Prodotti in scadenza</string>
+    <string name="expiring_products">Prodotti in Scadenza</string>
     <string name="pantry_categories_fruits_and_vegetables">Frutta e Verdura</string>
     <string name="pantry_categories_meat">Carne</string>
     <string name="category_product">Categorie</string>
     <string name="recipes_categories_title">Categorie</string>
-    <string name="recipes_menu_title">Che ne diresti di preparare ...</string>
+    <string name="recipes_menu_title">Oggi cucina</string>
     <string name="recipes_categories_appetizers">Antipasti</string>
     <string name="recipes_categories_first_courses">Primi Piatti</string>
     <string name="recipes_categories_main_courses">Secondi Piatti</string>
@@ -66,12 +65,12 @@
     <string name="preferences_general">Generale</string>
     <string name="preferences_barcode_api_title">Seleziona l\'Api per il barcode</string>
     <string name="new_product_toast_success">Prodotto aggiunto correttamente</string>
-    <string name="new_recipe_input_name">Recipe Name</string>
-    <string name="new_recipe_input_category">Recipe Category</string>
-    <string name="new_recipe_input_insert_date">Insert Date</string>
-    <string name="recipe_ingredients_button_remove">remove</string>
-    <string name="new_recipe_fragment">New Recipe</string>
-    <string name="new_recipe_toast_succes">New Recipe Successfully Added</string>
+    <string name="new_recipe_input_name">Nome della Ricetta</string>
+    <string name="new_recipe_input_category">Categoria</string>
+    <string name="new_recipe_input_insert_date">Data di Inderimento</string>
+    <string name="recipe_ingredients_button_remove">rimuovi</string>
+    <string name="new_recipe_fragment">Nuova Ricetta</string>
+    <string name="new_recipe_toast_succes">Nuova ricetta aggiunta correttamente</string>
     <string name="product_expired_today">Scaduto oggi</string>
     <string name="product_expired_from">"Scaduto da "</string>
     <string name="days">" giorni"</string>
@@ -88,10 +87,8 @@
     <string name="Undo">Annulla</string>
     <string name="Delete">Elimina</string>
     <string name="Add_to_shopping_list_swipe">Aggiungi</string>
-    <string name="item_new_recipe_delete">item_new_recipe_delete</string>
+    <string name="item_new_recipe_delete">Ricetta rimossa correttamente</string>
     <string name="category_recipe_profile">Categoria</string>
-    <string name="preferences_shopping_title">New Shopping List Fragment</string>
-    <string name="hello_blank_fragment">Leccami lo scroto</string>
     <string name="menu_dialog_name">Nome della ricetta</string>
     <string name="menu_dialog_title">Aggiungi al menu</string>
     <string name="menu_add_recipe">Aggiungi ricetta</string>
@@ -106,7 +103,7 @@
     <string name="notification_scheduled_recipes_2">Per oggi hai pianificato %1$s e %2$s. Buon appetito!</string>
     <string name="shopping_list_empty_text">La lista della spesa è vuota</string>
     <string name="removed_from_products">rimosso dai prodotti</string>
-    <string name="title_product_profile">Profilo del prodotto</string>
+    <string name="title_product_profile">Profilo prodotto</string>
     <string name="title_product_list">Lista Prodotti</string>
     <string name="new_recipe_quantity">Quantitá</string>
     <string name="product_list_empty_text">La lista dei prodotti è vuota</string>
@@ -116,6 +113,7 @@
     <string name="dinner">Cena</string>
     <string name="lunch">Pranzo</string>
     <string name="product_dialog_delete_title">Vuoi eliminare questo prodotto?</string>
-    <string name="recipe_dialog_delete_title">Do you want to delete this recipe?</string>
+    <string name="recipe_dialog_delete_title">Vuoi eliminare questa ricetta?</string>
     <string name="barcode">Codice a barre</string>
+    <string name="error_greater_than_zero">Inserisci un valore maggiore di 0</string>
 </resources>

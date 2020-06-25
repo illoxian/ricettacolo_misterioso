@@ -41,6 +41,7 @@ public class RecipesRepository {
         };
         new Thread(runnable).start();
     }
+
     public void getRandRecipe(MutableLiveData<Recipe> recipe) {
         Runnable runnable = () -> {
             try {
@@ -70,7 +71,7 @@ public class RecipesRepository {
 
     }
 
-   public void getRecipesByCategory(MutableLiveData<List<Recipe>> recipes, int category) {
+    public void getRecipesByCategory(MutableLiveData<List<Recipe>> recipes, int category) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -85,6 +86,7 @@ public class RecipesRepository {
         }).start();
 
     }
+
     public void delete(Recipe recipe, MutableLiveData<Integer> deleteId) {
 
         Runnable runnable = new Runnable() {
@@ -92,7 +94,7 @@ public class RecipesRepository {
             public void run() {
                 try {
                     int id = appDatabase.recipeDao().delete(recipe);
-                    Log.d(TAG, "run: deleteId:"+id);
+                    Log.d(TAG, "run: deleteId:" + id);
                     deleteId.postValue(id);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -103,7 +105,7 @@ public class RecipesRepository {
     }
 
 
-    public void getRecipesSearched(MutableLiveData<List<Recipe>> recipes, String recipe_name){
+    public void getRecipesSearched(MutableLiveData<List<Recipe>> recipes, String recipe_name) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

@@ -18,18 +18,11 @@ import com.pape.ricettacolomisterioso.utils.Functions;
 import java.util.List;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
+    private static int inflateRecipeItem = R.layout.recipe_list_item;
     private List<Recipe> recipes;
     private LayoutInflater layoutInflater;
-
-    public interface OnItemInteractions {
-        void onItemClick(Recipe recipe, View view);
-    }
-
     private OnItemInteractions onItemInteractions;
-    private static int inflateRecipeItem = R.layout.recipe_list_item;
-
-
-    public RecipeListAdapter(Context context, List<Recipe> recipes,  OnItemInteractions onItemInteractions) {
+    public RecipeListAdapter(Context context, List<Recipe> recipes, OnItemInteractions onItemInteractions) {
         this.recipes = recipes;
         this.layoutInflater = LayoutInflater.from(context);
         this.onItemInteractions = onItemInteractions;
@@ -37,7 +30,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public int getItemCount() {
-        if(recipes != null)
+        if (recipes != null)
             return recipes.size();
         else return 0;
     }
@@ -61,6 +54,22 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         ((RecipeListViewHolder) holder).bind(recipes.get(position), this.onItemInteractions);
     }
 
+    public void removeProductAt(int position) {
+        recipes.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, recipes.size());
+    }
+
+    public void insertProductAt(Recipe recipe, int position) {
+        recipes.add(position, recipe);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, recipes.size());
+    }
+
+
+    public interface OnItemInteractions {
+        void onItemClick(Recipe recipe, View view);
+    }
 
     public static class RecipeListViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "RecipeListViewHolder";
@@ -68,6 +77,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         TextView recipeTitle;
         TextView recipeCategory;
         ImageView recipeIcon;
+
         public RecipeListViewHolder(View view) {
             super(view);
             recipeTitle = view.findViewById(R.id.textView_recipe_list_item_name);
@@ -92,18 +102,5 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 }
             });
         }
-    }
-
-
-    public void removeProductAt(int position) {
-        recipes.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, recipes.size());
-    }
-
-    public void insertProductAt(Recipe recipe, int position) {
-        recipes.add(position, recipe);
-        notifyItemInserted(position);
-        notifyItemRangeChanged(position, recipes.size());
     }
 }

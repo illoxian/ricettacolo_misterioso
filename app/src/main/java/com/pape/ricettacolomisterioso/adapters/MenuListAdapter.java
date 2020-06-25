@@ -3,9 +3,7 @@ package com.pape.ricettacolomisterioso.adapters;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,21 +24,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.UnaryOperator;
 
 public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuListViewHolder> {
 
     private static final String TAG = "MenuListAdapter";
-
-    public interface OnItemInteractions {
-        void onRecipeClick(DailyMenu dailyMenu, int slot);
-        void onRecipeLongClick(DailyMenu dailyMenu, int slot, int adapterPosition);
-    }
-
     private List<DailyMenu> dailyMenus;
     private LayoutInflater layoutInflater;
-    private  OnItemInteractions onItemInteractions;
-
+    private OnItemInteractions onItemInteractions;
     public MenuListAdapter(Context context, List<DailyMenu> dailyMenus, OnItemInteractions onItemInteractions) {
         this.layoutInflater = LayoutInflater.from(context);
         this.dailyMenus = dailyMenus;
@@ -61,7 +51,7 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
 
     @Override
     public int getItemCount() {
-        if(dailyMenus != null)
+        if (dailyMenus != null)
             return dailyMenus.size();
         else return 0;
     }
@@ -73,11 +63,22 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
         }
     }
 
+    public void update(int adapterPosition, DailyMenu dailyMenu) {
+        dailyMenus.set(adapterPosition, dailyMenu);
+        notifyItemChanged(adapterPosition);
+    }
+
+
+    public interface OnItemInteractions {
+        void onRecipeClick(DailyMenu dailyMenu, int slot);
+
+        void onRecipeLongClick(DailyMenu dailyMenu, int slot, int adapterPosition);
+    }
 
     public static class MenuListViewHolder extends RecyclerView.ViewHolder {
         TextView item_name;
-        private List<CardView> recipe_cards;
         ConstraintLayout item_layout;
+        private List<CardView> recipe_cards;
 
         public MenuListViewHolder(View view) {
             super(view);
@@ -90,48 +91,46 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
             item_layout = view.findViewById(R.id.menu_row_layout);
         }
 
-        void bind(DailyMenu dailyMenu, OnItemInteractions onItemInteractions){
+        void bind(DailyMenu dailyMenu, OnItemInteractions onItemInteractions) {
             SimpleDateFormat format = new SimpleDateFormat("EEEE\nd MMM", Locale.getDefault());
             item_name.setText(format.format(dailyMenu.getDay()));
 
             long dailyMenuTime = dailyMenu.getDay().getTime();
             long today = Functions.ExcludeTime(Calendar.getInstance().getTime()).getTime();
             Log.d(TAG, "bind: DailyMenuTime: " + dailyMenuTime +
-                             "Today: " + today);
+                    "Today: " + today);
 
-            if(dailyMenuTime == today){
+            if (dailyMenuTime == today) {
                 item_name.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSecondary));
                 item_name.setTypeface(null, Typeface.BOLD);
                 Log.d(TAG, "bind: è oggi");
-            }
-            else{
+            } else {
                 Log.d(TAG, "bind: NON è oggi");
                 item_name.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnSurface));
                 item_name.setTypeface(null, Typeface.NORMAL);
             }
 
-            for(int i=0; i<recipe_cards.size(); i++){
+            for (int i = 0; i < recipe_cards.size(); i++) {
                 CardView card = recipe_cards.get(i);
                 TextView tv = (TextView) card.getChildAt(0);
 
                 DailyRecipe dailyRecipe = dailyMenu.getRecipes().get(i);
                 String recipeString;
 
-                if(dailyRecipe == null)
+                if (dailyRecipe == null)
                     recipeString = null;
                 else
                     recipeString = dailyRecipe.getRecipeName();
 
-                if(recipeString == null){
+                if (recipeString == null) {
                     tv.setText(R.string.menu_add_recipe);
                     tv.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnSurface));
                     card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorSurface));
-                }
-                else{
+                } else {
                     tv.setText(recipeString);
                     tv.setTextColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorOnPrimary));
                     card.setCardBackgroundColor(Functions.getThemeColor(itemView.getContext(), R.attr.colorPrimaryVariant));
-                    if(dailyRecipe.getRecipeComplex() != null){
+                    if (dailyRecipe.getRecipeComplex() != null) {
                         card.setClickable(true);
                         card.setFocusable(true);
 
@@ -162,10 +161,5 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.MenuLi
             }
         }
 
-    }
-
-    public void update(int adapterPosition, DailyMenu dailyMenu){
-        dailyMenus.set(adapterPosition, dailyMenu);
-        notifyItemChanged(adapterPosition);
     }
 }

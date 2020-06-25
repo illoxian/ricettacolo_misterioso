@@ -1,6 +1,5 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.adapters.ProductListAdapter;
@@ -42,84 +40,20 @@ public class ProductListFragment extends Fragment {
     private ProductListAdapter mAdapter;
 
     private FragmentProductListBinding binding;
-
-    public ProductListFragment() {
-    }
-
-    public static ProductListFragment newInstance() {
-        return new ProductListFragment();
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentProductListBinding.inflate(getLayoutInflater());
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
-        Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        binding.productListRecyclerView.setLayoutManager(layoutManager);
-        model = new ViewModelProvider(this).get(ProductListViewModel.class);
-
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(res));
-
-        mAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
-            @Override
-            public void onItemClick(Product product) {
-                Bundle recipeBundle = new Bundle();
-                recipeBundle.putParcelable("product", product);
-                ProductListFragmentDirections.ActionFragmentProductListToProductProfileFragment action =
-                       ProductListFragmentDirections.actionFragmentProductListToProductProfileFragment(product);
-                Navigation.findNavController(view).navigate(action);
-            }
-
-            @Override
-            public void onItemClickAddToShoppingList(Product product) {
-                model.addProductToShoppingList(product.getProduct_name());
-                Snackbar snackbar = Snackbar.make(view, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG);
-                snackbar.setAnchorView(getActivity().findViewById(R.id.nav_view));
-                snackbar.show();
-            }
-        });
-        binding.productListRecyclerView.setAdapter(mAdapter);
-
-        model.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
-            @Override
-            public void onChanged(List<Product> products) {
-                mAdapter.setData(model.getProducts().getValue());
-                Log.d(TAG, products.toString());
-                checkEmptyList();
-            }
-        });
-
-        if(res == R.string.pantry_categories_see_all) model.getAllProducts();
-        else{
-            model.getProductsByCategory(Arrays.asList(getResources().getStringArray(R.array.categoriesString)).indexOf(getString(res)));
-        }
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);
-    }
-
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        Product deletedItem = null;
+
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
-
-        Product deletedItem = null;
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             int position = viewHolder.getAdapterPosition();
 
-            switch (direction){
+            switch (direction) {
                 case ItemTouchHelper.LEFT:
                     deletedItem = model.getProducts().getValue().get(position);
                     model.delete(deletedItem);
@@ -159,6 +93,68 @@ public class ProductListFragment extends Fragment {
         }
     };
 
+    public ProductListFragment() {
+    }
+
+    public static ProductListFragment newInstance() {
+        return new ProductListFragment();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentProductListBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+        Integer res = ProductListFragmentArgs.fromBundle(getArguments()).getCategory();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.productListRecyclerView.setLayoutManager(layoutManager);
+        model = new ViewModelProvider(this).get(ProductListViewModel.class);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(res));
+
+        mAdapter = new ProductListAdapter(getActivity(), model.getProducts().getValue(), new ProductListAdapter.OnItemInteractions() {
+            @Override
+            public void onItemClick(Product product) {
+                Bundle recipeBundle = new Bundle();
+                recipeBundle.putParcelable("product", product);
+                ProductListFragmentDirections.ActionFragmentProductListToProductProfileFragment action =
+                        ProductListFragmentDirections.actionFragmentProductListToProductProfileFragment(product);
+                Navigation.findNavController(view).navigate(action);
+            }
+
+            @Override
+            public void onItemClickAddToShoppingList(Product product) {
+                model.addProductToShoppingList(product.getProduct_name());
+                Snackbar snackbar = Snackbar.make(view, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG);
+                snackbar.setAnchorView(getActivity().findViewById(R.id.nav_view));
+                snackbar.show();
+            }
+        });
+        binding.productListRecyclerView.setAdapter(mAdapter);
+
+        model.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                mAdapter.setData(model.getProducts().getValue());
+                Log.d(TAG, products.toString());
+                checkEmptyList();
+            }
+        });
+
+        if (res == R.string.pantry_categories_see_all) model.getAllProducts();
+        else {
+            model.getProductsByCategory(Arrays.asList(getResources().getStringArray(R.array.categoriesString)).indexOf(getString(res)));
+        }
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -169,11 +165,10 @@ public class ProductListFragment extends Fragment {
     }
 
     private void checkEmptyList() {
-        if(model.getProducts().getValue() == null || model.getProducts().getValue().size()==0){
+        if (model.getProducts().getValue() == null || model.getProducts().getValue().size() == 0) {
             binding.productListEmptyImageView.setVisibility(View.VISIBLE);
             binding.productListEmptyTextView.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             binding.productListEmptyImageView.setVisibility(View.INVISIBLE);
             binding.productListEmptyTextView.setVisibility(View.INVISIBLE);
         }

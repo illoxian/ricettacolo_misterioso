@@ -37,8 +37,8 @@ public class OFFProductApiResponse {
     }
 
     public int getStatus() {
-        if(product == null) return 0;
-        if(product.getProduct_name()==null || product.getProduct_name().equals(""))
+        if (product == null) return 0;
+        if (product.getProduct_name() == null || product.getProduct_name().equals(""))
             return 0;
         return status;
     }

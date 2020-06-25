@@ -7,15 +7,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.pape.ricettacolomisterioso.models.Item;
 import com.pape.ricettacolomisterioso.models.Product;
-import com.pape.ricettacolomisterioso.models.ProductDao;
 import com.pape.ricettacolomisterioso.repositories.ProductsRepository;
 import com.pape.ricettacolomisterioso.repositories.ShoppingListRepository;
 
-import java.util.List;
-
 public class ProductProfileViewModel extends ViewModel {
 
-    private final String TAG= "ProductProfileViewModel";
+    private final String TAG = "ProductProfileViewModel";
 
     private MutableLiveData<Product> product;
     private MutableLiveData<Long> insertId;
@@ -24,13 +21,13 @@ public class ProductProfileViewModel extends ViewModel {
     private MutableLiveData<Integer> quantity;
 
     public MutableLiveData<Integer> getQuantity() {
-        if (quantity==null) {
+        if (quantity == null) {
             quantity = new MutableLiveData<>();
         }
         return quantity;
     }
 
-    public MutableLiveData<Product> getProduct(){
+    public MutableLiveData<Product> getProduct() {
         if (product == null) {
             product = new MutableLiveData<>();
         }
@@ -58,7 +55,7 @@ public class ProductProfileViewModel extends ViewModel {
         return deleteId;
     }
 
-    public void delete(Product product){
+    public void delete(Product product) {
         ProductsRepository.getInstance().delete(product, getDeleteId());
     }
 
@@ -70,31 +67,34 @@ public class ProductProfileViewModel extends ViewModel {
     public void plusQuantity(Product product) {
         this.product = new MutableLiveData<>(product);
         ProductsRepository.getInstance().plus(this.product);
-        Log.d(TAG, ""+ this.product.getValue().getQuantity());
+        Log.d(TAG, "" + this.product.getValue().getQuantity());
     }
+
     public void findItemById(Product product) {
         this.product = new MutableLiveData<>(product);
         ProductsRepository.getInstance().getProductById(this.product);
 
     }
-    public void addItemToShoppingList(Item item){
+
+    public void addItemToShoppingList(Item item) {
         ShoppingListRepository.getInstance().addItem(item, getInsertId());
     }
-    public void addItemToShoppingList(String itemName, int quantity){
+
+    public void addItemToShoppingList(String itemName, int quantity) {
         addItemToShoppingList(new Item(itemName, quantity, false));
     }
-    public void addItemToShoppingList(String itemName){
+
+    public void addItemToShoppingList(String itemName) {
         addItemToShoppingList(itemName, 1);
     }
 
-    public void findItemInShoppingList(String itemName){
+    public void findItemInShoppingList(String itemName) {
         ShoppingListRepository.getInstance().findItemFromName(itemName, getFindItem());
     }
 
-    public void deleteItemFromShoppingList(String itemName){
+    public void deleteItemFromShoppingList(String itemName) {
         ShoppingListRepository.getInstance().delete(itemName, getDeleteId());
     }
-
 
 
 }

@@ -69,7 +69,7 @@ public class ScannerActivity extends AppCompatActivity {
             @Override
             public void onChanged(Product product) {
                 // Here we can update the UI
-                if(product!=null) Log.d(TAG, "onChanged: " + product.toString());
+                if (product != null) Log.d(TAG, "onChanged: " + product.toString());
                 createDialog(product);
             }
         };
@@ -115,7 +115,9 @@ public class ScannerActivity extends AppCompatActivity {
             }
 
             @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {  }
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            }
+
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 cameraSource.stop();
@@ -124,20 +126,21 @@ public class ScannerActivity extends AppCompatActivity {
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
-            public void release() { }
+            public void release() {
+            }
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (!barcodeFound && barcodes.size() != 0) {
-                    barcodeFound=true;
+                    barcodeFound = true;
                     OnBarcodeFound(barcodes.valueAt(0).displayValue);
                 }
             }
         });
     }
 
-    private void OnBarcodeFound(String barcodeData){
+    private void OnBarcodeFound(String barcodeData) {
         Log.d(TAG, "barcode found:" + barcodeData);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
@@ -154,18 +157,17 @@ public class ScannerActivity extends AppCompatActivity {
         };
     }
 
-    private void OnDialogOk(Product product){
+    private void OnDialogOk(Product product) {
         Log.d(TAG, "positive button clicked");
         returnProduct(product);
     }
 
-    private void OnDialogCancel(){
+    private void OnDialogCancel() {
         Log.d(TAG, "negative button clicked");
         barcodeFound = false;
-        try{
+        try {
             cameraSource.start(surfaceView.getHolder());
-        }
-        catch (IOException e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // dismiss dialog, start counter again
@@ -173,19 +175,18 @@ public class ScannerActivity extends AppCompatActivity {
 
     }
 
-    private void StartCamera(){
+    private void StartCamera() {
         try {
             cameraSource.start(surfaceView.getHolder());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    private void createDialog(Product product){
+    private void createDialog(Product product) {
 
-        if(product == null)
-        {
+        if (product == null) {
             builder = new AlertDialog.Builder(this, R.style.Theme_MyTheme_Dialog);
             builder.setTitle(getResources().getString(R.string.scanner_alert_dialog_title));
             builder.setMessage("Il codice a barre non è stato trovato nel database");
@@ -199,8 +200,7 @@ public class ScannerActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
-        }
-        else{
+        } else {
             builder = new AlertDialog.Builder(this, R.style.Theme_MyTheme_Dialog);
             LayoutInflater inflater = getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.dialog_scanner, null);
@@ -224,10 +224,14 @@ public class ScannerActivity extends AppCompatActivity {
                     image_view.setImageBitmap(bitmap);
                     bitmapLoaded = bitmap;
                 }
+
                 @Override
-                public void onBitmapFailed(Exception e, Drawable errorDrawable) {   }
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                }
+
                 @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {   }
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
             });
 
             String positiveText = getString(android.R.string.ok);
@@ -255,15 +259,15 @@ public class ScannerActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void returnProduct(Product p){
+    private void returnProduct(Product p) {
 
         String image_path = Functions.SaveImage(bitmapLoaded);
-        if(image_path != null)
+        if (image_path != null)
             p.setImageUrl(image_path);
 
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("product",p);
-        setResult(Activity.RESULT_OK,returnIntent);
+        returnIntent.putExtra("product", p);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 }

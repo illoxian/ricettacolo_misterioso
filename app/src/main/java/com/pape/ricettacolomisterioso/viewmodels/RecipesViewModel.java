@@ -14,6 +14,7 @@ public class RecipesViewModel extends ViewModel {
     private MutableLiveData<String> mText;
     private MutableLiveData<List<Recipe>> recipes;
     private MutableLiveData<Recipe> recipe;
+
     public RecipesViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
@@ -29,18 +30,21 @@ public class RecipesViewModel extends ViewModel {
         }
         return recipes;
     }
-    public MutableLiveData<List<Recipe>> getRecipesSearched(String recipe_name){
+
+    public MutableLiveData<List<Recipe>> getRecipesSearched(String recipe_name) {
         RecipesRepository.getInstance().getRecipesSearched(recipes, recipe_name);
         return recipes;
     }
-    public MutableLiveData<List<Recipe>> getAllRecipes(){
+
+    public MutableLiveData<List<Recipe>> getAllRecipes() {
         if (recipes == null) {
             recipes = new MutableLiveData<>();
         }
         RecipesRepository.getInstance().getRecipes(recipes);
         return recipes;
     }
-    public MutableLiveData<Recipe> getRandomRecipe(){
+
+    public MutableLiveData<Recipe> getRandomRecipe() {
         if (recipe == null) {
             recipe = new MutableLiveData<>();
         }

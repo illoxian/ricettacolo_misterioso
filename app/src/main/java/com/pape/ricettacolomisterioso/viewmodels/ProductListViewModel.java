@@ -50,7 +50,7 @@ public class ProductListViewModel extends ViewModel {
         return products;
     }
 
-    public MutableLiveData<List<Product>> getAllProducts(){
+    public MutableLiveData<List<Product>> getAllProducts() {
         if (products == null) {
             products = new MutableLiveData<>();
         }
@@ -60,7 +60,7 @@ public class ProductListViewModel extends ViewModel {
         return products;
     }
 
-    public MutableLiveData<List<Product>> getProductsSearched(String product_name){
+    public MutableLiveData<List<Product>> getProductsSearched(String product_name) {
         if (products == null) {
             products = new MutableLiveData<>();
         }
@@ -70,21 +70,23 @@ public class ProductListViewModel extends ViewModel {
         return products;
     }
 
-    public void delete(Product product){
+    public void delete(Product product) {
         ProductsRepository.getInstance().delete(product, getDeleteId());
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         ProductsRepository.getInstance().addItem(product, getInsertId());
     }
 
-    public void addProductToShoppingList(Item item){
+    public void addProductToShoppingList(Item item) {
         ShoppingListRepository.getInstance().addItem(item, getInsertId());
     }
-    public void addProductToShoppingList(String itemName, int quantity){
+
+    public void addProductToShoppingList(String itemName, int quantity) {
         addProductToShoppingList(new Item(itemName, quantity, false));
     }
-    public void addProductToShoppingList(String itemName){
+
+    public void addProductToShoppingList(String itemName) {
         addProductToShoppingList(itemName, 1);
     }
 }

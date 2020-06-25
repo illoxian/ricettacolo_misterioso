@@ -27,21 +27,20 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Functions {
-    public static int time_in_day_remain(Date expiring, Date today){
-        long time_in_millisecond = expiring.getTime() -  today.getTime();
+    public static int time_in_day_remain(Date expiring, Date today) {
+        long time_in_millisecond = expiring.getTime() - today.getTime();
         return (int) TimeUnit.DAYS.convert(time_in_millisecond, TimeUnit.MILLISECONDS);
     }
 
 
-    public static int percentual_for_bar(Date purchase, Date expiring, Date today){
+    public static int percentual_for_bar(Date purchase, Date expiring, Date today) {
         long exp_pur = expiring.getTime() - purchase.getTime();
         long tod_pur = today.getTime() - purchase.getTime();
-        double percentual_value_for_progress_bar = ((double)tod_pur/(double)exp_pur)*100;
-        return (int)Math.round(percentual_value_for_progress_bar);
+        double percentual_value_for_progress_bar = ((double) tod_pur / (double) exp_pur) * 100;
+        return (int) Math.round(percentual_value_for_progress_bar);
     }
 
-    public static Date ExcludeTime(Date date)
-    {
+    public static Date ExcludeTime(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         final int day = c.get(Calendar.DAY_OF_MONTH);
@@ -52,7 +51,8 @@ public class Functions {
         return c.getTime();
     }
 
-    public static @ColorInt int getThemeColor(Context context, int ResId){
+    public static @ColorInt
+    int getThemeColor(Context context, int ResId) {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(ResId, typedValue, true);
@@ -60,19 +60,20 @@ public class Functions {
         return color;
     }
 
-    public static String getProductCategoryString(Context context, int categoryId){
+    public static String getProductCategoryString(Context context, int categoryId) {
         return context.getResources().getStringArray(R.array.categoriesString)[categoryId];
     }
-    public static String getRecipeCategoryString(Context context, int categoryId){
+
+    public static String getRecipeCategoryString(Context context, int categoryId) {
         return context.getResources().getStringArray(R.array.recipeCategoriesString)[categoryId];
     }
+
     public static int getRecipeCategoryIndex(Context context, String category) {
         List<String> CATEGORIES = Arrays.asList(context.getResources().getStringArray(R.array.recipeCategoriesString));
         return CATEGORIES.indexOf(category);
     }
 
-    public static void enableBootReceiver(Context context)
-    {
+    public static void enableBootReceiver(Context context) {
         ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
         PackageManager pm = context.getPackageManager();
 
@@ -81,8 +82,7 @@ public class Functions {
                 PackageManager.DONT_KILL_APP);
     }
 
-    public static void disableBootReceiver(Context context)
-    {
+    public static void disableBootReceiver(Context context) {
         ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
         PackageManager pm = context.getPackageManager();
 
@@ -92,8 +92,7 @@ public class Functions {
     }
 
 
-    public static void SetAlarmManager(Context context)
-    {
+    public static void SetAlarmManager(Context context) {
         //enable boot receiver
         enableBootReceiver(context);
 
@@ -126,8 +125,7 @@ public class Functions {
         }
     }
 
-    public static void ClearAlarmManager(Context context)
-    {
+    public static void ClearAlarmManager(Context context) {
         //disable boot receiver
         disableBootReceiver(context);
 
@@ -153,9 +151,9 @@ public class Functions {
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
-        String fname = "Image-"+ n +".jpg";
-        File file = new File (myDir, fname);
-        if (file.exists ()) file.delete ();
+        String fname = "Image-" + n + ".jpg";
+        File file = new File(myDir, fname);
+        if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);

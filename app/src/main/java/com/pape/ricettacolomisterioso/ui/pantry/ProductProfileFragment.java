@@ -44,10 +44,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ProductProfileFragment extends Fragment {
+    final static String TAG = "ProductProfileFragment";
     private FragmentProductProfileBinding productProfileBinding;
     private ProductProfileViewModel model;
     private ProductListAdapter adapter;
-    final static String TAG="ProductProfileFragment";
 
     public ProductProfileFragment() {
 
@@ -62,7 +62,7 @@ public class ProductProfileFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
         bottomNavigationView.setVisibility(View.GONE);
@@ -73,7 +73,7 @@ public class ProductProfileFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     @Override
     public void onDetach() {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
 
         super.onDetach();
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
@@ -104,38 +104,36 @@ public class ProductProfileFragment extends Fragment {
 
     }
 
-    public void updateProductInformation(Product product, View view){
+    public void updateProductInformation(Product product, View view) {
         productProfileBinding.productNameTextView.setText(product.getProduct_name());
         productProfileBinding.categoryValueTextView.setText(Functions.getProductCategoryString(getContext(), product.getCategory()));
-        productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()) + " " + getString(R.string.measure_unit_piece_abbreviation));
-        if(product.getBrand().isEmpty()) productProfileBinding.brandValueTextView.setVisibility(View.INVISIBLE);
+        productProfileBinding.quantityValueTextView.setText(""+product.getQuantity());
+        if (product.getBrand().isEmpty())
+            productProfileBinding.brandValueTextView.setVisibility(View.INVISIBLE);
         else productProfileBinding.brandValueTextView.setText(product.getBrand());
         productProfileBinding.categoryValueTextView.setText(Functions.getProductCategoryString(getContext(), product.getCategory()));
         productProfileBinding.purchaseDateValueTextView.setText(product.getPurchaseDateString());
         productProfileBinding.expiringDateValueTextView.setText(product.getExpirationDateString());
         // image or category thumbnail
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if(((SharedPreferences) sharedPreferences).getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null)
-        {
+        if (((SharedPreferences) sharedPreferences).getBoolean("image_instead_of_thumbnail", false) && product.getImageUrl() != null) {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             File f = new File(product.getImageUrl());
             Picasso.get().load(f).into(productProfileBinding.categoryImage);
-        }
-        else{
+        } else {
             productProfileBinding.categoryImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             productProfileBinding.categoryImage.setImageResource(product.getCategoryPreviewId(getContext()));
         }
 
-        if(product.getBarcode() == null){
+        if (product.getBarcode() == null) {
             productProfileBinding.barcodeTextView.setVisibility(View.GONE);
             productProfileBinding.barcodeValueTextView.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             productProfileBinding.barcodeValueTextView.setText(product.getBarcode());
-            String text=product.getBarcode(); // Whatever you need to encode in the QR code
+            String text = product.getBarcode(); // Whatever you need to encode in the QR code
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {
-                BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.EAN_13,300,150);
+                BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.EAN_13, 300, 150);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                 Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                 productProfileBinding.barcodeImage.setImageBitmap(bitmap);
@@ -148,29 +146,28 @@ public class ProductProfileFragment extends Fragment {
         model.getFindItem().observe(getActivity(), new Observer<Item>() {
             @Override
             public void onChanged(Item item) {
-                if(item == null) setColorAddToShoppingListIcon(false);
+                if (item == null) setColorAddToShoppingListIcon(false);
                 else setColorAddToShoppingListIcon(true);
             }
         });
 
         productProfileBinding.addShoppingListImage.setOnClickListener(v -> {
-            if(productProfileBinding.addShoppingListImage.getColorFilter()==null){
+            if (productProfileBinding.addShoppingListImage.getColorFilter() == null) {
                 model.addItemToShoppingList(product.getProduct_name());
                 setColorAddToShoppingListIcon(true);
                 Snackbar.make(v, R.string.product_added_to_shopping_list, Snackbar.LENGTH_LONG).show();
-            }
-            else{
+            } else {
                 model.deleteItemFromShoppingList(product.getProduct_name());
                 setColorAddToShoppingListIcon(false);
                 Snackbar.make(v, R.string.product_removed_from_shopping_list, Snackbar.LENGTH_LONG).show();
             }
         });
 
-        productProfileBinding.deleteImage.setOnClickListener(v-> {
+        productProfileBinding.deleteImage.setOnClickListener(v -> {
             ShowDialogDelete(product);
         });
 
-        productProfileBinding.minusQuantity.setOnClickListener(v-> {
+        productProfileBinding.minusQuantity.setOnClickListener(v -> {
             model.minusQuantity(product);
 
             model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
@@ -182,45 +179,46 @@ public class ProductProfileFragment extends Fragment {
         });
 
 
-            productProfileBinding.plusQuantity.setOnClickListener(v -> {
-                model.plusQuantity(product);
+        productProfileBinding.plusQuantity.setOnClickListener(v -> {
+            model.plusQuantity(product);
 
-                model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
-                    @Override
-                    public void onChanged(Product product) {
-                        productProfileBinding.quantityValueTextView.setText("" + model.getProduct().getValue().getQuantity());
-                    }
-                });
+            model.getProduct().observe(getViewLifecycleOwner(), new Observer<Product>() {
+                @Override
+                public void onChanged(Product product) {
+                    productProfileBinding.quantityValueTextView.setText("" + model.getProduct().getValue().getQuantity());
+                }
+            });
 
-            });*/
-            model.findItemInShoppingList(product.getProduct_name());
+        });
+        model.findItemInShoppingList(product.getProduct_name());
 
     }
-    public void updateExpiringView(Date expiring, Date purchase_date){
+
+    public void updateExpiringView(Date expiring, Date purchase_date) {
         expiring = Functions.ExcludeTime(expiring);
         purchase_date = Functions.ExcludeTime(purchase_date);
         Date today = Calendar.getInstance().getTime();
         Date today_not_time = Functions.ExcludeTime(today);
 
-        int daysRemaining = Functions.time_in_day_remain(expiring,today_not_time);
+        int daysRemaining = Functions.time_in_day_remain(expiring, today_not_time);
 
-        if(daysRemaining > 0) {
-            int progress = Functions.percentual_for_bar(purchase_date,expiring,today); //in progress bar Today is used with time to prevent progress bar fully empty
+        if (daysRemaining > 0) {
+            int progress = Functions.percentual_for_bar(purchase_date, expiring, today); //in progress bar Today is used with time to prevent progress bar fully empty
             String daysRemainingString = daysRemaining + " " + getString(R.string.remaining_day);
             productProfileBinding.expiringValueTextView.setText(daysRemainingString);
             productProfileBinding.progressBar.setProgress(progress);
-        }else if(daysRemaining == 0) {
+        } else if (daysRemaining == 0) {
             productProfileBinding.expiringValueTextView.setText(getString(R.string.product_expired_today));
             productProfileBinding.progressBar.setProgress(100);
-        }else {
+        } else {
             String ExpiredFromXDays = getString(R.string.product_expired_from) + Math.abs(daysRemaining) + getString(R.string.days);
             productProfileBinding.expiringValueTextView.setText(ExpiredFromXDays);
             productProfileBinding.progressBar.setProgress(100);
         }
     }
 
-    private void setColorAddToShoppingListIcon(boolean lightUp){
-        if(lightUp)
+    private void setColorAddToShoppingListIcon(boolean lightUp) {
+        if (lightUp)
             productProfileBinding.addShoppingListImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.pink_a200), android.graphics.PorterDuff.Mode.SRC_IN);
         else
             productProfileBinding.addShoppingListImage.setColorFilter(null);
@@ -239,7 +237,7 @@ public class ProductProfileFragment extends Fragment {
         productProfileBinding.quantityValueTextView.setText(Integer.toString(product.getQuantity()));
     }
 
-    private void ShowDialogDelete(Product product){
+    private void ShowDialogDelete(Product product) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_MyTheme_Dialog);
         builder.setTitle(R.string.product_dialog_delete_title);
         // Set up the buttons

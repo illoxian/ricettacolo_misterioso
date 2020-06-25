@@ -8,8 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +53,6 @@ public class NewRecipeFragment extends Fragment {
     private Calendar c;
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,7 +68,7 @@ public class NewRecipeFragment extends Fragment {
         final Observer<Long> observer = new Observer<Long>() {
             @Override
             public void onChanged(Long insertId) {
-                if(insertId>=0) {
+                if (insertId >= 0) {
                     Toast.makeText(getContext(), R.string.new_recipe_toast_succes, Toast.LENGTH_LONG).show();
                     Navigation.findNavController(getView()).popBackStack();
                 }
@@ -118,12 +115,16 @@ public class NewRecipeFragment extends Fragment {
                 R.layout.new_recipe_item);
     }
 
-    private void initTextInputs(){
+    private void initTextInputs() {
         binding.textInputRecipeName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 binding.textInputLayoutRecipeName.setError(null);
@@ -132,9 +133,13 @@ public class NewRecipeFragment extends Fragment {
 
         binding.textInputRecipeCategory.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 binding.textInputLayoutRecipeCategory.setError(null);
@@ -146,7 +151,8 @@ public class NewRecipeFragment extends Fragment {
 
 
     }
-    private void initFab(){
+
+    private void initFab() {
         binding.newRecipeSaveFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,13 +161,13 @@ public class NewRecipeFragment extends Fragment {
         });
     }
 
-    private void initItemListCardView(Button button, LinearLayout layoutToInflate, int itemToInflate ) {
-        button.setOnClickListener(v-> {
+    private void initItemListCardView(Button button, LinearLayout layoutToInflate, int itemToInflate) {
+        button.setOnClickListener(v -> {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View addView = layoutInflater.inflate(itemToInflate, null);
             layoutToInflate.addView(addView);
-            layoutToInflate.getChildAt(layoutToInflate.getChildCount()-1).requestFocus();
-            TextInputLayout textInputLayout = (TextInputLayout)layoutToInflate.getChildAt(layoutToInflate.getChildCount()-1);
+            layoutToInflate.getChildAt(layoutToInflate.getChildCount() - 1).requestFocus();
+            TextInputLayout textInputLayout = (TextInputLayout) layoutToInflate.getChildAt(layoutToInflate.getChildCount() - 1);
             textInputLayout.setEndIconVisible(true);
             textInputLayout.setEndIconActivated(true);
             textInputLayout.setEndIconOnClickListener(v1 -> {
@@ -170,7 +176,7 @@ public class NewRecipeFragment extends Fragment {
         });
     }
 
-    private void initDatePicker(){
+    private void initDatePicker() {
         saveDate = Calendar.getInstance().getTime();
         binding.textInputRecipeSaveDate.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(saveDate));
 
@@ -202,15 +208,15 @@ public class NewRecipeFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id==android.R.id.home) {
+        if (id == android.R.id.home) {
             Navigation.findNavController(getView()).popBackStack();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void addRecipe(){
-        if(recipe==null) recipe = new Recipe();
+    private void addRecipe() {
+        if (recipe == null) recipe = new Recipe();
 
         recipe.setTitle(binding.textInputRecipeName.getText().toString());
         String categoryString = binding.textInputRecipeCategory.getText().toString();
@@ -219,28 +225,26 @@ public class NewRecipeFragment extends Fragment {
         recipe.setCategoryId(CATEGORIES.indexOf(categoryString));
 
 
-
         boolean isValid = true;
 
         //ProductName
-        if(recipe.getTitle().equals("")){
+        if (recipe.getTitle().equals("")) {
             binding.textInputLayoutRecipeName.setError(getResources().getString((R.string.error_empty_field)));
             binding.textInputLayoutRecipeName.requestFocus();
             isValid = false;
         }
         //Category
-        if(categoryString.equals("")){
+        if (categoryString.equals("")) {
             binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_empty_field)));
-            if(isValid) binding.textInputLayoutRecipeCategory.requestFocus();
+            if (isValid) binding.textInputLayoutRecipeCategory.requestFocus();
             isValid = false;
-        }
-        else if(recipe.getCategoryId() < 0) {
+        } else if (recipe.getCategoryId() < 0) {
             binding.textInputLayoutRecipeCategory.setError(getResources().getString((R.string.error_not_a_category)));
             if (isValid) binding.textInputLayoutRecipeCategory.requestFocus();
             isValid = false;
         }
 
-        if(isValid){
+        if (isValid) {
 
             List<String> ingredients = new ArrayList<String>();
             List<String> steps = new ArrayList<String>();
@@ -248,23 +252,25 @@ public class NewRecipeFragment extends Fragment {
             LinearLayout ingBind = binding.newRecipeIngredientListLinearLayout;
             LinearLayout stepBind = binding.newRecipeStepListLinearLayout;
 
-            for (int i=0; i < ingBind.getChildCount(); i++ ) {
+            for (int i = 0; i < ingBind.getChildCount(); i++) {
                 TextInputLayout text = (TextInputLayout) ingBind.getChildAt(i);
                 String prov = text.getEditText().getText().toString();
-                if( prov.length() == 0 ) { }
-                else { ingredients.add(prov);
-                Log.d(TAG, "ingredient n"+ (i+1) + ">  " + prov);
+                if (prov.length() == 0) {
+                } else {
+                    ingredients.add(prov);
+                    Log.d(TAG, "ingredient n" + (i + 1) + ">  " + prov);
                 }
 
             }
 
-            for (int i=0; i < stepBind.getChildCount(); i++ ) {
+            for (int i = 0; i < stepBind.getChildCount(); i++) {
                 TextInputLayout text = (TextInputLayout) stepBind.getChildAt(i);
                 String prov = text.getEditText().getText().toString();
-                if( prov.length() == 0 ) { }
-                else {
-                steps.add(prov);
-                Log.d(TAG, "step n"+ (i+1) + ">  " + prov); }
+                if (prov.length() == 0) {
+                } else {
+                    steps.add(prov);
+                    Log.d(TAG, "step n" + (i + 1) + ">  " + prov);
+                }
             }
 
 
@@ -272,12 +278,8 @@ public class NewRecipeFragment extends Fragment {
             recipe.setSteps(steps);
 
             insertId = model.addRecipe(recipe);
-         }
+        }
     }
-
-
-
-
 
 
 }

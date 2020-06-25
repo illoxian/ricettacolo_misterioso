@@ -45,16 +45,14 @@ import java.util.List;
 public class NewProductActivity extends AppCompatActivity {
 
     private static final String TAG = "NewProductActivity";
+    private static final int LAUNCH_SCANNER_ACTIVITY = 1;
+    private static final int LAUNCH_LOAD_IMAGE_ACTIVITY = 2;
+    private static final int LAUNCH_TAKE_PHOTO_ACTIVITY = 3;
     private ActivityNewProductBinding binding;
     private NewProductViewModel model;
     private Calendar c;
     private DatePickerDialog datePickerDialog;
     private List<String> CATEGORIES;
-
-    private static final int LAUNCH_SCANNER_ACTIVITY = 1;
-    private static final int LAUNCH_LOAD_IMAGE_ACTIVITY = 2;
-    private static final int LAUNCH_TAKE_PHOTO_ACTIVITY = 3;
-
     private Product product;
     private Date expirationDate;
     private Date purchaseDate;
@@ -73,10 +71,10 @@ public class NewProductActivity extends AppCompatActivity {
         final Observer<Long> observer = new Observer<Long>() {
             @Override
             public void onChanged(Long insertId) {
-                if(insertId>=0){
+                if (insertId >= 0) {
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("insertId",insertId);
-                    setResult(Activity.RESULT_OK,returnIntent);
+                    returnIntent.putExtra("insertId", insertId);
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }
             }
@@ -90,11 +88,6 @@ public class NewProductActivity extends AppCompatActivity {
         initDatePicker();
         initButtonImage();
     }
-
-
-
-
-
 
 
     private void initButtonImage() {
@@ -112,7 +105,7 @@ public class NewProductActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                            && ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                                && ActivityCompat.checkSelfPermission(NewProductActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                             startTakePhotoActivity();
                         } else {
                             ActivityCompat.requestPermissions(NewProductActivity.this, new
@@ -155,12 +148,16 @@ public class NewProductActivity extends AppCompatActivity {
         });
     }
 
-    private void initTextInputs(){
+    private void initTextInputs() {
         binding.textInputName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 binding.textInputLayoutName.setError(null);
@@ -169,9 +166,13 @@ public class NewProductActivity extends AppCompatActivity {
 
         binding.textInputCategory.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 binding.textInputLayoutCategory.setError(null);
@@ -183,7 +184,7 @@ public class NewProductActivity extends AppCompatActivity {
         binding.textInputCategory.setAdapter(adapter);
     }
 
-    private void initFAB(){
+    private void initFAB() {
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +193,7 @@ public class NewProductActivity extends AppCompatActivity {
         });
     }
 
-    private void initDatePicker(){
+    private void initDatePicker() {
         //ExpirationDate
         binding.textInputExpirationDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,14 +251,9 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case LAUNCH_SCANNER_ACTIVITY:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
@@ -291,16 +287,16 @@ public class NewProductActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_SCANNER_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 product = data.getParcelableExtra("product");
 
-                if(product != null){
+                if (product != null) {
                     binding.textInputName.setText(product.getProduct_name());
                     binding.textInputBrand.setText(product.getBrand());
 
                     String image_path = product.getImageUrl();
 
-                    if(image_path != null){
+                    if (image_path != null) {
                         File file = new File(image_path);
                         Picasso.get().load(file).into(binding.imageView2);
                     }
@@ -309,11 +305,10 @@ public class NewProductActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }
-        }
-        else if (requestCode == LAUNCH_LOAD_IMAGE_ACTIVITY) {
-            if(resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == LAUNCH_LOAD_IMAGE_ACTIVITY) {
+            if (resultCode == RESULT_OK && data != null) {
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 cursor.moveToFirst();
@@ -324,9 +319,8 @@ public class NewProductActivity extends AppCompatActivity {
                 bitmapProduct = bmp;
                 cursor.close();
             }
-        }
-        else if (requestCode == LAUNCH_TAKE_PHOTO_ACTIVITY) {
-            if(resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == LAUNCH_TAKE_PHOTO_ACTIVITY) {
+            if (resultCode == RESULT_OK && data != null) {
                 Bundle extras = data.getExtras();
                 // Get the returned image from extra
                 Bitmap bmp = (Bitmap) extras.get("data");
@@ -337,9 +331,9 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
@@ -348,15 +342,12 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    private void startScannerActivity(){
+    private void startScannerActivity() {
         Intent i = new Intent(this, ScannerActivity.class);
         startActivityForResult(i, LAUNCH_SCANNER_ACTIVITY);
     }
 
-    private void startPickImageActivity(){
+    private void startPickImageActivity() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, LAUNCH_LOAD_IMAGE_ACTIVITY);
     }
@@ -367,13 +358,8 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-    private void addProduct(){
-        if(product==null) product = new Product();
+    private void addProduct() {
+        if (product == null) product = new Product();
 
         product.setProduct_name(binding.textInputName.getText().toString());
         String categoryString = binding.textInputCategory.getText().toString();
@@ -386,42 +372,42 @@ public class NewProductActivity extends AppCompatActivity {
         boolean isValid = true;
 
         //ProductName
-        if(product.getProduct_name().equals("")){
+        if (product.getProduct_name().equals("")) {
             binding.textInputLayoutName.setError(getResources().getString((R.string.error_empty_field)));
-            if(isValid) binding.textInputLayoutName.requestFocus();
+            if (isValid) binding.textInputLayoutName.requestFocus();
             isValid = false;
         }
         //Category
-        if(categoryString.equals("")){
+        if (categoryString.equals("")) {
             binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_empty_field)));
-            if(isValid) binding.textInputLayoutCategory.requestFocus();
+            if (isValid) binding.textInputLayoutCategory.requestFocus();
             isValid = false;
-        }
-        else if(categoryId<0){
+        } else if (categoryId < 0) {
             binding.textInputLayoutCategory.setError(getResources().getString((R.string.error_not_a_category)));
-            if(isValid) binding.textInputLayoutCategory.requestFocus();
+            if (isValid) binding.textInputLayoutCategory.requestFocus();
             isValid = false;
         }
         //ExpirationDate
-        if(product.getExpirationDate()==null){
+        if (product.getExpirationDate() == null) {
             binding.textInputLayoutExpirationDate.setError(getResources().getString((R.string.error_empty_field)));
             isValid = false;
         }
         //PurchaseDate
-        if(product.getPurchaseDate()==null){
+        if (product.getPurchaseDate() == null) {
             binding.textInputLayoutPurchaseDate.setError(getResources().getString((R.string.error_empty_field)));
             isValid = false;
         }
         //Image from "add image"
-        if(bitmapProduct != null){
+        if (bitmapProduct != null) {
             String image_path = Functions.SaveImage(bitmapProduct);
-            if(image_path != null)
+            if (image_path != null)
                 product.setImageUrl(image_path);
         }
 
-        if(isValid){
+        if (isValid) {
             insertId = model.addProduct(product);
-            Log.d(TAG, "Added a product"+ product);
-            Log.d(TAG, "id afterInsertion: "+ insertId);        }
+            Log.d(TAG, "Added a product" + product);
+            Log.d(TAG, "id afterInsertion: " + insertId);
+        }
     }
 }

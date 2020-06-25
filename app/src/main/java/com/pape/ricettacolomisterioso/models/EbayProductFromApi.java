@@ -4,7 +4,7 @@ import com.tickaroo.tikxml.annotation.PropertyElement;
 import com.tickaroo.tikxml.annotation.Xml;
 
 @Xml(name = "Product")
-public class EbayProductFromApi{
+public class EbayProductFromApi {
     @PropertyElement(name = "DisplayStockPhotos")
     private boolean displayStockPhotos;
     @PropertyElement(name = "StockPhotoURL")
@@ -12,7 +12,7 @@ public class EbayProductFromApi{
     @PropertyElement(name = "Title")
     private String title;
 
-    public EbayProductFromApi(){
+    public EbayProductFromApi() {
 
     }
 

@@ -21,17 +21,9 @@ import java.util.List;
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ShoppingListViewHolder> {
 
     private static final String TAG = "ShoppingListAdapter";
-
-    public interface OnItemInteractions {
-        void onItemClick(Item item);
-        void onItemClickDelete(Item item, int position);
-        void onItemCheckChanged(Item item, boolean check, TextView textViewName);
-    }
-
     private List<Item> items;
     private LayoutInflater layoutInflater;
     private OnItemInteractions onItemInteractions;
-
     public ShoppingListAdapter(Context context, List<Item> items, OnItemInteractions onItemInteractions) {
         this.layoutInflater = LayoutInflater.from(context);
         this.items = items;
@@ -52,7 +44,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     @Override
     public int getItemCount() {
-        if(items != null)
+        if (items != null)
             return items.size();
         else return 0;
     }
@@ -64,6 +56,74 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         }
     }
 
+    public void removeItemAt(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, items.size());
+    }
+
+    public void insertItemAt(Item item, int position) {
+        items.add(position, item);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, items.size());
+    }
+
+    public void insertItem(Item item) {
+        int position = searchItemByName(item.getItemName());
+        if (position >= 0) {
+            Item item_found = items.get(position);
+            item_found.setQuantity(item_found.getQuantity() + item.getQuantity());
+            notifyDataSetChanged();
+        } else
+            insertItemAt(item, items.size());
+    }
+
+    public void updateItem(Item item, int position) {
+        items.set(position, item);
+        notifyItemChanged(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        Item item = items.get(fromPosition);
+        items.remove(fromPosition);
+        items.add(toPosition, item);
+
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void moveItemToEnd(int fromPosition) {
+        moveItem(fromPosition, items.size() - 1);
+    }
+
+    public void moveItemToTop(int fromPosition) {
+        moveItem(fromPosition, 0);
+    }
+
+    public void setItemStrikethrough(boolean isChecked, TextView textViewName) {
+        if (isChecked) {
+            textViewName.setPaintFlags(textViewName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            textViewName.setPaintFlags(textViewName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
+    }
+
+    public int searchItemByName(String item_name) {
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            if (item.getItemName().equals(item_name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public interface OnItemInteractions {
+        void onItemClick(Item item);
+
+        void onItemClickDelete(Item item, int position);
+
+        void onItemCheckChanged(Item item, boolean check, TextView textViewName);
+    }
 
     public static class ShoppingListViewHolder extends RecyclerView.ViewHolder {
         CheckBox item_checkbox;
@@ -79,11 +139,11 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             item_image_delete = view.findViewById(R.id.imageView_shopping_list_item_delete);
         }
 
-        void bind(Item item, OnItemInteractions onItemInteractions){
+        void bind(Item item, OnItemInteractions onItemInteractions) {
 
             item_checkbox.setChecked(item.isSelected());
             item_name.setText(item.getItemName());
-            item_quantity.setText(item.getQuantity()+" "+itemView.getContext().getResources().getString(R.string.measure_unit_piece_abbreviation));
+            item_quantity.setText(item.getQuantity() + " " + itemView.getContext().getResources().getString(R.string.measure_unit_piece_abbreviation));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,70 +167,5 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             });
         }
 
-    }
-
-
-
-    public void removeItemAt(int position) {
-        items.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, items.size());
-    }
-
-    public void insertItemAt(Item item, int position) {
-        items.add(position, item);
-        notifyItemInserted(position);
-        notifyItemRangeChanged(position, items.size());
-    }
-
-    public void insertItem(Item item) {
-        int position = searchItemByName(item.getItemName());
-        if(position>=0){
-            Item item_found = items.get(position);
-            item_found.setQuantity(item_found.getQuantity() + item.getQuantity());
-            notifyDataSetChanged();
-        }
-        else
-            insertItemAt(item, items.size());
-    }
-
-    public void updateItem(Item item, int position) {
-        items.set(position, item);
-        notifyItemChanged(position);
-    }
-
-    public void moveItem(int fromPosition, int toPosition){
-        Item item = items.get(fromPosition);
-        items.remove(fromPosition);
-        items.add(toPosition, item);
-
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void moveItemToEnd(int fromPosition){
-        moveItem(fromPosition, items.size()-1);
-    }
-
-    public void moveItemToTop(int fromPosition){
-        moveItem(fromPosition, 0);
-    }
-
-    public void setItemStrikethrough(boolean isChecked, TextView textViewName) {
-        if(isChecked){
-            textViewName.setPaintFlags(textViewName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        else{
-            textViewName.setPaintFlags(textViewName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-        }
-    }
-
-    public int searchItemByName(String item_name){
-        for(int i=0; i<items.size(); i++){
-            Item item = items.get(i);
-            if(item.getItemName().equals(item_name)){
-                return i;
-            }
-        }
-        return -1;
     }
 }

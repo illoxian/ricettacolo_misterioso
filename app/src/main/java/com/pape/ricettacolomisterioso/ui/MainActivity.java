@@ -10,12 +10,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
-import androidx.room.Room;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pape.ricettacolomisterioso.R;
 import com.pape.ricettacolomisterioso.models.AppDatabase;
-import com.pape.ricettacolomisterioso.utils.Functions;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         //check theme
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(sharedPreferences.getBoolean("dark_mode", false))
+        if (sharedPreferences.getBoolean("dark_mode", false))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -41,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.navigation_recipes, R.id.navigation_pantry, R.id.navigation_shoppinglist, R.id.navigation_menu, R.id.navigation_preferences)
-                    .build();
+                R.id.navigation_recipes, R.id.navigation_pantry, R.id.navigation_shoppinglist, R.id.navigation_menu, R.id.navigation_preferences)
+                .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         SetDatabase();
     }
 
-    private void SetDatabase(){
+    private void SetDatabase() {
         db = AppDatabase.getInstance(this);
     }
 

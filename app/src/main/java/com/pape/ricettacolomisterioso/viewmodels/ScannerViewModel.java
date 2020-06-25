@@ -23,14 +23,14 @@ public class ScannerViewModel extends ViewModel {
 
     public MutableLiveData<Product> getProductInfo(String code, String dataProvider) {
         Log.d(TAG, "getProductInfo: Download the product info from Internet");
-        if(dataProvider.equals("ebay"))
+        if (dataProvider.equals("ebay"))
             ProductsRepository.getInstance().getProductInfoEbay(getProduct(), code);
         else
             ProductsRepository.getInstance().getProductInfoOFF(getProduct(), code);
         return product;
     }
 
-    public void clear(){
+    public void clear() {
         product = null;
     }
 

@@ -24,16 +24,16 @@ public class DailyMenuRepository {
         setDatabase(MainActivity.db);
     }
 
-    public void setDatabase(AppDatabase db){
-        appDatabase = db;
-    }
-
     //this defines a singleton for ShoppingListRepository Class
     public static synchronized DailyMenuRepository getInstance() {
         if (instance == null) {
             instance = new DailyMenuRepository();
         }
         return instance;
+    }
+
+    public void setDatabase(AppDatabase db) {
+        appDatabase = db;
     }
 
     public void getDailyMenus(MutableLiveData<List<DailyMenu>> dailyMenus, List<Date> days) {
@@ -44,12 +44,12 @@ public class DailyMenuRepository {
 
                     Log.d(TAG, "run: getDailyMenus()");
                     List<DailyMenu> menus = new ArrayList<>();
-                    for(int i = 0; i<days.size(); i++){
+                    for (int i = 0; i < days.size(); i++) {
                         List<DailyRecipe> recipes = new ArrayList<>();
-                        for(int j = 0; j<4; j++){
+                        for (int j = 0; j < 4; j++) {
                             DailyRecipe recipe = appDatabase.menuDao().getDailyRecipes(days.get(i), j);
 
-                            if(recipe != null) recipes.add(recipe);
+                            if (recipe != null) recipes.add(recipe);
                             else recipes.add(null);
                         }
                         menus.add(new DailyMenu(days.get(i), recipes));
@@ -66,10 +66,10 @@ public class DailyMenuRepository {
 
     public DailyMenu getDailyMenuSync(Date day) {
         List<DailyRecipe> recipes = new ArrayList<>();
-        for(int j = 0; j<4; j++){
+        for (int j = 0; j < 4; j++) {
             DailyRecipe recipe = appDatabase.menuDao().getDailyRecipes(day, j);
 
-            if(recipe != null) recipes.add(recipe);
+            if (recipe != null) recipes.add(recipe);
             else recipes.add(null);
         }
         return new DailyMenu(day, recipes);

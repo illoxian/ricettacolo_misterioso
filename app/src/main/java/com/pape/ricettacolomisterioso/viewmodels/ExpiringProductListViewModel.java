@@ -16,7 +16,7 @@ public class ExpiringProductListViewModel extends ViewModel {
     private MutableLiveData<List<Product>> mostExpiringProducts;
     private MutableLiveData<List<Product>> expiringProductsOrdered;
 
-    public MutableLiveData<List<Product>> getMostExpiringProduct(){
+    public MutableLiveData<List<Product>> getMostExpiringProduct() {
         if (mostExpiringProducts == null) {
             mostExpiringProducts = new MutableLiveData<>();
         }
@@ -24,7 +24,7 @@ public class ExpiringProductListViewModel extends ViewModel {
         return mostExpiringProducts;
     }
 
-    public MutableLiveData<List<Product>> getExpiringProductsOrdered(){
+    public MutableLiveData<List<Product>> getExpiringProductsOrdered() {
         if (expiringProductsOrdered == null) {
             expiringProductsOrdered = new MutableLiveData<>();
         }
@@ -32,14 +32,14 @@ public class ExpiringProductListViewModel extends ViewModel {
         return expiringProductsOrdered;
     }
 
-    public MutableLiveData<List<Product>> getAllMostExpiringProduct(){
+    public MutableLiveData<List<Product>> getAllMostExpiringProduct() {
         Log.d(TAG, "getAllProducts: getProductsUpdate");
         ProductsRepository.getInstance().getMostExpiringProducts(mostExpiringProducts);
         return mostExpiringProducts;
     }
 
-    public MutableLiveData<List<Product>> getAllProductsOrderByExpirationDate(){
-         Log.d(TAG, "getAllProducts: getProductsUpdate");
+    public MutableLiveData<List<Product>> getAllProductsOrderByExpirationDate() {
+        Log.d(TAG, "getAllProducts: getProductsUpdate");
         ProductsRepository.getInstance().getAllProductsOrderByExpirationDate(expiringProductsOrdered);
         return expiringProductsOrdered;
     }

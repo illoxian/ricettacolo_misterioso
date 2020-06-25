@@ -37,6 +37,7 @@ public interface ProductDao {
 
     @Query("UPDATE products SET quantity = quantity + 1 WHERE id LIKE :id")
     void plus(int id);
+
     @Query("UPDATE products SET quantity = quantity - 1 WHERE id LIKE :id")
     void minus(int id);
 

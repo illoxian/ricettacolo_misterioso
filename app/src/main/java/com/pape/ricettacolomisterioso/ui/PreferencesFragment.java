@@ -26,10 +26,10 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 boolean selectedValue = (boolean) newValue;
-                if(selectedValue)
+                if (selectedValue)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 requireActivity().recreate();
                 return true;
             }
@@ -41,13 +41,15 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 boolean selectedValue = (boolean) newValue;
-                if(selectedValue)
+                if (selectedValue)
                     Functions.SetAlarmManager(getContext());
                 else
                     Functions.ClearAlarmManager(getContext());
                 return true;
             }
         });
+
+
     }
 
 }

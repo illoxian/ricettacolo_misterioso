@@ -39,8 +39,8 @@ public class EbayProductApiResponse {
         this.product = product;
     }
 
-    public int getStatus(){
-        if(ack.equals("Success")) return 1;
+    public int getStatus() {
+        if (ack.equals("Success")) return 1;
         else return 0;
     }
 

@@ -36,7 +36,7 @@ public class NewProductViewModel extends ViewModel {
 
     */
 
-    public MutableLiveData<Long> addProduct(Product product){
+    public MutableLiveData<Long> addProduct(Product product) {
         ProductsRepository.getInstance().addProduct(product, getInsertId());
         return insertId;
     }

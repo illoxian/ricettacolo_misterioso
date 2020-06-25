@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QKing</string>
+    <string name="app_name" translatable="false">QKing</string>
     <string name="title_recipes">Recipes</string>
     <string name="title_pantry">Pantry</string>
     <string name="title_shoppinglist">Shopping List</string>
@@ -12,7 +12,7 @@
     <string name="pantry_categories_fruits_and_vegetables">Fruits and Vegetables</string>
     <string name="pantry_categories_meat">Meat</string>
     <string name="recipes_categories_title">Categories</string>
-    <string name="recipes_menu_title">What about making ...</string>
+    <string name="recipes_menu_title">Cooking time</string>
     <string name="recipes_categories_appetizers">Appetizers</string>
     <string name="recipes_categories_first_courses">First Courses</string>
     <string name="recipes_categories_main_courses">Main Courses</string>
@@ -72,7 +72,7 @@
     <string name="api_text_ebay" translatable="false">Ebay</string>
     <string name="new_product_toast_success">Product added successfully</string>
     <string name="new_recipe_input_name">Recipe Name</string>
-    <string name="new_recipe_input_category">Recipe Category</string>
+    <string name="new_recipe_input_category">Category</string>
     <string name="new_recipe_input_insert_date">Insert Date</string>
     <string name="recipe_ingredients_button_remove">remove</string>
     <string name="new_recipe_fragment">New Recipe</string>
@@ -91,12 +91,9 @@
     <string name="removed_from_shopping_list">removed from shopping list</string>
     <string name="Undo">Undo</string>
     <string name="Delete">Delete</string>
-    <string name="item_new_recipe_delete">item_new_recipe_delete</string>
+    <string name="item_new_recipe_delete">Recipe successfully deleted</string>
     <string name="removed_from_products">removed from products</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_recipe_profile">Category</string>
-    <string name="preferences_shopping_title">New Shopping List Fragment</string>
     <string name="menu_dialog_name">Recipe name</string>
     <string name="Add_to_shopping_list_swipe">Add</string>
     <string name="menu_dialog_title">Add to menu</string>
@@ -123,4 +120,6 @@
     <string name="product_dialog_delete_title">Do you want to delete this product?</string>
     <string name="recipe_dialog_delete_title">Do you want to delete this recipe?</string>
     <string name="barcode">Barcode</string>
+    <string name="error_greater_than_zero">Insert a value greater than 0</string>
+    <string name="contact_developer_uri" translatable="false">mailto:m.sangalli9@campus.unimib.it,m.sgro2@campus.unimib.it,g.ziccardi@campus.unimib.it</string>
 </resources>

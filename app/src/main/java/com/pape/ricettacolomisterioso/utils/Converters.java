@@ -21,7 +21,8 @@ public class Converters {
 
     @TypeConverter
     public static List<String> restoreList(String listOfString) {
-        return new Gson().fromJson(listOfString, new TypeToken<List<String>>() {}.getType());
+        return new Gson().fromJson(listOfString, new TypeToken<List<String>>() {
+        }.getType());
     }
 
     @TypeConverter

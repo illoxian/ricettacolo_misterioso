@@ -12,7 +12,8 @@ public class DailyRecipe {
     @NonNull
     private Date day;
     private String recipe;
-    @Embedded private Recipe recipeComplex;
+    @Embedded
+    private Recipe recipeComplex;
     @NonNull
     private int slot;
 
@@ -66,7 +67,7 @@ public class DailyRecipe {
     @Override
     public String toString() {
         String recipeComplexString = null;
-        if(recipeComplex!=null) recipeComplexString = recipeComplex.toString();
+        if (recipeComplex != null) recipeComplexString = recipeComplex.toString();
         return "DailyRecipe{" +
                 "day=" + day +
                 ", recipe='" + recipe + '\'' +
@@ -76,7 +77,7 @@ public class DailyRecipe {
     }
 
     public String getRecipeName() {
-        if(recipeComplex != null) return recipeComplex.getTitle();
+        if (recipeComplex != null) return recipeComplex.getTitle();
         else return recipe;
     }
 }

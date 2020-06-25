@@ -5,14 +5,14 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "items")
 public class Item {
+    boolean isSelected;
     @PrimaryKey(autoGenerate = true)
     private long id;
-
     private String itemName;
     private int quantity;
-    boolean isSelected;
 
-    public Item() {}
+    public Item() {
+    }
 
     public Item(String itemName, int itemCounter, boolean isSelected) {
         this.itemName = itemName;

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MenuViewModel extends ViewModel {
-    private final String TAG= "MenuViewModel";
+    private final String TAG = "MenuViewModel";
 
     private int weekOffset;
 
@@ -59,12 +59,12 @@ public class MenuViewModel extends ViewModel {
         return recipes;
     }
 
-    public void ChangeWeek(int offset){
+    public void ChangeWeek(int offset) {
         weekOffset += offset;
         getWeekDailyMenus();
     }
 
-    private List<Date> getWeekDays(){
+    private List<Date> getWeekDays() {
         Calendar c1 = Calendar.getInstance();
         int weekOfYear = c1.get(Calendar.WEEK_OF_YEAR);
 
@@ -72,8 +72,8 @@ public class MenuViewModel extends ViewModel {
         c1.set(Calendar.WEEK_OF_YEAR, weekOfYear);
         c1.setFirstDayOfWeek(Calendar.MONDAY);
         List<Date> days = new ArrayList<>();
-        for(int i=0; i<7; i++){
-            int day = ((Calendar.MONDAY + 7 + i - 1) % 7)+1;
+        for (int i = 0; i < 7; i++) {
+            int day = ((Calendar.MONDAY + 7 + i - 1) % 7) + 1;
             c1.set(Calendar.DAY_OF_WEEK, day);
             days.add(Functions.ExcludeTime(c1.getTime()));
         }
@@ -87,13 +87,13 @@ public class MenuViewModel extends ViewModel {
 
         if (days.size() > 0) {
             String startDayString = format.format(days.get(0).getTime());
-            String endDayString = format.format(days.get(days.size()-1).getTime());
+            String endDayString = format.format(days.get(days.size() - 1).getTime());
             return startDayString + " - " + endDayString;
         }
         return null;
     }
 
-    private void getWeekDailyMenus(){
+    private void getWeekDailyMenus() {
 
         List<Date> days = getWeekDays();
         List<DailyMenu> menus = new ArrayList<>();
@@ -101,15 +101,15 @@ public class MenuViewModel extends ViewModel {
         DailyMenuRepository.getInstance().getDailyMenus(dailyMenus, days);
     }
 
-    public void insert(DailyRecipe dailyRecipe){
+    public void insert(DailyRecipe dailyRecipe) {
         DailyMenuRepository.getInstance().insert(dailyRecipe, getInsertId());
     }
 
-    public void delete(DailyRecipe dailyRecipe){
+    public void delete(DailyRecipe dailyRecipe) {
         DailyMenuRepository.getInstance().delete(dailyRecipe, getDeleteId());
     }
 
-    public void getAllRecipes(){
+    public void getAllRecipes() {
         RecipesRepository.getInstance().getRecipes(recipes);
     }
 }

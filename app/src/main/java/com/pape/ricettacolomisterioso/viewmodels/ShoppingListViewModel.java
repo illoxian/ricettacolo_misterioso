@@ -9,7 +9,7 @@ import com.pape.ricettacolomisterioso.repositories.ShoppingListRepository;
 import java.util.List;
 
 public class ShoppingListViewModel extends ViewModel {
-    private final String TAG= "ShoppingListViewModel";
+    private final String TAG = "ShoppingListViewModel";
 
     private MutableLiveData<List<Item>> items;
     private MutableLiveData<Long> insertId;
@@ -47,19 +47,19 @@ public class ShoppingListViewModel extends ViewModel {
         return deleteId;
     }
 
-    public void getAllItems(){
+    public void getAllItems() {
         ShoppingListRepository.getInstance().getItems(getItems());
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
         ShoppingListRepository.getInstance().addItem(item, getInsertId());
     }
 
-    public void updateIsSelected(Long itemId, boolean isSelected){
+    public void updateIsSelected(Long itemId, boolean isSelected) {
         ShoppingListRepository.getInstance().updateIsSelected(itemId, isSelected, getUpdateId());
     }
 
-    public void delete(Item item){
+    public void delete(Item item) {
         ShoppingListRepository.getInstance().delete(item.getItemName(), getDeleteId());
     }
 }

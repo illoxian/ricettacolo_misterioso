@@ -18,6 +18,16 @@ import java.util.List;
 
 @Entity(tableName = "products")
 public class Product implements Parcelable {
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String product_name;
@@ -26,14 +36,11 @@ public class Product implements Parcelable {
     private String barcode;
     private String dataSource;
     private int quantity;
-
     private int category;
     private Date expirationDate;
     private Date purchaseDate;
 
-
-
-    public Product(){
+    public Product() {
 
     }
 
@@ -47,6 +54,21 @@ public class Product implements Parcelable {
         this.expirationDate = expirationDate;
         this.purchaseDate = purchaseDate;
         this.quantity = quantity;
+    }
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private Product(Parcel in) {
+
+        this.id = in.readInt();
+        this.product_name = in.readString();
+        this.imageUrl = in.readString();
+        this.brand = in.readString();
+        this.barcode = in.readString();
+        this.dataSource = in.readString();
+        this.quantity = in.readInt();
+        this.category = in.readInt();
+        this.expirationDate = new Date(in.readLong());
+        this.purchaseDate = new Date(in.readLong());
     }
 
     public int getId() {
@@ -121,8 +143,8 @@ public class Product implements Parcelable {
         this.purchaseDate = purchaseDate;
     }
 
-    public String getExpirationDateString(){
-        if(expirationDate != null)
+    public String getExpirationDateString() {
+        if (expirationDate != null)
             return DateFormat.getDateInstance(DateFormat.SHORT).format(expirationDate);
         else return "";
     }
@@ -174,41 +196,15 @@ public class Product implements Parcelable {
         out.writeInt(this.quantity);
         out.writeInt(this.category);
 
-        if(this.expirationDate==null) out.writeString(null);
+        if (this.expirationDate == null) out.writeString(null);
         else out.writeLong(this.expirationDate.getTime());
 
-        if(this.purchaseDate==null) out.writeString(null);
+        if (this.purchaseDate == null) out.writeString(null);
         else out.writeLong(this.purchaseDate.getTime());
 
     }
 
-    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
-    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
-        public Product createFromParcel(Parcel in) {
-            return new Product(in);
-        }
-
-        public Product[] newArray(int size) {
-            return new Product[size];
-        }
-    };
-
-    // example constructor that takes a Parcel and gives you an object populated with it's values
-    private Product(Parcel in) {
-
-        this.id = in.readInt();
-        this.product_name = in.readString();
-        this.imageUrl = in.readString();
-        this.brand = in.readString();
-        this.barcode = in.readString();
-        this.dataSource = in.readString();
-        this.quantity = in.readInt();
-        this.category = in.readInt();
-        this.expirationDate = new Date(in.readLong());
-        this.purchaseDate = new Date(in.readLong());
-    }
-
-    public int getCategoryIconId(Context context){
+    public int getCategoryIconId(Context context) {
         Resources res = context.getResources();
         TypedArray icons = res.obtainTypedArray(R.array.categoriesIcon);
         List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));
@@ -219,7 +215,7 @@ public class Product implements Parcelable {
         return resourceId;
     }
 
-    public int getCategoryPreviewId(Context context){
+    public int getCategoryPreviewId(Context context) {
         Resources res = context.getResources();
         TypedArray previews = res.obtainTypedArray(R.array.categoriesPreviews);
         List categories = Arrays.asList(res.getStringArray(R.array.categoriesString));

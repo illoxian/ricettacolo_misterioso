@@ -50,7 +50,7 @@ public class RecipeListViewModel extends ViewModel {
         return recipes;
     }
 
-    public MutableLiveData<List<Recipe>> getAllRecipes(){
+    public MutableLiveData<List<Recipe>> getAllRecipes() {
         if (recipes == null) {
             recipes = new MutableLiveData<>();
         }
@@ -60,11 +60,11 @@ public class RecipeListViewModel extends ViewModel {
         return recipes;
     }
 
-    public void delete(Recipe recipe){
+    public void delete(Recipe recipe) {
         RecipesRepository.getInstance().delete(recipe, getDeleteId());
     }
 
-    public void addRecipe(Recipe recipe){
+    public void addRecipe(Recipe recipe) {
         RecipesRepository.getInstance().addRecipe(recipe, getInsertId());
     }
 }

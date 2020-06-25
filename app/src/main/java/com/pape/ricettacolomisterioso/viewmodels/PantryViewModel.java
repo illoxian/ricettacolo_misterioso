@@ -16,7 +16,7 @@ public class PantryViewModel extends ViewModel {
     private MutableLiveData<List<Product>> products;
     private MutableLiveData<Long> insertId;
 
-    public MutableLiveData<List<Product>> getMostExpiringProducts(){
+    public MutableLiveData<List<Product>> getMostExpiringProducts() {
         if (mostExpiringProducts == null) {
             mostExpiringProducts = new MutableLiveData<>();
         }
@@ -31,17 +31,17 @@ public class PantryViewModel extends ViewModel {
         return products;
     }
 
-    public MutableLiveData<List<Product>> getAllMostExpiringProducts(){
+    public MutableLiveData<List<Product>> getAllMostExpiringProducts() {
         ProductsRepository.getInstance().getMostExpiringProducts(mostExpiringProducts);
         return mostExpiringProducts;
     }
 
-    public MutableLiveData<List<Product>> getAllProductsOrderByExpirationDate(){
+    public MutableLiveData<List<Product>> getAllProductsOrderByExpirationDate() {
         ProductsRepository.getInstance().getAllProductsOrderByExpirationDate(mostExpiringProducts);
         return mostExpiringProducts;
     }
 
-    public MutableLiveData<List<Product>> getProductsSearched(String product_name){
+    public MutableLiveData<List<Product>> getProductsSearched(String product_name) {
         ProductsRepository.getInstance().getProductSearched(products, product_name);
         return products;
     }
@@ -53,13 +53,15 @@ public class PantryViewModel extends ViewModel {
         return insertId;
     }
 
-    public void addProductToShoppingList(Item item){
+    public void addProductToShoppingList(Item item) {
         ShoppingListRepository.getInstance().addItem(item, getInsertId());
     }
-    public void addProductToShoppingList(String itemName, int quantity){
+
+    public void addProductToShoppingList(String itemName, int quantity) {
         addProductToShoppingList(new Item(itemName, quantity, false));
     }
-    public void addProductToShoppingList(String itemName){
+
+    public void addProductToShoppingList(String itemName) {
         addProductToShoppingList(itemName, 1);
     }
 }

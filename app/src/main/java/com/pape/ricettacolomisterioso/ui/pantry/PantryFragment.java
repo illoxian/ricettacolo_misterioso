@@ -55,7 +55,7 @@ public class PantryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        model =  new ViewModelProvider(this).get(PantryViewModel.class);
+        model = new ViewModelProvider(this).get(PantryViewModel.class);
 
         getMostExpiringProducts();
 
@@ -78,7 +78,7 @@ public class PantryFragment extends Fragment {
         cardViews.add(binding.oilAndCondimentsCardView);
         cardViews.add(binding.waterAndDrinksCardView);
         cardViews.add(binding.seeAllCardView);
-        for(CardView cardView: cardViews)
+        for (CardView cardView : cardViews)
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,7 +117,7 @@ public class PantryFragment extends Fragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-searchViewOpen();
+                        searchViewOpen();
 
                         onSearched(newText);
                         return false;
@@ -128,7 +128,7 @@ searchViewOpen();
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-searchViewClose();
+                searchViewClose();
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -166,12 +166,10 @@ searchViewClose();
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.app_bar_add){
+        if (id == R.id.app_bar_add) {
             Log.d(TAG, "onOptionsItemSelected: Add");
             Navigation.findNavController(getView()).navigate(R.id.action_navigation_pantry_to_newProductFragment);
             return true;
@@ -179,7 +177,7 @@ searchViewClose();
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSearched(String newString){
+    public void onSearched(String newString) {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.pantryFragmentRecyclerView.setLayoutManager(layoutManager);
@@ -216,11 +214,11 @@ searchViewClose();
         model.getProductsSearched(newString);
     }
 
-    public int getCardViewStringRes(CardView cardView){
+    public int getCardViewStringRes(CardView cardView) {
         int res = 0;
-        switch (cardView.getId()){
+        switch (cardView.getId()) {
             case R.id.fruits_and_vegetables_cardView:
-                res =  R.string.pantry_categories_fruits_and_vegetables;
+                res = R.string.pantry_categories_fruits_and_vegetables;
                 break;
             case R.id.meat_cardView:
                 res = R.string.pantry_categories_meat;
@@ -257,7 +255,7 @@ searchViewClose();
 
     }
 
-    public void getMostExpiringProducts(){
+    public void getMostExpiringProducts() {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.expiringProductPreviewRecyclerView.setLayoutManager(layoutManager);
@@ -281,9 +279,7 @@ searchViewClose();
             public void onChanged(@Nullable List<Product> products) {
                 if (products.isEmpty()) {
                     binding.expiringCard.setVisibility(View.GONE);
-                }
-
-                else {
+                } else {
                     Log.d(TAG, "onChanged: Items:" + products);
                     expiringAdapter.setData(model.getMostExpiringProducts().getValue());
                     binding.expiringCard.setVisibility(View.VISIBLE);
@@ -298,9 +294,9 @@ searchViewClose();
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_PRODUCT_ADDED) {
-            if(resultCode == Activity.RESULT_OK){
-                long insertId = data.getLongExtra("insertId",-1);
-                if(insertId>=0) {
+            if (resultCode == Activity.RESULT_OK) {
+                long insertId = data.getLongExtra("insertId", -1);
+                if (insertId >= 0) {
                     Snackbar.make(getView(), R.string.new_product_toast_success, Snackbar.LENGTH_LONG).show();
                     getMostExpiringProducts();
                 }

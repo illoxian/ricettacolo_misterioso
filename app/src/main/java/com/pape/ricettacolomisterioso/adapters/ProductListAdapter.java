@@ -23,17 +23,10 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
 
     private static final String TAG = "ProductListAdapter";
-
-    public interface OnItemInteractions {
-        void onItemClick(Product product);
-        void onItemClickAddToShoppingList(Product product);
-    }
-
     private List<Product> products;
     private LayoutInflater layoutInflater;
     private OnItemInteractions onItemInteractions;
-
-    public ProductListAdapter(Context context, List<Product> products,  OnItemInteractions onItemInteractions) {
+    public ProductListAdapter(Context context, List<Product> products, OnItemInteractions onItemInteractions) {
         this.layoutInflater = LayoutInflater.from(context);
         this.products = products;
         this.onItemInteractions = onItemInteractions;
@@ -53,7 +46,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public int getItemCount() {
-        if(products != null)
+        if (products != null)
             return products.size();
         else return 0;
     }
@@ -62,54 +55,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         if (data != null) {
             this.products = data;
             notifyDataSetChanged();
-        }
-    }
-
-
-    public static class ProductListViewHolder extends RecyclerView.ViewHolder {
-        TextView product_name;
-        TextView product_category;
-        ImageView product_icon;
-        ImageView addToShoppingListIcon;
-
-        public ProductListViewHolder(View view) {
-            super(view);
-            product_name = view.findViewById(R.id.text_view_product_list_item_name);
-            product_category = view.findViewById(R.id.text_view_product_list_item_category);
-            product_icon = view.findViewById(R.id.image_view_product_list_item_category);
-            addToShoppingListIcon = view.findViewById(R.id.image_view_product_list_item_add_shopping_list);
-        }
-
-        void bind(Product product, OnItemInteractions onItemInteractions) {
-
-            product_name.setText(product.getProduct_name());
-            product_category.setText(Functions.getProductCategoryString(itemView.getContext(), product.getCategory()));
-
-            SharedPreferences sharedPreferences =PreferenceManager.getDefaultSharedPreferences(product_icon.getContext());
-            if(sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null)
-            {
-                File f = new File(product.getImageUrl());
-                Picasso.get().load(f).into(product_icon);
-            }
-            else {
-                product_icon.setImageDrawable(itemView.getResources().getDrawable(
-                        product.getCategoryIconId(itemView.getContext())));
-            }
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemInteractions.onItemClick(product);
-                }
-            });
-
-            addToShoppingListIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemInteractions.onItemClickAddToShoppingList(product);
-                }
-            });
-
         }
     }
 
@@ -134,11 +79,62 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         notifyItemChanged(position);
     }
 
-    public void moveProduct(int fromPosition, int toPosition){
+    public void moveProduct(int fromPosition, int toPosition) {
         Product product = products.get(fromPosition);
         products.remove(fromPosition);
         products.add(toPosition, product);
 
         notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public interface OnItemInteractions {
+        void onItemClick(Product product);
+
+        void onItemClickAddToShoppingList(Product product);
+    }
+
+    public static class ProductListViewHolder extends RecyclerView.ViewHolder {
+        TextView product_name;
+        TextView product_category;
+        ImageView product_icon;
+        ImageView addToShoppingListIcon;
+
+        public ProductListViewHolder(View view) {
+            super(view);
+            product_name = view.findViewById(R.id.text_view_product_list_item_name);
+            product_category = view.findViewById(R.id.text_view_product_list_item_category);
+            product_icon = view.findViewById(R.id.image_view_product_list_item_category);
+            addToShoppingListIcon = view.findViewById(R.id.image_view_product_list_item_add_shopping_list);
+        }
+
+        void bind(Product product, OnItemInteractions onItemInteractions) {
+
+            product_name.setText(product.getProduct_name());
+            product_category.setText(Functions.getProductCategoryString(itemView.getContext(), product.getCategory()));
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(product_icon.getContext());
+            if (sharedPreferences.getBoolean("image_instead_of_icon", false) && product.getImageUrl() != null) {
+                File f = new File(product.getImageUrl());
+                Picasso.get().load(f).into(product_icon);
+            } else {
+                product_icon.setImageDrawable(itemView.getResources().getDrawable(
+                        product.getCategoryIconId(itemView.getContext())));
+            }
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemInteractions.onItemClick(product);
+                }
+            });
+
+            addToShoppingListIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemInteractions.onItemClickAddToShoppingList(product);
+                }
+            });
+
+        }
     }
 }
