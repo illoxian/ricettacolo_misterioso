@@ -17,7 +17,6 @@
         <!--Component styles-->
         <item name="bottomNavigationStyle">@style/Widget.MyTheme.BottomNavigationView.Dark</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">?android:colorBackground</item>
-
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
 

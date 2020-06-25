@@ -98,6 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="6dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_recipe_category">
 
@@ -159,6 +161,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            style="@style/Widget.MyTheme.CardView"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="6dp"
+
             android:id="@+id/new_recipe_steps_cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
