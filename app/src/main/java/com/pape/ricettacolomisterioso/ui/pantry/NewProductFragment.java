@@ -54,7 +54,7 @@ import static android.app.Activity.RESULT_OK;
 public class NewProductFragment extends Fragment {
 
     private static final String TAG = "NewProductFragment";
-    private static final int LAUNCH_SCANNER_ACTIVITY = 1;
+    static final int LAUNCH_SCANNER_ACTIVITY = 1;
     private static final int LAUNCH_LOAD_IMAGE_ACTIVITY = 2;
     private static final int LAUNCH_TAKE_PHOTO_ACTIVITY = 3;
     private FragmentNewProductBinding binding;
@@ -73,8 +73,7 @@ public class NewProductFragment extends Fragment {
     }
 
     public static NewProductFragment newInstance() {
-        NewProductFragment fragment = new NewProductFragment();
-        return fragment;
+        return new NewProductFragment();
     }
 
     @Nullable
@@ -324,9 +323,6 @@ public class NewProductFragment extends Fragment {
                         Picasso.get().load(file).into(binding.imageView2);
                     }
                 }
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
             }
         } else if (requestCode == LAUNCH_LOAD_IMAGE_ACTIVITY) {
             if (resultCode == RESULT_OK && data != null) {

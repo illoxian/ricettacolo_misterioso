@@ -1,10 +1,12 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,8 +38,6 @@ import com.pape.ricettacolomisterioso.utils.Functions;
 import com.pape.ricettacolomisterioso.viewmodels.ScannerViewModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-
-import java.io.IOException;
 
 public class ScannerActivity extends AppCompatActivity {
 
@@ -166,7 +167,12 @@ public class ScannerActivity extends AppCompatActivity {
         Log.d(TAG, "negative button clicked");
         barcodeFound = false;
         try {
-            cameraSource.start(surfaceView.getHolder());
+            if (ActivityCompat.checkSelfPermission(ScannerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                cameraSource.start(surfaceView.getHolder());
+            } else {
+                ActivityCompat.requestPermissions(ScannerActivity.this, new
+                        String[]{Manifest.permission.CAMERA}, NewProductFragment.LAUNCH_SCANNER_ACTIVITY);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,7 +183,12 @@ public class ScannerActivity extends AppCompatActivity {
 
     private void StartCamera() {
         try {
-            cameraSource.start(surfaceView.getHolder());
+            if (ActivityCompat.checkSelfPermission(ScannerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                cameraSource.start(surfaceView.getHolder());
+            } else {
+                ActivityCompat.requestPermissions(ScannerActivity.this, new
+                        String[]{Manifest.permission.CAMERA}, NewProductFragment.LAUNCH_SCANNER_ACTIVITY);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
