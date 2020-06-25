@@ -61,28 +61,27 @@ public class RecipesFragment extends Fragment {
         model.getRandomRecipe().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe mRecipe) {
-                Recipe recipe = mRecipe;
 
-                if (recipe == null) {
+                if (mRecipe == null) {
                     binding.randomCardView.setVisibility(GONE);
                     binding.recipesMenuTitle.setVisibility(GONE);
 
                 }
 
-                if (recipe != null) {
-                    Drawable d = getResources().getDrawable(recipe.getCategoryPreviewId(getActivity().getApplicationContext()));
+                if (mRecipe != null) {
+                    Drawable d = getResources().getDrawable(mRecipe.getCategoryPreviewId(getActivity().getApplicationContext()));
 
-                    binding.randomRecipeCategory.setText(Functions.getRecipeCategoryString(getContext(), recipe.getCategoryId()));
+                    binding.randomRecipeCategory.setText(Functions.getRecipeCategoryString(getContext(), mRecipe.getCategoryId()));
                     binding.randomRecipeImg.setImageDrawable(d);
-                    binding.randomRecipeName.setText(recipe.getTitle());
+                    binding.randomRecipeName.setText(mRecipe.getTitle());
 
                     binding.randomCardView.setVisibility(VISIBLE);
                     binding.recipesMenuTitle.setVisibility(VISIBLE);
 
                     binding.randomCardView.setOnClickListener(v -> {
                         Bundle recipeBundle = new Bundle();
-                        recipeBundle.putParcelable("recipe", recipe);
-                        RecipesFragmentDirections.ShowRecipeProfileFromNavigationPantry action = RecipesFragmentDirections.showRecipeProfileFromNavigationPantry(recipe);
+                        recipeBundle.putParcelable("recipe", mRecipe);
+                        RecipesFragmentDirections.ShowRecipeProfileFromNavigationPantry action = RecipesFragmentDirections.showRecipeProfileFromNavigationPantry(mRecipe);
                         Navigation.findNavController(view).navigate(action);
                     });
                 }

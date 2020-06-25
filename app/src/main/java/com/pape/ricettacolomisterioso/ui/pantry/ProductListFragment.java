@@ -53,25 +53,23 @@ public class ProductListFragment extends Fragment {
 
             int position = viewHolder.getAdapterPosition();
 
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    deletedItem = model.getProducts().getValue().get(position);
-                    model.delete(deletedItem);
-                    mAdapter.removeProductAt(position);
-                    checkEmptyList();
-                    Snackbar snackbar = Snackbar.make(binding.productListRecyclerView,
-                            deletedItem.getProduct_name() + " " + getString(R.string.removed_from_products),
-                            Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mAdapter.insertProductAt(deletedItem, position);
-                            model.addProduct(deletedItem);
-                            checkEmptyList();
-                        }
-                    });
-                    snackbar.show();
-                    break;
-/*                 case ItemTouchHelper.RIGHT:
+            if (direction == ItemTouchHelper.LEFT) {
+                deletedItem = model.getProducts().getValue().get(position);
+                model.delete(deletedItem);
+                mAdapter.removeProductAt(position);
+                checkEmptyList();
+                Snackbar snackbar = Snackbar.make(binding.productListRecyclerView,
+                        deletedItem.getProduct_name() + " " + getString(R.string.removed_from_products),
+                        Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAdapter.insertProductAt(deletedItem, position);
+                        model.addProduct(deletedItem);
+                        checkEmptyList();
+                    }
+                });
+                snackbar.show();
+                    /*                 case ItemTouchHelper.RIGHT:
 
                      break;*/
             }

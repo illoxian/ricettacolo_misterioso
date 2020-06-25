@@ -122,4 +122,27 @@
     <string name="barcode">Barcode</string>
     <string name="error_greater_than_zero">Insert a value greater than 0</string>
     <string name="contact_developer_uri" translatable="false">mailto:m.sangalli9@campus.unimib.it,m.sgro2@campus.unimib.it,g.ziccardi@campus.unimib.it</string>
+    <string name="scanner_dialog_product_name_label_text_view">Product name:</string>
+    <string name="scanner_dialog_product_name_value_text_view">productName Placeholder</string>
+    <string name="scanner_dialog_generic_name_label_text_view">Generic name:</string>
+    <string name="scanner_dialog_generic_name_value_text_view">genericName Placeholder</string>
+    <string name="scanner_dialog_brand_label_text_view">Brand:</string>
+    <string name="scanner_dialog_brand_value_text_view">brand placeholder</string>
+    <string name="scanner_dialog_code_label_text_view">Code:</string>
+    <string name="scanner_dialog_code_value_text_view">10452040421</string>
+    <string name="category_name_placeholder">Category Name</string>
+    <string name="product_name_placeholder">Product Name</string>
+    <string name="days_remaining_placeholder">some days remaining</string>
+    <string name="new_product_image_add_button_text">Add an Image</string>
+    <string name="new_recipe_data_text_view">Date</string>
+    <string name="recipe_ingredients_title_text_view">Ingredients</string>
+    <string name="new_recipe_add_button_text_view">Add</string>
+    <string name="recipe_step_title_text_view">Steps</string>
+    <string name="data_placeholder">dd/mm/yyyy</string>
+    <string name="recipe_title_placeholder">Title</string>
+    <string name="recipe_category_placeholder">Categoria</string>
+    <string name="sheet_dialog_picture_text">Take a Photo</string>
+    <string name="sheet_dialog_gallery_text">Pick from Gallery</string>
+    <string name="search_text">Search</string>
+    <string name="add_text">Add</string>
 </resources>

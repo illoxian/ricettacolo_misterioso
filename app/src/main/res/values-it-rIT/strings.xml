@@ -116,4 +116,27 @@
     <string name="recipe_dialog_delete_title">Vuoi eliminare questa ricetta?</string>
     <string name="barcode">Codice a barre</string>
     <string name="error_greater_than_zero">Inserisci un valore maggiore di 0</string>
+    <string name="scanner_dialog_product_name_label_text_view">Nome prodotto:</string>
+    <string name="scanner_dialog_product_name_value_text_view">nomeProdotto placeholder</string>
+    <string name="scanner_dialog_generic_name_label_text_view">Nome generico:</string>
+    <string name="scanner_dialog_generic_name_value_text_view">nomeGenerico placeholder</string>
+    <string name="scanner_dialog_brand_label_text_view">Marca:</string>
+    <string name="scanner_dialog_brand_value_text_view">marca placeholder</string>
+    <string name="scanner_dialog_code_label_text_view">Codice:</string>
+    <string name="scanner_dialog_code_value_text_view">10452040421</string>
+    <string name="category_name_placeholder">Nome Categoria</string>
+    <string name="product_name_placeholder">Nome Prodotto</string>
+    <string name="days_remaining_placeholder">qualche giorno rimanente</string>
+    <string name="new_product_image_add_button_text">Aggiungi Immagine</string>
+    <string name="new_recipe_data_text_view">Data</string>
+    <string name="recipe_ingredients_title_text_view">Ingredienti</string>
+    <string name="new_recipe_add_button_text_view">Aggiungi</string>
+    <string name="recipe_step_title_text_view">Passaggi</string>
+    <string name="data_placeholder">dd/mm/yyyy</string>
+    <string name="recipe_title_placeholder">Titolo</string>
+    <string name="recipe_category_placeholder">Categoria</string>
+    <string name="sheet_dialog_picture_text">Fai una Foto</string>
+    <string name="sheet_dialog_gallery_text">Scegli dalla Galleria</string>
+    <string name="search_text">Ricerca</string>
+    <string name="add_text">Aggiungi</string>
 </resources>

@@ -52,24 +52,22 @@ public class ShoppingListFragment extends Fragment {
 
             int position = viewHolder.getAdapterPosition();
 
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    deletedItem = model.getItems().getValue().get(position);
-                    model.delete(deletedItem);
-                    mAdapter.removeItemAt(position);
-                    Snackbar snackbar = Snackbar.make(binding.shoppingListRecyclerView,
-                            deletedItem.getItemName() + " " + getString(R.string.removed_from_shopping_list),
-                            Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mAdapter.insertItemAt(deletedItem, position);
-                            model.addItem(deletedItem);
-                        }
-                    });
-                    snackbar.setAnchorView(binding.FabAddItem);
-                    snackbar.show();
-                    break;
-                 /*case ItemTouchHelper.RIGHT:
+            if (direction == ItemTouchHelper.LEFT) {
+                deletedItem = model.getItems().getValue().get(position);
+                model.delete(deletedItem);
+                mAdapter.removeItemAt(position);
+                Snackbar snackbar = Snackbar.make(binding.shoppingListRecyclerView,
+                        deletedItem.getItemName() + " " + getString(R.string.removed_from_shopping_list),
+                        Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAdapter.insertItemAt(deletedItem, position);
+                        model.addItem(deletedItem);
+                    }
+                });
+                snackbar.setAnchorView(binding.FabAddItem);
+                snackbar.show();
+                    /*case ItemTouchHelper.RIGHT:
 
                      break;*/
             }

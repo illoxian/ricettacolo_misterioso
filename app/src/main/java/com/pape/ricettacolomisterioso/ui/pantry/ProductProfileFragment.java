@@ -54,8 +54,7 @@ public class ProductProfileFragment extends Fragment {
     }
 
     public static ProductProfileFragment newInstance() {
-        ProductProfileFragment fragment = new ProductProfileFragment();
-        return fragment;
+        return new ProductProfileFragment();
     }
 
     @SuppressLint("RestrictedApi")
@@ -88,9 +87,8 @@ public class ProductProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         productProfileBinding = FragmentProductProfileBinding.inflate(getLayoutInflater());
         model = new ViewModelProvider(this).get(ProductProfileViewModel.class);
-        View view = productProfileBinding.getRoot();
 
-        return view;
+        return productProfileBinding.getRoot();
     }
 
     @Override

@@ -158,7 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="false"
+                android:focusable="true"
                 android:inputType="date"
                 android:textCursorDrawable="@null" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="false"
+                android:focusable="true"
                 android:inputType="date"
                 android:textCursorDrawable="@null" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -228,7 +228,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:text="Aggiungi immagine"
+            android:text="@string/new_product_image_add_button_text"
             android:textAllCaps="true"
             app:icon="@drawable/baseline_add_photo_alternate_24"
             app:iconGravity="textStart"

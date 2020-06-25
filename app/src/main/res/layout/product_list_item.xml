@@ -28,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="pasta e riso"
+        android:text="@string/category_name_placeholder"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textSize="12sp"
@@ -44,7 +44,7 @@
         android:layout_marginBottom="16dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="Spaghetti"
+        android:text="@string/product_name_placeholder"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="?attr/colorOnSurface"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,6 +61,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/image_view_product_list_item_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/image_view_product_list_item_category"
-        app:srcCompat="@drawable/baseline_add_shopping_cart_24" />
+        app:srcCompat="@drawable/baseline_add_shopping_cart_24"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

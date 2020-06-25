@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
-            android:text="Scatta una foto" />
+            android:text="@string/sheet_dialog_picture_text" />
     </LinearLayout>
 
     <LinearLayout
@@ -49,6 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
-            android:text="Scegli dalla galleria" />
+            android:text="@string/sheet_dialog_gallery_text" />
     </LinearLayout>
 </LinearLayout>

@@ -39,8 +39,7 @@ public class RecipeProfileFragment extends Fragment {
     }
 
     public static RecipeProfileFragment newInstance() {
-        RecipeProfileFragment fragment = new RecipeProfileFragment();
-        return fragment;
+        return new RecipeProfileFragment();
     }
 
     @Nullable
