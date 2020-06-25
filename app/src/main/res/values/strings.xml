@@ -121,4 +121,5 @@
     <string name="title_product_list">Product List</string>
     <string name="new_recipe_quantity">Quantity</string>
     <string name="product_dialog_delete_title">Do you want to delete this product?</string>
+    <string name="recipe_dialog_delete_title">Do you want to delete this recipe?</string>
 </resources>

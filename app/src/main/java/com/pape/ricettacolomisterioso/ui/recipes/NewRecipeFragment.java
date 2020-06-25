@@ -199,17 +199,9 @@ public class NewRecipeFragment extends Fragment {
         });
     }
 
-
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.new_recipe_app_bar_menu, menu);
-
-    }
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id==R.id.new_recipe_app_bar_add) {
-            addRecipe();
-            return true;
-        }
+
         if(id==android.R.id.home) {
             Navigation.findNavController(getView()).popBackStack();
             return true;

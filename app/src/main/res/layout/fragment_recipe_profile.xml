@@ -44,13 +44,23 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp">
 
+                <ImageView
+                    android:id="@+id/delete_recipe_image"
+                    style="@style/Widget.AppCompat.ActionButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_delete_24" />
+
                 <TextView
                     android:id="@+id/textView_recipe_profile_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Titolo"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

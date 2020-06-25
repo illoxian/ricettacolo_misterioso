@@ -188,6 +188,7 @@ public class ProductsRepository {
                     appDatabase.productDao().plus(product.getValue().getId());
                     product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
                     Log.d(TAG, "plus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
+                    appDatabase.productDao().update(product.getValue());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -206,9 +207,17 @@ public class ProductsRepository {
                 try {
                     if (appDatabase.productDao().findById(product.getValue().getId()).getQuantity() > 1) {
                         appDatabase.productDao().minus(product.getValue().getId());
+                        product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
                         Log.d(TAG, "minus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
+                        appDatabase.productDao().update(product.getValue());
+
                     }
-                    else Log.d(TAG, "quantity 1, cannot go deeper");
+                    else {
+                        Log.d(TAG, "quantity 1, cannot go deeper");
+                        product.postValue(appDatabase.productDao().findById(product.getValue().getId()));
+                        Log.d(TAG, "minus UPDATES" + appDatabase.productDao().findById(product.getValue().getId()).toString());
+                        appDatabase.productDao().update(product.getValue());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
