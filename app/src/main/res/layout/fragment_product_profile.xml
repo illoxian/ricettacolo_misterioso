@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="fill_parent">
 
         <ImageView
             android:id="@+id/category_image"
@@ -87,7 +87,7 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="De cecco"
+                        android:text="@string/category_name_placeholder"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_constraintEnd_toStartOf="@+id/add_shopping_list_image"
@@ -121,7 +121,7 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:gravity="center_vertical"
-                        android:text="Pasta e riso"
+                        android:text="@string/product_name_placeholder"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="?attr/colorOnSurface"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +152,7 @@
                         android:layout_height="50dp"
                         android:layout_marginEnd="88dp"
                         android:gravity="center_vertical|end"
-                        android:text="2"
+                        android:text="0"
                         android:textColor="?attr/colorOnSurface"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -225,7 +225,7 @@
                         android:id="@+id/expiring_value_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10 giorni rimanenti"
+                        android:text="@string/days_remaining_placeholder"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textSize="12sp"
@@ -238,7 +238,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:gravity="center_vertical"
-                        android:text="dd/mm/yyyy"
+                        android:text="@string/data_placeholder"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="?attr/colorOnSurface"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -249,7 +249,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="dd/mm/yyyy"
+                        android:text="@string/data_placeholder"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="?attr/colorOnSurface"
                         app:layout_constraintStart_toStartOf="parent"
@@ -263,7 +263,7 @@
                         android:text="@string/expiring_product_profile"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         app:layout_constraintEnd_toEndOf="@+id/expiring_date_value_text_view"
                         app:layout_constraintTop_toTopOf="@+id/purchase_date_text_view" />
 
@@ -276,7 +276,7 @@
                         android:text="@string/purchase_date_product_profile"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         app:layout_constraintStart_toStartOf="@+id/purchase_date_value_text_view"
                         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 

@@ -55,7 +55,7 @@
                     android:id="@+id/random_recipe_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:contentDescription="Penne al pomodoro"
+                    android:contentDescription="@string/recipe_title_placeholder"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Primi piatti"
+                        android:text="@string/recipe_category_placeholder"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/grey_400"
@@ -93,13 +93,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Penne al pomodoro"
+                        android:text="@string/recipe_title_placeholder"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="@color/white_50"
                         android:textSize="24sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recipes_menu_card1_category" />
+                        app:layout_constraintTop_toBottomOf="@+id/random_recipe_category" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

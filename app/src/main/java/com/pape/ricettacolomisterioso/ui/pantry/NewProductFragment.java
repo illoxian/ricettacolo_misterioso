@@ -1,7 +1,6 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;

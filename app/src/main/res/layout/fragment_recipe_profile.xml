@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
 
         <ImageView
             android:id="@+id/imageView"
@@ -32,9 +32,10 @@
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.MyTheme.CardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="150dp"
             app:cardBackgroundColor="?attr/colorSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,7 +58,7 @@
                     android:id="@+id/textView_recipe_profile_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Titolo"
+                    android:text="@string/recipe_title_placeholder"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -69,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Categoria"
+                    android:text="@string/recipe_category_placeholder"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     app:layout_constraintStart_toStartOf="@+id/textView_recipe_profile_title"
@@ -79,7 +80,7 @@
                     android:id="@+id/textView_recipe_profile_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="data"
+                    android:text="@string/data_placeholder"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView_recipe_profile_category"
@@ -114,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Ingredienti"
+                    android:text="@string/recipe_ingredients_title_text_view"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +129,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_recipe_profile_ingredients"></LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/textView_recipe_profile_ingredients" />
 
                 <View
                     android:id="@+id/divider2"
@@ -145,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Passaggi"
+                    android:text="@string/recipe_step_title_text_view"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +160,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView_recipe_profile_steps"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_recipe_profile_steps"></LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/textView_recipe_profile_steps" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

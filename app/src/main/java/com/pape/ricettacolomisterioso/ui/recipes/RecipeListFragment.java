@@ -55,26 +55,24 @@ public class RecipeListFragment extends Fragment {
 
             int position = viewHolder.getAdapterPosition();
 
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    deletedItem = model.getRecipes().getValue().get(position);
-                    model.delete(deletedItem);
-                    mAdapter.removeProductAt(position);
-                    checkEmptyList();
-                    Snackbar snackbar = Snackbar.make(binding.recipeListRecyclerView,
-                            deletedItem.getTitle() + " " + getString(R.string.removed_from_recipes),
-                            Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mAdapter.insertProductAt(deletedItem, position);
-                            model.addRecipe(deletedItem);
-                            checkEmptyList();
+            if (direction == ItemTouchHelper.LEFT) {
+                deletedItem = model.getRecipes().getValue().get(position);
+                model.delete(deletedItem);
+                mAdapter.removeProductAt(position);
+                checkEmptyList();
+                Snackbar snackbar = Snackbar.make(binding.recipeListRecyclerView,
+                        deletedItem.getTitle() + " " + getString(R.string.removed_from_recipes),
+                        Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAdapter.insertProductAt(deletedItem, position);
+                        model.addRecipe(deletedItem);
+                        checkEmptyList();
 
-                        }
-                    });
-                    snackbar.show();
-                    break;
-/*                 case ItemTouchHelper.RIGHT:
+                    }
+                });
+                snackbar.show();
+                    /*                 case ItemTouchHelper.RIGHT:
 
                      break;*/
             }
@@ -116,8 +114,7 @@ public class RecipeListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentRecipeListBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override

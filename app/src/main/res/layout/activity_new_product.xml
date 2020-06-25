@@ -129,7 +129,8 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="date"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="KeyboardInaccessibleWidget" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -153,7 +154,8 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="date"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="KeyboardInaccessibleWidget" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
