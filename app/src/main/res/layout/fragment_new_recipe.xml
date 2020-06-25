@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="true"
+                android:focusable="false"
                 android:inputType="date"
                 android:textCursorDrawable="@null" />
         </com.google.android.material.textfield.TextInputLayout>
