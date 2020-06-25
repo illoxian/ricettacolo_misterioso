@@ -73,13 +73,13 @@ public class MenuFragment extends Fragment {
                     showDialog(dailyMenu.getDay(), slot);
                 }
                 else{
+                    Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
                     if(dailyRecipe.getRecipeComplex()!=null){
                         Bundle recipeBundle = new Bundle();
                         recipeBundle.putParcelable("recipe", dailyRecipe.getRecipeComplex());
                         MenuFragmentDirections.ShowRecipeProfileFromMenu action = MenuFragmentDirections.ShowRecipeProfileFromMenu(dailyRecipe.getRecipeComplex());
                         Navigation.findNavController(mView).navigate(action);
                     }
-                    Log.d(TAG, "onRecipeClick: "+ dailyMenu.getRecipes().get(slot));
                 }
             }
 
@@ -117,7 +117,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 recipesString = new ArrayList<>();
-                for (Recipe r:model.getRecipes().getValue()) {
+                for (Recipe r:recipes) {
                     recipesString.add(r.getTitle());
                 }
             }

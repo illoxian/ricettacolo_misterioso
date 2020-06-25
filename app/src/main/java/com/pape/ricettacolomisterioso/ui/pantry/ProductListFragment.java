@@ -101,7 +101,7 @@ public class ProductListFragment extends Fragment {
         else{
             model.getProductsByCategory(Arrays.asList(getResources().getStringArray(R.array.categoriesString)).indexOf(getString(res)));
         }
-        checkEmptyList();
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.productListRecyclerView);
     }

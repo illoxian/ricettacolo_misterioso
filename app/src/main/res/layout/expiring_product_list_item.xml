@@ -21,23 +21,26 @@
 
     <TextView
         android:id="@+id/text_view_expiring_product_list_item_category"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:text="pasta e riso"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar_expiring_item"
         app:layout_constraintStart_toEndOf="@+id/image_view_expiring_product_list_item_category"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_view_expiring_product_list_item_name"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:ellipsize="end"
         android:singleLine="true"
@@ -45,6 +48,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="?attr/colorOnSurface"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar_expiring_item"
         app:layout_constraintStart_toStartOf="@+id/text_view_expiring_product_list_item_category" />
 
     <ProgressBar
