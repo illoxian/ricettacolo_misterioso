@@ -1,7 +1,5 @@
 package com.pape.ricettacolomisterioso.ui.pantry;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +40,7 @@ public class PantryFragment extends Fragment {
 
     private FragmentPantryBinding binding;
 
-    private int NEW_PRODUCT_ADDED = 0;
+    //private int NEW_PRODUCT_ADDED = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPantryBinding.inflate(getLayoutInflater());
@@ -290,7 +288,7 @@ public class PantryFragment extends Fragment {
         model.getAllMostExpiringProducts();
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_PRODUCT_ADDED) {
@@ -305,6 +303,6 @@ public class PantryFragment extends Fragment {
                 //Write your code if there's no result
             }
         }
-    }
+    }*/
 
 }

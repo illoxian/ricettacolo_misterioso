@@ -3,6 +3,7 @@
 <resources>
 
     <style name="Base.Theme.RicettacoloMisterioso" parent="Theme.MaterialComponents.DayNight">
+
     </style>
 
     <style name="Base.Theme.MyApp" parent="Base.Theme.RicettacoloMisterioso">
@@ -28,16 +29,5 @@
 
         <!--Component styles-->
         <item name="bottomNavigationStyle">@style/Widget.MyTheme.BottomNavigationView</item>
-    </style>
-
-
-
-    <!-- NoActionBar for profile activity -->
-
-    <style name="Theme.MyTheme.DayNight.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/yellow_500</item>
-        <item name="colorPrimaryDark">@color/yellow_500_dark</item>
-        <item name="colorSecondary">@color/pink_a200</item>
-        <item name="colorAccent">@color/pink_a200_dark</item>
     </style>
 </resources>
